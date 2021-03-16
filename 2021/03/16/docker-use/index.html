@@ -23,20 +23,24 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"nova-mist.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
   </script>
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="description" content="Docker 学习  Docker 从入门到实践 菜鸟教程 适用于 Linux 的 Windows 子系统安装指南 (Windows 10)  按步骤安装 WSL 2    Docker 简介 😸俺的理解  Docker 就相当于一个轻量级的虚拟机。在不保存数据的前提下（可以保存），可以很轻松的学习 Linux 的各种操作，并且不用担心恢复配置的问题（关闭容器数据就清除了）。 在后续使用中可以使">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="https://nova-mist.github.io/2021/03/04/hello-world/index.html">
+<meta property="og:title" content="docker-use">
+<meta property="og:url" content="https://nova-mist.github.io/2021/03/16/docker-use/index.html">
 <meta property="og:site_name" content="novamist blog">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="Docker 学习  Docker 从入门到实践 菜鸟教程 适用于 Linux 的 Windows 子系统安装指南 (Windows 10)  按步骤安装 WSL 2    Docker 简介 😸俺的理解  Docker 就相当于一个轻量级的虚拟机。在不保存数据的前提下（可以保存），可以很轻松的学习 Linux 的各种操作，并且不用担心恢复配置的问题（关闭容器数据就清除了）。 在后续使用中可以使">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-03-04T15:12:46.168Z">
-<meta property="article:modified_time" content="2021-03-08T02:41:48.257Z">
+<meta property="og:image" content="https://www.docker.com/sites/default/files/d8/2019-07/Moby-logo.png">
+<meta property="article:published_time" content="2021-03-16T12:30:37.000Z">
+<meta property="article:modified_time" content="2021-03-16T12:34:04.749Z">
 <meta property="article:author" content="Nova-mist">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="技术">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.docker.com/sites/default/files/d8/2019-07/Moby-logo.png">
 
 
-<link rel="canonical" href="https://nova-mist.github.io/2021/03/04/hello-world/">
+<link rel="canonical" href="https://nova-mist.github.io/2021/03/16/docker-use/">
 
 
 <script data-pjax class="page-configurations">
@@ -48,7 +52,7 @@
     lang   : 'zh-CN'
   };
 </script>
-<title>Hello World | novamist blog</title>
+<title>docker-use | novamist blog</title>
   
 
 
@@ -158,7 +162,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-%E5%AD%A6%E4%B9%A0"><span class="nav-number">1.</span> <span class="nav-text">Docker 学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">Docker 简单使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows-10-%E5%AE%89%E8%A3%85"><span class="nav-number">2.1.</span> <span class="nav-text">Windows 10 安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E9%95%9C%E5%83%8F"><span class="nav-number">2.2.</span> <span class="nav-text">使用镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">2.3.</span> <span class="nav-text">容器命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TODO-%E6%8C%82%E8%BD%BD%E4%B8%BB%E6%9C%BA%E7%9B%AE%E5%BD%95"><span class="nav-number">2.4.</span> <span class="nav-text">TODO: 挂载主机目录</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -235,7 +239,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2021/03/04/hello-world/">
+    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2021/03/16/docker-use/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.png">
@@ -248,7 +252,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hello World
+          docker-use
         </h1>
 
         <div class="post-meta-container">
@@ -258,16 +262,10 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2021-03-04 23:12:46" itemprop="dateCreated datePublished" datetime="2021-03-04T23:12:46+08:00">2021-03-04</time>
+      <time title="创建时间：2021-03-16 20:30:37 / 修改时间：20:34:04" itemprop="dateCreated datePublished" datetime="2021-03-16T20:30:37+08:00">2021-03-16</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-08 10:41:48" itemprop="dateModified" datetime="2021-03-08T10:41:48+08:00">2021-03-08</time>
-      </span>
 
   
 </div>
@@ -279,20 +277,45 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+        <h2 id="Docker-学习"><a href="#Docker-学习" class="headerlink" title="Docker 学习"></a>Docker 学习</h2><img src="https://www.docker.com/sites/default/files/d8/2019-07/Moby-logo.png" alt="Docker Logos | Docker" style="zoom: 50%;" />
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo server<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/">Docker 从入门到实践</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.runoob.com/docker/docker-tutorial.html">菜鸟教程</a></p>
+<p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/windows/wsl/install-win10">适用于 Linux 的 Windows 子系统安装指南 (Windows 10)</a></p>
+<ul>
+<li>按步骤安装 <code>WSL 2</code></li>
+</ul>
+<p>  <a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/introduction">Docker 简介</a></p>
+<p>😸<em>俺的理解</em></p>
+<blockquote>
+<p><code>Docker</code> 就相当于一个轻量级的虚拟机。在不保存数据的前提下（可以保存），可以很轻松的学习 <code>Linux</code> 的各种操作，并且不用担心恢复配置的问题（关闭容器数据就清除了）。</p>
+<p>在后续使用中可以使用 <code>Docker</code> 在服务器上快速部署服务，<code>PHP</code> <code>MySQL</code> <code>Tomcat</code> 等。</p>
+</blockquote>
+<h2 id="Docker-简单使用"><a href="#Docker-简单使用" class="headerlink" title="Docker 简单使用"></a>Docker 简单使用</h2><h3 id="Windows-10-安装"><a href="#Windows-10-安装" class="headerlink" title="Windows 10 安装"></a><a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/install/windows">Windows 10 安装</a></h3><blockquote>
+<p>点击以下 [链接](<a target="_blank" rel="noopener" href="https://desktop.docker.com/win/stable/Docker">https://desktop.docker.com/win/stable/Docker</a> Desktop Installer.exe) 下载 Docker Desktop for Windows。</p>
+<p>推荐使用 <a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/windows/terminal/get-started">Windows Terminal</a> 在终端使用 Docker。</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6933384126363877384#heading-17">Windows Terminal 主题美化</a></p>
+<p><a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/install/mirror#windows-10">配置国内镜像加速</a></p>
+<h3 id="使用镜像"><a href="#使用镜像" class="headerlink" title="使用镜像"></a><a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/image">使用镜像</a></h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 拉取镜像 docker pull --help</span>
+docker pull <span class="token punctuation">[</span>选项<span class="token punctuation">]</span> <span class="token punctuation">[</span>Docker Registry 地址<span class="token punctuation">[</span>:端口号<span class="token punctuation">]</span>/<span class="token punctuation">]</span>仓库名<span class="token punctuation">[</span>:标签<span class="token punctuation">]</span>
+docker pull ubuntu:18.04 <span class="token comment"># latest</span>
+docker run -it --rm ubuntu:18.04 <span class="token function">bash</span> <span class="token comment"># 启动一个交互终端 退出后删除 /bin/bash</span>
+<span class="token comment"># cat /etc/os-release 查看信息</span>
+docker image <span class="token function">ls</span> <span class="token comment"># 列出镜像 参数 -a 查看所有镜像 参数 -q 镜像ID</span>
+docker image <span class="token function">rm</span> <span class="token comment"># 删除镜像 后加ID</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo generate<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="容器命令"><a href="#容器命令" class="headerlink" title="容器命令"></a><a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/container">容器命令</a></h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 新建并启动</span>
+docker run ubuntu:18.04 /bin/echo <span class="token string">'Hello world'</span> <span class="token comment"># 命令完成后就停止容器</span>
+docker run -it ubuntu:18.04 /bin/bash <span class="token comment"># 启动一个 bash 终端 可以交互</span>
+<span class="token comment"># exit Ctrl+d 退出终端</span>
+docker container start<span class="token punctuation">[</span>restart<span class="token punctuation">]</span><span class="token punctuation">[</span>stop<span class="token punctuation">]</span>
+docker container <span class="token function">ls</span> <span class="token punctuation">[</span>-a<span class="token punctuation">]</span> <span class="token comment"># 查看列表</span>
+docker attach <span class="token punctuation">[</span>id<span class="token punctuation">]</span> <span class="token comment"># 进入容器</span>
+docker container <span class="token function">rm</span> <span class="token punctuation">[</span>id<span class="token punctuation">]</span> <span class="token comment"># 删除容器</span>
+docker container prune <span class="token comment"># 清理所有处于终止状态的容器</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo deploy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
+<h3 id="TODO-挂载主机目录"><a href="#TODO-挂载主机目录" class="headerlink" title="TODO: 挂载主机目录"></a>TODO: 挂载主机目录</h3>
     </div>
 
     
@@ -300,16 +323,20 @@
     
 
     <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/docker/" rel="tag"># docker</a>
+              <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
+                <a href="/2021/03/12/careerPlanning/" rel="prev" title="集中一点地学习">
+                  <i class="fa fa-chevron-left"></i> 集中一点地学习
+                </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2021/03/08/Womens-Day/" rel="next" title="Happy International Women's Day 2021!">
-                  Happy International Women's Day 2021! <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
