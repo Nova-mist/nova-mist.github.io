@@ -23,16 +23,16 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"nova-mist.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
   </script>
-<meta name="description" content="这里放一些俺觉得有意思的文章 😸 技术常来看看 Hexo-next 中文文档 Hexo-next 英文文档  长知识数媒相关文章 未来取代 JPEG 的，可能是 Android 12 支持的新图片格式  资料 [播客] 牛油果烤面包 计算机图形学——视觉效果、3D打印、摄影和其他 [播客] ggtalk 聊聊音视频技术  [blog] FFMPEG视音频编解码零基础学习方法 中传博士，音视频领">
+<meta name="description" content="这里放一些俺觉得有意思的文章 😸 技术常来看看 Hexo-next 中文文档 Hexo-next 英文文档 Markdown 入门教程及书写风格指南  长知识 tinyTorrent: 从头写一个 Deno 的 BitTorrent 下载器  数媒相关文章 未来取代 JPEG 的，可能是 Android 12 支持的新图片格式  什么决定了你看到的画质  mini-LED 是什么？配备它的新款">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Stars">
 <meta property="og:url" content="https://nova-mist.github.io/stars/index.html">
 <meta property="og:site_name" content="novamist blog">
-<meta property="og:description" content="这里放一些俺觉得有意思的文章 😸 技术常来看看 Hexo-next 中文文档 Hexo-next 英文文档  长知识数媒相关文章 未来取代 JPEG 的，可能是 Android 12 支持的新图片格式  资料 [播客] 牛油果烤面包 计算机图形学——视觉效果、3D打印、摄影和其他 [播客] ggtalk 聊聊音视频技术  [blog] FFMPEG视音频编解码零基础学习方法 中传博士，音视频领">
+<meta property="og:description" content="这里放一些俺觉得有意思的文章 😸 技术常来看看 Hexo-next 中文文档 Hexo-next 英文文档 Markdown 入门教程及书写风格指南  长知识 tinyTorrent: 从头写一个 Deno 的 BitTorrent 下载器  数媒相关文章 未来取代 JPEG 的，可能是 Android 12 支持的新图片格式  什么决定了你看到的画质  mini-LED 是什么？配备它的新款">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://nova-mist.github.io/images/xiaonanji_1.png">
 <meta property="article:published_time" content="2021-03-10T07:21:03.000Z">
-<meta property="article:modified_time" content="2021-03-27T00:38:30.463Z">
+<meta property="article:modified_time" content="2021-04-24T13:33:25.852Z">
 <meta property="article:author" content="Nova-mist">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://nova-mist.github.io/images/xiaonanji_1.png">
@@ -128,8 +128,8 @@
 <nav class="site-nav">
   <ul class="main-menu menu">
         <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
-        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">7</span></a></li>
-        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">6</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">13</span></a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li>
         <li class="menu-item menu-item-stars"><a href="/stars/" rel="section"><i class="fa fa-heart fa-fw"></i>收集</a></li>
   </ul>
 </nav>
@@ -177,14 +177,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -253,9 +253,29 @@
 <h2 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h2><h3 id="常来看看"><a href="#常来看看" class="headerlink" title="常来看看"></a>常来看看</h3><ul>
 <li><a target="_blank" rel="noopener" href="http://theme-next.iissnan.com/">Hexo-next 中文文档</a></li>
 <li><a target="_blank" rel="noopener" href="https://theme-next.js.org/">Hexo-next 英文文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://tingtalk.me/markdown/">Markdown 入门教程及书写风格指南</a></li>
 </ul>
-<h3 id="长知识"><a href="#长知识" class="headerlink" title="长知识"></a>长知识</h3><h3 id="数媒相关"><a href="#数媒相关" class="headerlink" title="数媒相关"></a>数媒相关</h3><h4 id="文章"><a href="#文章" class="headerlink" title="文章"></a>文章</h4><ul>
-<li><a target="_blank" rel="noopener" href="https://www.ifanr.com/1403324">未来取代 JPEG 的，可能是 Android 12 支持的新图片格式</a></li>
+<h3 id="长知识"><a href="#长知识" class="headerlink" title="长知识"></a>长知识</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://cjting.me/2020/10/31/tinytorrent-a-deno-bt-downloader/">tinyTorrent: 从头写一个 Deno 的 BitTorrent 下载器</a></li>
+</ul>
+<h3 id="数媒相关"><a href="#数媒相关" class="headerlink" title="数媒相关"></a>数媒相关</h3><h4 id="文章"><a href="#文章" class="headerlink" title="文章"></a>文章</h4><ul>
+<li><p><a target="_blank" rel="noopener" href="https://www.ifanr.com/1403324">未来取代 JPEG 的，可能是 Android 12 支持的新图片格式</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://sspai.com/post/66001">什么决定了你看到的画质</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://sspai.com/post/65708">mini-LED 是什么？配备它的新款 iPad Pro、 Macbook 或许很快到来</a></p>
+<blockquote>
+<ol>
+<li>目前屏幕若材质主要以 LCD、OLED 两类为主，且OLED 逐渐取代了 LCD。</li>
+<li>LCD 即液晶显示器，它的发光原理主要依靠背光层（背光、彩色滤光片、液晶三者缺一不可）；而 OLED 则依靠有机化合物涂层发光，只需通电就会亮，高对比度和高饱和度，还有着轻薄、可弯曲、省电的优势。</li>
+<li>mini-LED 相比 LCD 有局部调光，相比 OLED 无低频频闪，<strong>但仍旧处于初期阶段。</strong></li>
+</ol>
+</blockquote>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://sspai.com/post/65997">译文｜魔改二维码</a> 核心思想：服务器重定向、二维码纠错功能</p>
+</li>
+<li><p>[Jacob Ziv 的压缩算法改变了世界](<a target="_blank" rel="noopener" href="https://www.solidot.org/story?sid=67574">奇客Solidot | Jacob Ziv 的压缩算法改变了世界</a>)</p>
+</li>
 </ul>
 <h4 id="资料"><a href="#资料" class="headerlink" title="资料"></a>资料</h4><ul>
 <li><a target="_blank" rel="noopener" href="https://www.xiaoyuzhoufm.com/episode/6011c65e875ca52f827ef35a?s=eyJ1IjoiNWU4MjgyMWYxYmZiYmMzZGFkODUxYWNiIn0=%0A">[播客] 牛油果烤面包 计算机图形学——视觉效果、3D打印、摄影和其他</a></li>
@@ -277,6 +297,10 @@
 <blockquote>
 <p>结论：西门子、博世（同产线），更高预算选择美诺。租房波轮式，住房滚筒式。</p>
 </blockquote>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://support.microsoft.com/zh-cn/topic/%E8%AE%BE%E7%BD%AE%E4%BD%A0%E7%9A%84%E6%A1%8C%E9%9D%A2-e9f3fc2c-e6fa-d27f-78c4-274b3669c425">微软 - 办公坐姿</a> 一定要保护颈椎啊</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://app.yinxiang.com/fx/cb68c019-5d4a-457e-b669-399da88aade4">手机被盗之后，第一时间应该做什么？ - 清单模板</a> 其实用处不大…<br><a target="_blank" rel="noopener" href="https://web.archive.org/web/20210414075653/https://app.yinxiang.com/fx/cb68c019-5d4a-457e-b669-399da88aade4">存档</a></p>
 </li>
 </ul>
 
