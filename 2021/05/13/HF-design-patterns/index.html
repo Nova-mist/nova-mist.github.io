@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"nova-mist.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+<meta name="description" content="读完 Head First Java , 接着看看设计模式，因为之前已经看过了《大话设计模式》有了基本的了解，希望这次阅读应该能轻松一点。☕ OO基础：  抽象 封装 多态 继承  OO原则：  封装变化 多用组合，少用继承 针对接口编程，不针对实现编程 松耦合">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HF设计模式">
+<meta property="og:url" content="https://nova-mist.github.io/2021/05/13/HF-design-patterns/index.html">
+<meta property="og:site_name" content="novamist blog">
+<meta property="og:description" content="读完 Head First Java , 接着看看设计模式，因为之前已经看过了《大话设计模式》有了基本的了解，希望这次阅读应该能轻松一点。☕ OO基础：  抽象 封装 多态 继承  OO原则：  封装变化 多用组合，少用继承 针对接口编程，不针对实现编程 松耦合">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/ysamaImage/blog_image2021/main/img/github/2021/image-20210515173119062.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ysamaImage/blog_image2021/main/img/github/2021/image-20210515173101656.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ysamaImage/blog_image2021/main/img/github/2021/image-20210515190219524.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ysamaImage/blog_image2021/main/img/github/2021/image-20210515190155948.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ysamaImage/blog_image2021/main/img/github/2021/image-20210515190114185.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ysamaImage/blog_image2021/main/img/github/2021/image-20210516232237113.png">
+<meta property="article:published_time" content="2021-05-13T14:42:09.000Z">
+<meta property="article:modified_time" content="2021-05-16T16:34:40.743Z">
+<meta property="article:author" content="Nova-mist">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="软件工程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/ysamaImage/blog_image2021/main/img/github/2021/image-20210515173119062.png">
+
+
+<link rel="canonical" href="https://nova-mist.github.io/2021/05/13/HF-design-patterns/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>HF设计模式 | novamist blog</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">novamist blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">14</span></a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">10</span></a></li>
+        <li class="menu-item menu-item-stars"><a href="/stars/" rel="section"><i class="fa fa-heart fa-fw"></i>收集</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">策略模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">观察者模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-%E5%86%85%E7%BD%AE%E7%9A%84%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.1.</span> <span class="nav-text">Java 内置的观察者模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JDK-%E4%B8%AD%E7%9A%84%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.2.</span> <span class="nav-text">JDK 中的观察者模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">装饰者模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-I-O"><span class="nav-number">3.1.</span> <span class="nav-text">Java I&#x2F;O</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#java%E7%B1%BB%E7%9A%84%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90"><span class="nav-number">4.1.</span> <span class="nav-text">java类的访问权限</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E4%BB%B6%E6%A8%A1%E5%BC%8F"><span class="nav-number">5.</span> <span class="nav-text">单件模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%B9%E5%96%84%E6%80%A7%E8%83%BD"><span class="nav-number">5.1.</span> <span class="nav-text">改善性能</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F"><span class="nav-number">6.</span> <span class="nav-text">命令模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%92%A4%E9%94%80%E6%93%8D%E4%BD%9C"><span class="nav-number">6.1.</span> <span class="nav-text">撤销操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%8F%E5%91%BD%E4%BB%A4"><span class="nav-number">6.2.</span> <span class="nav-text">宏命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8"><span class="nav-number">6.3.</span> <span class="nav-text">应用</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nova-mist"
+      src="/uploads/avatar.png">
+  <p class="site-author-name" itemprop="name">Nova-mist</p>
+  <div class="site-description" itemprop="description">My blog about daily life and learning. :b</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Nova-mist" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Nova-mist" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fas fa-cat fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.bilibili.com/" title="https:&#x2F;&#x2F;www.bilibili.com&#x2F;" rel="noopener" target="_blank">Bilibili</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2021/05/13/HF-design-patterns/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="Nova-mist">
+      <meta itemprop="description" content="My blog about daily life and learning. :b">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="novamist blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HF设计模式
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-05-13 22:42:09" itemprop="dateCreated datePublished" datetime="2021-05-13T22:42:09+08:00">2021-05-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-05-17 00:34:40" itemprop="dateModified" datetime="2021-05-17T00:34:40+08:00">2021-05-17</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>读完 Head First Java , 接着看看设计模式，因为之前已经看过了《大话设计模式》有了基本的了解，希望这次阅读应该能轻松一点。☕</p>
+<p>OO基础：</p>
+<ul>
+<li>抽象</li>
+<li>封装</li>
+<li>多态</li>
+<li>继承</li>
+</ul>
+<p>OO原则：</p>
+<ul>
+<li>封装变化</li>
+<li>多用组合，少用继承</li>
+<li><strong>针对接口编程，不针对实现编程</strong></li>
+<li>松耦合</li>
+</ul>
+<span id="more"></span>
+
+<h2 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h2><blockquote>
+<p>定义了算法族，分别封装起来，让它们之间可以互相替换，此模式<strong>让算法的变化独立于使用算法的客户</strong>。</p>
+</blockquote>
+<p>示例：鸭子的设计</p>
+<ul>
+<li>子类行为交给<strong>实现行为接口的行为类</strong>来调用。</li>
+</ul>
+<h2 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h2><blockquote>
+<p>在对象之间定义一对多的依赖，当一个对象改变状态，依赖它的对象都会收到通知，并自动更新。</p>
+</blockquote>
+<ul>
+<li><strong>有多个观察者，不可以依赖特定的通知次序。</strong></li>
+<li>努力实现 Observable 类</li>
+<li><strong>可观察者</strong>不知道观察者的细节，只知道观察者实现了观察者接口。</li>
+</ul>
+<p>示例：气象站</p>
+<h3 id="Java-内置的观察者模式"><a href="#Java-内置的观察者模式" class="headerlink" title="Java 内置的观察者模式"></a>Java 内置的观察者模式</h3><p><code>java.util</code> 包含最基本的 Observer 接口与 Observable 接口。</p>
+<p><strong>（1）把对象变成观察者</strong></p>
+<p>实现 Observer 接口然后调用 <code>addObserver()</code> <code>deleteObserver()</code></p>
+<p><strong>（2）观察者送出通知</strong></p>
+<p>继承 Observable 类，标记状态改变 <code>setChange()</code> ，调用 <code>notifyObservers()</code> 或 <code>notifyObservers(Object arg)</code></p>
+<p><strong>（3）观察者接收通知</strong></p>
+<p><code>uodate(Observable o, Object arg)</code> 可以推（push）数据  <code>Object arg </code> 给观察者</p>
+<p>Observable 是一个类，将关键的方法保护起来。可以扩展 <code>java.util.Observable</code> 或自己实现一整套观察者模式。</p>
+<h3 id="JDK-中的观察者模式"><a href="#JDK-中的观察者模式" class="headerlink" title="JDK 中的观察者模式"></a>JDK 中的观察者模式</h3><ul>
+<li>JavaBeans</li>
+<li>Swing 中的 JButton ActionListener actionPerformed</li>
+<li>RMI</li>
+</ul>
+<h2 id="装饰者模式"><a href="#装饰者模式" class="headerlink" title="装饰者模式"></a>装饰者模式</h2><blockquote>
+<p>动态地将责任附加到对象上。想要扩展功能，装饰者提供有别于继承的另一种选择。</p>
+</blockquote>
+<ul>
+<li>装饰者会导致设计中出现许多小对象。</li>
+<li><strong>组合和委托可用于在运动时动态地加上新的行为。</strong></li>
+<li>装饰者可以在被装饰者的行为前后加上自己的行为，<strong>甚至替换整个被装饰者的行为</strong>。</li>
+<li><strong>装饰者和被装饰者都继承了共同的超类，来达到类型匹配。</strong></li>
+</ul>
+<p>示例：咖啡店</p>
+<h3 id="Java-I-O"><a href="#Java-I-O" class="headerlink" title="Java I/O"></a>Java I/O</h3><p><img src="https://raw.githubusercontent.com/ysamaImage/blog_image2021/main/img/github/2021/image-20210515173119062.png" alt="image-20210515173119062"></p>
+<p><img src="https://raw.githubusercontent.com/ysamaImage/blog_image2021/main/img/github/2021/image-20210515173101656.png" alt="image-20210515173101656"></p>
+<h2 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h2><blockquote>
+<p>抽象工厂模式：提供给一个接口，用于创建相关或依赖<strong>对象的家族</strong>，而不需要明确指定具体类。</p>
+<p>工厂方法模式：定义了一个创建对象的接口，但由子类决定要实例化的类是哪一个。<strong>工厂方法把实例化推迟到子类</strong>。</p>
+<p><code>abstract Product factoryMethod(String type)</code></p>
+</blockquote>
+<p><strong>依赖倒置原则：避免依赖具体类型，尽量依赖抽象。</strong></p>
+<ul>
+<li>简单工厂不是真正的设计模式，但可以将客户程序从具体类解耦。</li>
+<li>抽象工厂使用对象组合，对象的创建被实现在工厂接口所暴露出来的方法中。</li>
+<li>工厂方法使用类，通过继承来创造对象。<strong>（对象是类的实例）</strong></li>
+<li>抽象工厂的具体工厂经常实现工厂方法来创建他们的产品。</li>
+<li>当不知道将来需要实例化哪些具体类时可以用工厂方法，<strong>继承为子类并实现工厂方法，实例化推迟到子类。</strong></li>
+</ul>
+<p>示例：披萨店</p>
+<p><img src="https://raw.githubusercontent.com/ysamaImage/blog_image2021/main/img/github/2021/image-20210515190219524.png" alt="简单工厂"></p>
+<p>简单工厂</p>
+<p><img src="https://raw.githubusercontent.com/ysamaImage/blog_image2021/main/img/github/2021/image-20210515190155948.png" alt="image-20210515190155948"></p>
+<p>工厂方法模式</p>
+<p><img src="https://raw.githubusercontent.com/ysamaImage/blog_image2021/main/img/github/2021/image-20210515190114185.png" alt="image-20210515190114185"></p>
+<p>抽象工厂模式</p>
+<h3 id="java类的访问权限"><a href="#java类的访问权限" class="headerlink" title="java类的访问权限"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xwdreamer/archive/2012/04/06/2434483.html">java类的访问权限</a></h3><p>default：即不加任何访问修饰符，通常称为“默认访问模式“。该模式下，只允许在同一个包中进行访问。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>同一个类</strong></th>
+<th><strong>同一个包</strong></th>
+<th><strong>不同包的子类</strong></th>
+<th><strong>不同包的非子类</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Private</td>
+<td>√</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Default</td>
+<td>√</td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Protected</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td>Public</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+</tbody></table>
+<h2 id="单件模式"><a href="#单件模式" class="headerlink" title="单件模式"></a>单件模式</h2><blockquote>
+<p><strong>确保一个类只有一个实例</strong>，并提供全局访问点。</p>
+</blockquote>
+<ul>
+<li>实现单件模式需要私有的构造器、一个静态方法和一个静态变量。</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Singleton</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token class-name">Singleton</span> uniqueInstance<span class="token punctuation">;</span>
+    <span class="token comment">// 其他的有用实例化变量</span>
+    <span class="token keyword">private</span> <span class="token class-name">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token comment">// 同步化处理多线程</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">synchronized</span> <span class="token class-name">Singleton</span> <span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>uniqueInstance <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            uniqueInstance <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">return</span> uniqueInstance<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token comment">// 其他的有用方法</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="改善性能"><a href="#改善性能" class="headerlink" title="改善性能"></a>改善性能</h3><ul>
+<li>同步 getInstance() 方法最直接，但会降低性能。</li>
+<li>急切实例化  直接使用静态初始化 <code>private static Singleton uniqueInstance = new Singleton();</code> 并用 public 静态方法返回</li>
+<li>双重检查加锁</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Singleton</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">private</span> <span class="token keyword">volatile</span> <span class="token keyword">static</span> <span class="token class-name">Singleton</span> uniqueInstance<span class="token punctuation">;</span> <span class="token comment">// volatile禁止指令重排 多个线程能正确处理 uniqueInstance 变量</span>
+    <span class="token keyword">private</span> <span class="token class-name">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token class-name">Singleton</span> <span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>uniqueInstance <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">synchronized</span> <span class="token punctuation">(</span><span class="token class-name">Singleton</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>uniqueInstance <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                    uniqueInstance <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">&#125;</span> <span class="token comment">// close if</span>
+            <span class="token punctuation">&#125;</span> <span class="token comment">// close synchronized</span>
+        <span class="token punctuation">&#125;</span> <span class="token comment">// close if</span>
+        <span class="token keyword">return</span> uniqueInstance<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token comment">// close getInstance() method</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+
+<h2 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a>命令模式</h2><blockquote>
+<p>将“请求”封装成对象，以便使用不同的请求，队列或者日志来参数化其他对象。命令模式也支持可撤销的操作。redo</p>
+</blockquote>
+<ul>
+<li>命令模式将<strong>发出请求的对象</strong>和<strong>执行请求的对象</strong>解耦，<strong>命令对象</strong>作为中间的桥梁。</li>
+<li>命令对象封装了接收者和一个或一组动作。</li>
+<li>调用者通过调用命令对象的 <code>execute()</code> 发出的请求，调用接收者的动作。</li>
+<li>调用者可以接受命令当作参数。</li>
+<li>空对象 NoCommand ，调用它的 <code>execute()</code> 方法，对象什么也不做。</li>
+</ul>
+<p>示例：餐厅、遥控器</p>
+<table>
+<thead>
+<tr>
+<th>餐厅</th>
+<th>命令模式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>服务员</td>
+<td>Invoker</td>
+</tr>
+<tr>
+<td>快餐厨师</td>
+<td>Receiver</td>
+</tr>
+<tr>
+<td>orderUp()</td>
+<td>execute()</td>
+</tr>
+<tr>
+<td>订单</td>
+<td>Command</td>
+</tr>
+<tr>
+<td>顾客</td>
+<td>Client</td>
+</tr>
+<tr>
+<td>takeOrder()</td>
+<td>setCommand()</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Client -&gt; Command (Invoker.setCommand()) -&gt; Invoker -&gt; Invoker.execute()</p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/ysamaImage/blog_image2021/main/img/github/2021/image-20210516232237113.png" alt="image-20210516232237113"></p>
+<h3 id="撤销操作"><a href="#撤销操作" class="headerlink" title="撤销操作"></a>撤销操作</h3><ul>
+<li>要有一个记录状态的变量。</li>
+<li>undo() 和 execute() 同级</li>
+</ul>
+<h3 id="宏命令"><a href="#宏命令" class="headerlink" title="宏命令"></a>宏命令</h3><p>命令的一种简单的延申，允许调用多个命令。<strong>借助栈来实现撤销。</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Command</span><span class="token punctuation">[</span><span class="token punctuation">]</span> commands <span class="token operator">=</span> <span class="token punctuation">&#123;</span>a<span class="token punctuation">,</span> b<span class="token punctuation">,</span> c<span class="token punctuation">,</span> d<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token class-name">InstanceCommand</span> instanceCommand <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">InstanceCommand</span><span class="token punctuation">(</span>commands<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">Invoker</span><span class="token punctuation">.</span><span class="token function">setCommand</span><span class="token punctuation">(</span>instanceCommand<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h3><p>命令可以将运算块打包并当作一般的对象来传送，于是运算块可以在创建许久之后被调用，也支持不同的线程。</p>
+<p>所以可以应用于：日志安排，线程池，工作队列。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"># Java</a>
+              <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" rel="tag"># 软件工程</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/05/10/typora-issue-01/" rel="prev" title="解决 Typora 编辑为知笔记频繁失焦问题">
+                  <i class="fa fa-chevron-left"></i> 解决 Typora 编辑为知笔记频繁失焦问题
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nova-mist</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+    <div class="pjax">
+
+
+    </div>
+</body>
+</html>
