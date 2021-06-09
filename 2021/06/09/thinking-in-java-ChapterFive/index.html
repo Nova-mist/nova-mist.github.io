@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"nova-mist.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+<meta property="og:type" content="article">
+<meta property="og:title" content="thinking-in-java-ChapterFive">
+<meta property="og:url" content="https://nova-mist.github.io/2021/06/09/thinking-in-java-ChapterFive/index.html">
+<meta property="og:site_name" content="novamist blog">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/Nova-mist/nova-mist.github.io/main/img/github/2021/Snipaste_2021-06-04_09-03-23.png">
+<meta property="article:published_time" content="2021-06-09T08:37:28.000Z">
+<meta property="article:modified_time" content="2021-06-09T08:56:51.861Z">
+<meta property="article:author" content="Nova-mist">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="notes">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Nova-mist/nova-mist.github.io/main/img/github/2021/Snipaste_2021-06-04_09-03-23.png">
+
+
+<link rel="canonical" href="https://nova-mist.github.io/2021/06/09/thinking-in-java-ChapterFive/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>thinking-in-java-ChapterFive | novamist blog</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">novamist blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">17</span></a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">11</span></a></li>
+        <li class="menu-item menu-item-stars"><a href="/stars/" rel="section"><i class="fa fa-heart fa-fw"></i>收集</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%8E%E6%B8%85%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">5 初始化与清理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E9%87%8D%E8%BD%BD-P77"><span class="nav-number">1.1.</span> <span class="nav-text">方法重载 P77</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#this-P84"><span class="nav-number">1.2.</span> <span class="nav-text">this P84</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E6%9E%84%E9%80%A0%E5%99%A8%E4%B8%AD%E8%B0%83%E7%94%A8%E6%9E%84%E9%80%A0%E5%99%A8-P86"><span class="nav-number">1.2.1.</span> <span class="nav-text">在构造器中调用构造器 P86</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%88%E7%BB%93%E5%A4%84%E7%90%86%E5%92%8C%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6-P87"><span class="nav-number">1.2.2.</span> <span class="nav-text">终结处理和垃圾回收 P87</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%92%A1%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C-P89"><span class="nav-number">1.2.3.</span> <span class="nav-text">💡垃圾回收器如何工作 P89</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%90%E5%91%98%E5%88%9D%E5%A7%8B%E5%8C%96-P92"><span class="nav-number">1.3.</span> <span class="nav-text">成员初始化 P92</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E5%99%A8%E5%88%9D%E5%A7%8B%E5%8C%96-P94"><span class="nav-number">1.4.</span> <span class="nav-text">构造器初始化 P94</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%BE%E7%A4%BA%E7%9A%84%E9%9D%99%E6%80%81%E5%88%9D%E5%A7%8B%E5%8C%96-P97"><span class="nav-number">1.4.1.</span> <span class="nav-text">显示的静态初始化 P97</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9E%E9%9D%99%E6%80%81%E5%AE%9E%E4%BE%8B%E5%88%9D%E5%A7%8B%E5%8C%96-P97"><span class="nav-number">1.4.2.</span> <span class="nav-text">非静态实例初始化 P97</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E5%88%9D%E5%A7%8B%E5%8C%96-P99"><span class="nav-number">1.5.</span> <span class="nav-text">数组初始化 P99</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E5%88%97%E8%A1%A8-P102"><span class="nav-number">1.5.1.</span> <span class="nav-text">可变参数列表 P102</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%9A%E4%B8%BE%E7%B1%BB%E5%9E%8B-P106"><span class="nav-number">1.6.</span> <span class="nav-text">枚举类型 P106</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nova-mist"
+      src="/uploads/avatar.png">
+  <p class="site-author-name" itemprop="name">Nova-mist</p>
+  <div class="site-description" itemprop="description">My blog about daily life and learning. :b</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Nova-mist" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Nova-mist" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fas fa-cat fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.bilibili.com/" title="https:&#x2F;&#x2F;www.bilibili.com&#x2F;" rel="noopener" target="_blank">Bilibili</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2021/06/09/thinking-in-java-ChapterFive/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="Nova-mist">
+      <meta itemprop="description" content="My blog about daily life and learning. :b">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="novamist blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          thinking-in-java-ChapterFive
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-06-09 16:37:28 / 修改时间：16:56:51" itemprop="dateCreated datePublished" datetime="2021-06-09T16:37:28+08:00">2021-06-09</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><img src="https://raw.githubusercontent.com/Nova-mist/nova-mist.github.io/main/img/github/2021/Snipaste_2021-06-04_09-03-23.png" alt="Snipaste_2021-06-04_09-03-23"></p>
+<span id="more"></span>
+
+
+
+<h1 id="5-初始化与清理"><a href="#5-初始化与清理" class="headerlink" title="5 初始化与清理"></a>5 初始化与清理</h1><p>Constructor &amp; GC</p>
+<h2 id="方法重载-P77"><a href="#方法重载-P77" class="headerlink" title="方法重载 P77"></a>方法重载 P77</h2><p>方法重载：每个重载的方法都必须有一个独一无二的参数类型列表。</p>
+<ul>
+<li>参数类型的不同</li>
+<li>参数顺序的不同（会使代码难以维护）</li>
+<li><strong>不能通过返回值来区分</strong></li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/ethanhola/article/details/50823458">Java基本类型转换的优先顺序</a></p>
+<p><code>byte, short, char &lt; int &lt; long &lt; float &lt; double</code></p>
+<blockquote>
+<p>操作数1 | 操作数2 | 运算结果<br>byte short char | byte short char | int<br>byte short char | Int | Int<br>byte short char int | Long | Long<br>byte short char int long | Float | Float<br>byte short char int long double | Double | Double</p>
+</blockquote>
+<p><strong>如果传入重载方法的实际参数较大，要进行强制类型转换，否则报错。</strong></p>
+<p><strong>如果已经定义了一个构造器（无论是否有参数），编译器不会自动创建默认构造器。</strong></p>
+<h2 id="this-P84"><a href="#this-P84" class="headerlink" title="this P84"></a>this P84</h2><p>this 关键字在方法内部使用，表示对 “调用方法的那个对象” 的引用。</p>
+<h3 id="在构造器中调用构造器-P86"><a href="#在构造器中调用构造器-P86" class="headerlink" title="在构造器中调用构造器 P86"></a>在构造器中调用构造器 P86</h3><blockquote>
+<p>可以在构造器中使用 this 调用一个构造器，但不能使用两次。</p>
+<p>除构造器之外，编译器禁止在其他任何方法中调用构造器。 </p>
+</blockquote>
+<h3 id="终结处理和垃圾回收-P87"><a href="#终结处理和垃圾回收-P87" class="headerlink" title="终结处理和垃圾回收 P87"></a>终结处理和垃圾回收 P87</h3><ul>
+<li>Java 有垃圾回收器负责回收无用对象占据的内存资源，这种机制使得没有析构函数</li>
+<li>垃圾回收器只知道释放经由 <code>new</code> 分配的内存，特殊情况需要自己写 <code>finalize()</code> 方法</li>
+<li>垃圾回收并不等于“析构”</li>
+<li>Java 可以调用其他语言代码，带来内存泄漏，例如 没有 <code>free()</code> 的 <code>malloc()</code> （C语言）</li>
+<li>Java 不允许创建局部对象，必须使用 <code>new</code> 创建对象，也没有用于释放对象的 <code>delete</code></li>
+</ul>
+<h3 id="💡垃圾回收器如何工作-P89"><a href="#💡垃圾回收器如何工作-P89" class="headerlink" title="💡垃圾回收器如何工作 P89"></a>💡垃圾回收器如何工作 P89</h3><blockquote>
+<p>”自适应的、分代的、停止—复制、标记—清扫“ 式垃圾回收器。</p>
+</blockquote>
+<p>Java 中的垃圾回收器工作时，一面回收空间，一面使堆中的对象紧密排列，”堆指针“很容易移动到新分配的区域，避免了<strong>页面错误（频繁的内存调度，需要额外内存）</strong>。</p>
+<ol>
+<li><p>引用记数是一种简单但速度很慢的垃圾回收技术，缺陷是<strong>对象之间的循环引用</strong>。</p>
+</li>
+<li><p>另一种思想：对任何活的对象，一定能最终追溯到其存活在堆栈或静态存储区之中的引用。</p>
+</li>
+</ol>
+<h2 id="成员初始化-P92"><a href="#成员初始化-P92" class="headerlink" title="成员初始化 P92"></a>成员初始化 P92</h2><ul>
+<li>方法内的局部变量要初始化赋值。</li>
+<li><strong>类内的每个基本类型数据成员会默认有初始值。</strong>对象引用默认为 null</li>
+<li>可以直接在定义类成员变量的地方为其赋值，C++中不可以</li>
+</ul>
+<h2 id="构造器初始化-P94"><a href="#构造器初始化-P94" class="headerlink" title="构造器初始化 P94"></a>构造器初始化 P94</h2><ul>
+<li>自动初始化在构造器被调用之前发生</li>
+<li>变量定义顺序决定初始化顺序，<strong>但初始化先于其他方法与顺序无关</strong></li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Counter</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> i<span class="token punctuation">;</span>
+    <span class="token class-name">Counter</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>i <span class="token operator">=</span> <span class="token number">7</span><span class="token punctuation">;</span><span class="token punctuation">&#125;</span>
+    <span class="token comment">// i先为0然后变为7</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>创建顺序：静态初始化、非静态初始化、构造器、方法。</p>
+<ul>
+<li>静态初始化只有一次</li>
+<li>静态初始化中的非静态初始化、构造器都进行后才算完成一次静态初始化</li>
+</ul>
+<h3 id="显示的静态初始化-P97"><a href="#显示的静态初始化-P97" class="headerlink" title="显示的静态初始化 P97"></a>显示的静态初始化 P97</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">static</span> <span class="token keyword">int</span> i<span class="token punctuation">;</span>
+<span class="token keyword">static</span> <span class="token punctuation">&#123;</span>
+    i <span class="token operator">=</span> <span class="token number">47</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="非静态实例初始化-P97"><a href="#非静态实例初始化-P97" class="headerlink" title="非静态实例初始化 P97"></a>非静态实例初始化 P97</h3><p>初始化每一个对象的非静态量，在构造器之前执行。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Mugs</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">Mug</span> mug1<span class="token punctuation">;</span>
+    <span class="token class-name">Mug</span> mug2<span class="token punctuation">;</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token class-name">Mug1</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Mug</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">Mug2</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Mug</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token class-name">Mugs</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token class-name">Mugs</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="数组初始化-P99"><a href="#数组初始化-P99" class="headerlink" title="数组初始化 P99"></a>数组初始化 P99</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ArrayInit</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">Integer</span><span class="token punctuation">[</span><span class="token punctuation">]</span> a <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">new</span> <span class="token class-name">Integer</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            <span class="token keyword">new</span> <span class="token class-name">Integer</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            <span class="token number">3</span><span class="token punctuation">,</span> <span class="token comment">// autoboxing</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+        <span class="token class-name">Integer</span><span class="token punctuation">[</span><span class="token punctuation">]</span> b <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Integer</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">new</span> <span class="token class-name">Integer</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            <span class="token keyword">new</span> <span class="token class-name">Integer</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            <span class="token number">3</span><span class="token punctuation">,</span> <span class="token comment">// autoboxing</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>甚至可以在方法调用处创建数组，提供可替换的参数。</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DynamicArray</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">Other</span><span class="token punctuation">.</span><span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">&#123;</span><span class="token string">"i"</span><span class="token punctuation">,</span> <span class="token string">"like"</span><span class="token punctuation">,</span> <span class="token string">"happy"</span><span class="token punctuation">,</span> <span class="token string">"life"</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">class</span> <span class="token class-name">Other</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">String</span> s <span class="token operator">:</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span>s <span class="token operator">+</span> <span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="可变参数列表-P102"><a href="#可变参数列表-P102" class="headerlink" title="可变参数列表 P102"></a>可变参数列表 P102</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token keyword">int</span> required<span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> trailing<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"required: "</span> <span class="token operator">+</span> required <span class="token operator">+</span> <span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">String</span> s <span class="token operator">:</span> trailing<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span>s <span class="token operator">+</span> <span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">f</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">"one"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">f</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token string">"two"</span><span class="token punctuation">,</span> <span class="token string">"three"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">f</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>使用可变参数列表不依赖于 <code>autoboxing</code> ，使用的是基本类型。</p>
+<p>但可以在单一的参数列表中将类型混合在一起，自动包装机制将有选择地将 <code>int</code> 参数提升为 <code>Integer</code> </p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token class-name">Integer</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">Integer</span> i <span class="token operator">:</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span>i <span class="token operator">+</span> <span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">f</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">Integer</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>只能在重载方法的一个版本上使用可变参数列表，或者都添加一个非可变参数。</strong></p>
+<h2 id="枚举类型-P106"><a href="#枚举类型-P106" class="headerlink" title="枚举类型 P106"></a>枚举类型 P106</h2><p><code>enum</code> 关键字</p>
+<p>命名都用大写字母表示（一个名字中有多个单词，使用下划线分隔开）</p>
+<p>创建 <strong>enum</strong> 时，编译器会自动添加有用的特性：</p>
+<ul>
+<li>创建 <code>toString()</code> 方法</li>
+<li>创建 <code>ordinal()</code> 方法，用来表示某个特定 enum 常量的声明顺序</li>
+<li><code>static values()</code> 按照 enum 常量的声明顺序，产生由这些常量值构成的数组</li>
+</ul>
+<p><strong>经常搭配 switch 语句使用，并且可以使程序意图清晰。</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">enum</span> <span class="token class-name">Spiciness</span> <span class="token punctuation">&#123;</span>
+    NOT<span class="token punctuation">,</span> MILD<span class="token punctuation">,</span> MEDIUM<span class="token punctuation">,</span><span class="token punctuation">,</span> HOT<span class="token punctuation">,</span> FLAMING
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+
+
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// switch 的新形式</span>
+<span class="token keyword">switch</span> <span class="token punctuation">(</span>degree<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">case</span> NOT<span class="token operator">:</span>
+                <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"not spicy at all"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">case</span> MILD<span class="token operator">:</span>
+            <span class="token keyword">case</span> MEDIUM<span class="token operator">:</span>
+                <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"a little hot"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">case</span> HOT<span class="token operator">:</span>
+            <span class="token keyword">case</span> FLAMING<span class="token operator">:</span>
+            <span class="token keyword">default</span><span class="token operator">:</span>
+                <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"maye too hot."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+<span class="token comment">//        switch (degree) &#123;</span>
+<span class="token comment">//            case NOT -> System.out.println("not spicy at all");</span>
+<span class="token comment">//            case MILD, MEDIUM -> System.out.println("a little hot");</span>
+<span class="token comment">//            default -> System.out.println("maye too hot.");</span>
+<span class="token comment">//        &#125;</span>
+
+<span class="token comment">// 声明的新写法</span>
+<span class="token class-name">Burrito</span>
+                plain <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Burrito</span><span class="token punctuation">(</span><span class="token class-name">Spiciness</span><span class="token punctuation">.</span>NOT<span class="token punctuation">)</span><span class="token punctuation">,</span>
+                greenChile <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Burrito</span><span class="token punctuation">(</span><span class="token class-name">Spiciness</span><span class="token punctuation">.</span>MEDIUM<span class="token punctuation">)</span><span class="token punctuation">,</span>
+                jalapeno <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Burrito</span><span class="token punctuation">(</span><span class="token class-name">Spiciness</span><span class="token punctuation">.</span>HOT<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"># Java</a>
+              <a href="/tags/notes/" rel="tag"># notes</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/05/30/java-thread/" rel="prev" title="java线程">
+                  <i class="fa fa-chevron-left"></i> java线程
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/06/09/mythoughts/" rel="next" title="随便想想">
+                  随便想想 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nova-mist</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+    <div class="pjax">
+
+
+    </div>
+</body>
+</html>
