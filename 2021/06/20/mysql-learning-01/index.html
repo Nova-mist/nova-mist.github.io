@@ -23,21 +23,24 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"nova-mist.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
   </script>
-<meta name="description" content="Test: 这个 post 用来临时记录一些自己的思考，有时间会单独添加到侧边栏。 写博客的好处总是有的，至少当个笔记以作备忘。今天 PicGo 的设置丢失了，于是照着之前写的记录重新配置了下图片上传设置，懒得换账号设置将图片传到另一个仓库中了，于是本次修改之后，图片会传到和文章相同的仓库 Nova-mist&#x2F;nova-mist.github.io: My hexo blog. 🐇 中的 img">
+<meta name="description" content="之前有在菜鸟教程看过一点 mysql 的知识，现在有些遗忘了，这次慢慢花时间复习一下，搭配着看看书《SQL必知必会》。顺便整理和完善一下之前的笔记。 安装MySQL的安装与配置——详细教程 - Winton-H - 博客园 (cnblogs.com)  将 MySQL Community Server 免安装版的包解压到纯英文目录，管理员模式打开命令行。  # 安装 记住初始化密码 mysql">
 <meta property="og:type" content="article">
-<meta property="og:title" content="随便想想">
-<meta property="og:url" content="https://nova-mist.github.io/2021/06/09/mythoughts/index.html">
+<meta property="og:title" content="mysql学习01——配置环境">
+<meta property="og:url" content="https://nova-mist.github.io/2021/06/20/mysql-learning-01/index.html">
 <meta property="og:site_name" content="novamist blog">
-<meta property="og:description" content="Test: 这个 post 用来临时记录一些自己的思考，有时间会单独添加到侧边栏。 写博客的好处总是有的，至少当个笔记以作备忘。今天 PicGo 的设置丢失了，于是照着之前写的记录重新配置了下图片上传设置，懒得换账号设置将图片传到另一个仓库中了，于是本次修改之后，图片会传到和文章相同的仓库 Nova-mist&#x2F;nova-mist.github.io: My hexo blog. 🐇 中的 img">
+<meta property="og:description" content="之前有在菜鸟教程看过一点 mysql 的知识，现在有些遗忘了，这次慢慢花时间复习一下，搭配着看看书《SQL必知必会》。顺便整理和完善一下之前的笔记。 安装MySQL的安装与配置——详细教程 - Winton-H - 博客园 (cnblogs.com)  将 MySQL Community Server 免安装版的包解压到纯英文目录，管理员模式打开命令行。  # 安装 记住初始化密码 mysql">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-06-09T08:48:14.000Z">
-<meta property="article:modified_time" content="2021-06-09T08:55:54.609Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/Nova-mist/nova-mist.github.io/main/img/github/2021/kisspng-mysql.png">
+<meta property="og:image" content="https://i.loli.net/2021/03/08/eCEVBMGPXopdn9c.png">
+<meta property="article:published_time" content="2021-06-20T12:37:26.000Z">
+<meta property="article:modified_time" content="2021-06-20T13:19:46.447Z">
 <meta property="article:author" content="Nova-mist">
-<meta property="article:tag" content="生活">
+<meta property="article:tag" content="mysql">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Nova-mist/nova-mist.github.io/main/img/github/2021/kisspng-mysql.png">
 
 
-<link rel="canonical" href="https://nova-mist.github.io/2021/06/09/mythoughts/">
+<link rel="canonical" href="https://nova-mist.github.io/2021/06/20/mysql-learning-01/">
 
 
 <script data-pjax class="page-configurations">
@@ -49,7 +52,7 @@
     lang   : 'zh-CN'
   };
 </script>
-<title>随便想想 | novamist blog</title>
+<title>mysql学习01——配置环境 | novamist blog</title>
   
 
 
@@ -126,8 +129,8 @@
 <nav class="site-nav">
   <ul class="main-menu menu">
         <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
-        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">17</span></a></li>
-        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">11</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">22</span></a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">14</span></a></li>
         <li class="menu-item menu-item-stars"><a href="/stars/" rel="section"><i class="fa fa-heart fa-fw"></i>收集</a></li>
   </ul>
 </nav>
@@ -146,7 +149,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -159,6 +162,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81"><span class="nav-number">2.</span> <span class="nav-text">修改密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%98%E8%AE%B0%E5%AF%86%E7%A0%81"><span class="nav-number">3.</span> <span class="nav-text">忘记密码</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -174,14 +178,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -235,7 +239,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2021/06/09/mythoughts/">
+    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2021/06/20/mysql-learning-01/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.png">
@@ -248,7 +252,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          随便想想
+          mysql学习01——配置环境
         </h1>
 
         <div class="post-meta-container">
@@ -260,7 +264,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2021-06-09 16:48:14 / 修改时间：16:55:54" itemprop="dateCreated datePublished" datetime="2021-06-09T16:48:14+08:00">2021-06-09</time>
+      <time title="创建时间：2021-06-20 20:37:26 / 修改时间：21:19:46" itemprop="dateCreated datePublished" datetime="2021-06-20T20:37:26+08:00">2021-06-20</time>
     </span>
 
   
@@ -273,10 +277,60 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>Test: 这个 post 用来临时记录一些自己的思考，有时间会单独添加到侧边栏。</p>
-<p>写博客的好处总是有的，至少当个笔记以作备忘。今天 PicGo 的设置丢失了，于是照着之前写的记录重新配置了下图片上传设置，懒得换账号设置将图片传到另一个仓库中了，于是本次修改之后，图片会传到和文章相同的仓库 <a target="_blank" rel="noopener" href="https://github.com/Nova-mist/nova-mist.github.io">Nova-mist/nova-mist.github.io: My hexo blog. 🐇</a> 中的 <code>img/github2021</code> 。</p>
-<p>感觉我在文件路径管理方面还是欠缺经验。－O－</p>
-<p>——2021.6.9</p>
+        <img src="https://raw.githubusercontent.com/Nova-mist/nova-mist.github.io/main/img/github/2021/kisspng-mysql.png" alt="kisspng-mysql" style="zoom:50%;" />
+
+<p>之前有在<a target="_blank" rel="noopener" href="https://www.runoob.com/mysql/mysql-tutorial.html">菜鸟教程</a>看过一点 mysql 的知识，现在有些遗忘了，这次慢慢花时间复习一下，搭配着看看书《SQL必知必会》。顺便整理和完善一下之前的笔记。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/winton-nfs/p/11524007.html">MySQL的安装与配置——详细教程 - Winton-H - 博客园 (cnblogs.com)</a></p>
+<ol>
+<li>将 <code>MySQL Community Server</code> 免安装版的包解压到<strong>纯英文目录</strong>，管理员模式打开命令行。</li>
+</ol>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 安装 记住初始化密码</span>
+mysqld --install
+<span class="token comment"># 初始化</span>
+mysqld --initialize --console
+<span class="token comment"># 开启服务</span>
+net start mysql
+<span class="token comment"># 关闭服务</span>
+net stop mysql
+<span class="token comment"># 登陆</span>
+mysql -u root -p <span class="token comment"># 输入密码</span>
+<span class="token comment"># Enter PassWord</span>
+ 
+<span class="token comment"># 标记删除 Windows系统的 mysql 服务 慎用</span>
+<span class="token comment"># sc delete mysql</span>
+<span class="token comment"># exit / quit</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ol start="2">
+<li>设置全局变量 （Win + Pause）</li>
+</ol>
+<img src="https://i.loli.net/2021/03/08/eCEVBMGPXopdn9c.png" alt="Snipaste_2021-03-08_09-17-52" style="zoom: 80%;" />
+
+<blockquote>
+<p>mysql –&gt; 所在路径</p>
+<p>path –&gt; %mysql%\bin</p>
+</blockquote>
+<ol start="3">
+<li>在目录下创建配件配置文件  <code>my.ini</code></li>
+</ol>
+<blockquote>
+<p>[mysqld]<br>character-set-server=utf8mb4<br>bind-address=0.0.0.0<br>port=3306<br>default-storage-engine=INNODB<br>[mysql]<br>default-character-set=utf8mb4<br>[client]<br>default-character-set=utf8mb4</p>
+</blockquote>
+<p> utf8mb4 字符编码可存储4 个字节 (bytes) 支持存储 Emoji 🥰 ; utf8 则可存储 3 bytes</p>
+<h2 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h2><blockquote>
+<p>方法一：</p>
+<p>mysql&gt; alter user ‘root’@’localhost’ identified by ‘root’; <strong>(by 接着的是密码)</strong></p>
+<p>方法二：</p>
+<p>mysql&gt; set password for username @localhost = password(newpwd);</p>
+<p>方法三：</p>
+<p>cmd&gt; mysqladmin -u用户名 -p旧密码 password 新密码</p>
+<p><strong>现任密码：</strong> yangyang</p>
+</blockquote>
+<h2 id="忘记密码"><a href="#忘记密码" class="headerlink" title="忘记密码"></a>忘记密码</h2><p><strong>如果忘记密码了，也不需要数据，还是重装吧。</strong>😂 </p>
+<blockquote>
+<p>删掉 <code>data</code> 文件夹 和 <code>my.ini</code> 文件</p>
+</blockquote>
+<p>这步骤随便看的，不知道是不是必需步骤。</p>
+<p>TODO：能不能像 Linux 一样修改什么配置来重设密码还保存数据？（Linux 我也不会）</p>
 
     </div>
 
@@ -286,18 +340,21 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E7%94%9F%E6%B4%BB/" rel="tag"># 生活</a>
+              <a href="/tags/mysql/" rel="tag"><i class="fa fa-tag"></i> mysql</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2021/06/09/thinking-in-java-ChapterFive/" rel="prev" title="thinking-in-java-ChapterFive">
-                  <i class="fa fa-chevron-left"></i> thinking-in-java-ChapterFive
+                <a href="/2021/06/18/%E9%95%BF%E5%A4%A7%E4%BA%86%E5%B0%B1%E4%BC%9A%E5%8F%98%E5%A5%BD%E5%90%97/" rel="prev" title="读书笔记《长大了就会变好吗？》">
+                  <i class="fa fa-chevron-left"></i> 读书笔记《长大了就会变好吗？》
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2021/06/21/mysql-learning-02/" rel="next" title="mysql学习02——概述与常用命令">
+                  mysql学习02——概述与常用命令 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>
