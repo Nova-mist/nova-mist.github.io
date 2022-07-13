@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"nova-mist.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+<meta name="description" content="JDBC（Java Database Connectivity）是一个用来规范客户端程序如何与数据库交互的应用程序接口。所涉及的是代码层面，流程语句难免会有些繁琐，了解了 JDBC 之后就可以转向以配置文件层面为主的 MyBatis 框架。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JDBCNote">
+<meta property="og:url" content="https://nova-mist.github.io/2021/11/15/JDBCNote/index.html">
+<meta property="og:site_name" content="novamist blog">
+<meta property="og:description" content="JDBC（Java Database Connectivity）是一个用来规范客户端程序如何与数据库交互的应用程序接口。所涉及的是代码层面，流程语句难免会有些繁琐，了解了 JDBC 之后就可以转向以配置文件层面为主的 MyBatis 框架。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/november/718153f4gy1gw4jq5yvrcj20ku0ku0zl.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/october/image-20211028113217795.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/october/image-20211028224401500.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/october/image-20211028224746635.png">
+<meta property="article:published_time" content="2021-11-15T13:29:10.000Z">
+<meta property="article:modified_time" content="2021-11-15T13:38:09.469Z">
+<meta property="article:author" content="Nova-mist">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="mysql">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/november/718153f4gy1gw4jq5yvrcj20ku0ku0zl.jpg">
+
+
+<link rel="canonical" href="https://nova-mist.github.io/2021/11/15/JDBCNote/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>JDBCNote | novamist blog</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">novamist blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">75</span></a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">28</span></a></li>
+        <li class="menu-item menu-item-stars"><a href="/stars/" rel="section"><i class="fa fa-heart fa-fw"></i>收集</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%B8%80%E4%BA%9B%E5%87%86%E5%A4%87"><span class="nav-number">1.</span> <span class="nav-text">1 一些准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E4%BA%8B%E5%8A%A1"><span class="nav-number">2.</span> <span class="nav-text">2 事务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E5%BB%BA%E8%A1%A8%E7%BB%83%E4%B9%A0"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 建表练习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E8%BD%AC%E8%B4%A6%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 转账实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E7%B4%A2%E5%BC%95"><span class="nav-number">3.</span> <span class="nav-text">3 索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9D%83%E9%99%90%E4%B8%8E%E8%AE%BE%E8%AE%A1"><span class="nav-number">4.</span> <span class="nav-text">4 数据库权限与设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 用户管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E5%A4%87%E4%BB%BD"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 备份</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-%E4%B8%89%E5%A4%A7%E8%8C%83%E5%BC%8F"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 三大范式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-JDBC"><span class="nav-number">5.</span> <span class="nav-text">5 JDBC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-Demo01"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 Demo01</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-Demo02"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 Demo02</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-Statement"><span class="nav-number">5.3.</span> <span class="nav-text">5.3 Statement</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-%E5%B0%81%E8%A3%85%E5%B7%A5%E5%85%B7%E7%B1%BB"><span class="nav-number">5.4.</span> <span class="nav-text">5.4 封装工具类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-5-sql%E6%B3%A8%E5%85%A5-amp-PreparedStatement"><span class="nav-number">5.5.</span> <span class="nav-text">5.5 sql注入 &amp; PreparedStatement</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-6-IDEA%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">5.6.</span> <span class="nav-text">5.6 IDEA连接数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-7-JDBC%E6%93%8D%E4%BD%9C%E4%BA%8B%E5%8A%A1"><span class="nav-number">5.7.</span> <span class="nav-text">5.7 JDBC操作事务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-8-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E6%B1%A0"><span class="nav-number">5.8.</span> <span class="nav-text">5.8 数据库连接池</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nova-mist"
+      src="/uploads/avatar.png">
+  <p class="site-author-name" itemprop="name">Nova-mist</p>
+  <div class="site-description" itemprop="description">My blog about daily life and learning. :b</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Nova-mist" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Nova-mist" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fas fa-cat fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.bilibili.com/" title="https:&#x2F;&#x2F;www.bilibili.com&#x2F;" rel="noopener" target="_blank">Bilibili</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2021/11/15/JDBCNote/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="Nova-mist">
+      <meta itemprop="description" content="My blog about daily life and learning. :b">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="novamist blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JDBCNote
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-11-15 21:29:10 / 修改时间：21:38:09" itemprop="dateCreated datePublished" datetime="2021-11-15T21:29:10+08:00">2021-11-15</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><img src="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/november/718153f4gy1gw4jq5yvrcj20ku0ku0zl.jpg" alt="718153f4gy1gw4jq5yvrcj20ku0ku0zl"></p>
+<p>JDBC（Java Database Connectivity）是一个用来规范客户端程序如何与数据库交互的应用程序接口。所涉及的是代码层面，流程语句难免会有些繁琐，了解了 JDBC 之后就可以转向以配置文件层面为主的 MyBatis 框架。</p>
+<span id="more"></span>
+
+<h2 id="1-一些准备"><a href="#1-一些准备" class="headerlink" title="1 一些准备"></a>1 一些准备</h2><ul>
+<li>  JDK1.8（java8）<a target="_blank" rel="noopener" href="https://www.oracle.com/java/technologies/downloads/archive/">Java Archive | Oracle</a></li>
+<li>  mysql 5.7</li>
+<li>  <a target="_blank" rel="noopener" href="https://github.com/webyog/sqlyog-community/wiki/Downloads">mysql-GUI-tool-sqlyog</a></li>
+</ul>
+<p><strong>测试</strong></p>
+<blockquote>
+<p>  新建数据库 基字符集utf8 数据库排列规则utf8_genernal_ci</p>
+<p>  新建表 InnoDB</p>
+<p>  列名 id name age 主键、非空</p>
+<p>  打开表</p>
+</blockquote>
+<h2 id="2-事务"><a href="#2-事务" class="headerlink" title="2 事务"></a>2 事务</h2><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2NTAzMTExNg==&mid=2247484221&idx=1&sn=ca4493b916139ebd136835491c62cc8a&scene=19#wechat_redirect">狂神说MySQL06：事务和索引 (qq.com)</a></p>
+<ul>
+<li>  原子性</li>
+<li>  一致性</li>
+<li>  隔离性</li>
+<li>  持久性</li>
+</ul>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">-- 改变自动提交模式 默认自动提交
+SET autocommit &#x3D; 0; -- 关闭
+SET autocommit &#x3D; 1; -- 开启
+START TRANSACTION
+COMMIT
+ROLLBACK -- 回滚到初始状态
+-- 设置一个事务保存点
+SAVEPOINT [name]
+-- 回滚到保存点
+ROLLBACK TO SAVEPOINT [name]
+RELEASE SAVEPOINT -- 删除保存点<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="2-1-建表练习"><a href="#2-1-建表练习" class="headerlink" title="2.1 建表练习"></a>2.1 建表练习</h3><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">CREATE DATABASE &#96;shop&#96; CHARACTER SET utf8 COLATE utf8_general_ci;
+USE &#96;shop&#96;;
+CREATE TABLE &#96;account&#96;(
+	&#96;id&#96; INT(11) NOT NULL AUTO_INCREMENT,
+    &#96;name&#96; VARCHAR(32) NOT NULL,
+    &#96;cash&#96; DECIMAL(9,2) NOT NULL,
+    PRIMARY KEY(&#96;id&#96;)
+)ENGINE&#x3D;INNODB DEFAULT CHARSET&#x3D;utf8
+INSERT INTO account(&#96;name&#96;,&#96;cash&#96;)
+VALUES(&#39;A&#39;,2000.00),(&#39;B&#39;,10000.00)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="2-2-转账实现"><a href="#2-2-转账实现" class="headerlink" title="2.2 转账实现"></a>2.2 转账实现</h3><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SET autocommit &#x3D; 0;
+START TRANSACTION;
+UPDATE account SET cash&#x3D;cash-500 WHERE &#96;name&#96;&#x3D;&#39;A&#39;;
+UPDATE account SET cash&#x3D;cash+500 WHERE &#96;name&#96;&#x3D;&#39;B&#39;;
+COMMIT;
+-- 提交之后被持久化 无法回滚
+SET autocommit &#x3D; 1;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="3-索引"><a href="#3-索引" class="headerlink" title="3 索引"></a>3 索引</h2><p><a target="_blank" rel="noopener" href="https://www.runoob.com/mysql/mysql-index.html">MySQL 索引 | 菜鸟教程 (runoob.com)</a></p>
+<ul>
+<li>  提高查询速度</li>
+<li>  确保数据的唯一性</li>
+</ul>
+<p><strong>分类：</strong></p>
+<ul>
+<li>  主键索引 (Primary Key)</li>
+<li>  唯一索引 (Unique)</li>
+<li>  常规索引 (Index)</li>
+</ul>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">CREATE TABLE &#96;result&#96;(
+   -- 省略一些代码
+  INDEX&#x2F;KEY &#96;ind&#96; (&#96;studentNo&#96;,&#96;subjectNo&#96;) -- 创建表时添加
+)
+-- 创建后添加
+ALTER TABLE &#96;result&#96; ADD INDEX &#96;ind&#96;(&#96;studentNo&#96;,&#96;subjectNo&#96;);
+
+-- 创建索引
+CREATE INDEX indexName ON table_name (column_name)
+-- 删除索引
+DROP INDEX [indexName] ON mytable; 
+#删除主键索引: ALTER TABLE 表名 DROP PRIMARY KEY;
+#显示索引信息: SHOW INDEX FROM student;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>  全文索引 (FullText)</li>
+</ul>
+<blockquote>
+<p>  主键索引只能有一个，唯一索引可能有多个</p>
+<p>  全文索引适合大型数据集</p>
+</blockquote>
+<h2 id="4-数据库权限与设计"><a href="#4-数据库权限与设计" class="headerlink" title="4 数据库权限与设计"></a>4 数据库权限与设计</h2><h3 id="4-1-用户管理"><a href="#4-1-用户管理" class="headerlink" title="4.1 用户管理"></a>4.1 用户管理</h3><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2NTAzMTExNg==&mid=2247484227&idx=1&sn=2523e6a5081a0fbf698a39ed63adc60e&scene=19#wechat_redirect">狂神说MySQL07：权限及如何设计数据库 (qq.com)</a></p>
+<p><strong>使用 SQLyog 创建用户，赋予权限。</strong></p>
+<p>root 用户拥有最高的权限，可以赋予其他用户<strong>除了 GRANT OPTION 之外的</strong>所有简单权限。</p>
+<p>用户的信息存放在 <code>mysql.user</code> 表中</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">-- 刷新权限
+FLUSH PRIVILEGES
+-- 增加用户
+CREATE USER &#96;[username]&#96; IDENTIFIED BY &#96;[password]&#96; 
+-- 重命名用户
+RENAME USER old_user TO new_user
+-- 设置密码
+SET PASSWORD &#x3D; PASSWORD(&#39;密码&#39;)    -- 为当前用户设置密码
+SET PASSWORD FOR [user] &#x3D; PASSWORD(&#39;密码&#39;)    -- 为指定用户设置密码
+-- 删除用户
+DROP USER [username]
+-- 分配权限&#x2F;添加用户
+GRANT 权限列表 ON 表名 TO 用户名 [IDENTIFIED BY [PASSWORD] &#39;password&#39;]
+  - all privileges 表示所有权限
+  - *.* 表示所有库的所有表
+  - 库名.表名 表示某库下面的某表
+-- 查看权限
+SHOW GRANTS FOR [username]
+SHOW GRANTS FOR CURRENT_USER; -- 当前用户
+-- 撤销权限
+REVOKE 权限列表 ON 表名 FROM 用户名
+REVOKE ALL PRIVILEGES, GRANT OPTION FROM 用户名    -- 撤销所有权限<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="4-2-备份"><a href="#4-2-备份" class="headerlink" title="4.2 备份"></a>4.2 备份</h3><ul>
+<li>  直接拷贝数据库文件和相关配置文件 （data文件夹和配置）</li>
+<li>  数据库管理工具,如SQLyog</li>
+<li>  mysqldump备份工具</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 导出表</span>
+mysqldump -hlocalhost -uroot -p123456 school student <span class="token operator">></span>D:/Desktop/a.sql <span class="token comment"># 库名 表名[..] 只写库名默认所有表</span>
+<span class="token comment"># 导出库</span>
+mysqldump -u<span class="token punctuation">[</span>username<span class="token punctuation">]</span> -p<span class="token punctuation">[</span>passworld<span class="token punctuation">]</span> -B <span class="token punctuation">[</span>库名<span class="token punctuation">]</span> <span class="token operator">></span><span class="token punctuation">[</span>文件名<span class="token punctuation">]</span>
+
+<span class="token comment"># 导入</span>
+<span class="token comment"># 登录情况下</span>
+mysql -uroot -p123456
+<span class="token builtin class-name">source</span> D:/Desktop/a.sql
+<span class="token comment"># 不登录情况</span>
+mysql -uroot -p1234 <span class="token punctuation">[</span>库名<span class="token punctuation">]</span><span class="token operator">&lt;</span><span class="token punctuation">[</span>备份文件<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="4-3-三大范式"><a href="#4-3-三大范式" class="headerlink" title="4.3 三大范式"></a>4.3 三大范式</h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/linjiqin/archive/2012/04/01/2428695.html">数据库设计三大范式 - Ruthless - 博客园 (cnblogs.com)</a></p>
+<ol>
+<li>  第一范式：所有字段值都是不可分解的原子值（地址的拆分）</li>
+<li>  第二范式：<strong>确保表中的每列都和主键相关</strong>（联合主键的订单使用3个表）</li>
+<li>  第三范式：<strong>每列都和主键列直接相关,而不是间接相关</strong>（订单表中只有客户编号，不可有其他客户信息）</li>
+</ol>
+<h2 id="5-JDBC"><a href="#5-JDBC" class="headerlink" title="5 JDBC"></a>5 JDBC</h2><h3 id="5-1-Demo01"><a href="#5-1-Demo01" class="headerlink" title="5.1 Demo01"></a>5.1 Demo01</h3><p><a target="_blank" rel="noopener" href="https://www.yiibai.com/jdbc/jdbc_quick_guide.html">JDBC快速入门教程 - JDBC教程™ (yiibai.com)</a></p>
+<p><strong>导入数据库驱动包</strong></p>
+<blockquote>
+<p>  mysql 8 <a target="_blank" rel="noopener" href="https://jar-download.com/artifacts/mysql/mysql-connector-java/5.1.44/source-code">Download mysql-connector-java JAR 5.1.44</a> <strong>并且在mysql连接字符串url中加入ssl=true或者false</strong></p>
+<p>  mysql 5.7 <a target="_blank" rel="noopener" href="https://jar-download.com/artifacts/mysql/mysql-connector-java/5.1.37/source-code">Download mysql-connector-java JAR 5.1.37</a></p>
+<p>  <strong>用户管理中的插件改为 mysql_native_password</strong></p>
+</blockquote>
+<p>新建路径 lib –&gt; Add as Library</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 1. Import required packages</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>sql<span class="token punctuation">.</span></span><span class="token operator">*</span><span class="token punctuation">;</span>
+<span class="token comment">// 2. Register JDBC driver</span>
+<span class="token class-name">Class</span><span class="token punctuation">.</span><span class="token function">forName</span><span class="token punctuation">(</span><span class="token string">"com.mysql.jdbc.Driver"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 3. Open a connection</span>
+<span class="token comment">/*
+Connection conn = null;
+Statement stmt = null;
+*/</span>
+<span class="token comment">//  Database credentials</span>
+<span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> USER <span class="token operator">=</span> <span class="token string">"root"</span><span class="token punctuation">;</span>
+<span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> PASS <span class="token operator">=</span> <span class="token string">"pwd123456"</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Connecting to database..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+conn <span class="token operator">=</span> <span class="token class-name">DriverManager</span><span class="token punctuation">.</span><span class="token function">getConnection</span><span class="token punctuation">(</span>DB_URL<span class="token punctuation">,</span>USER<span class="token punctuation">,</span>PASS<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 4. Execute a query</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Creating statement..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+stmt <span class="token operator">=</span> conn<span class="token punctuation">.</span><span class="token function">createStatement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">String</span> sql<span class="token punctuation">;</span>
+sql <span class="token operator">=</span> <span class="token string">"SELECT id, first, last, age FROM Employees"</span><span class="token punctuation">;</span>
+<span class="token class-name">ResultSet</span> rs <span class="token operator">=</span> stmt<span class="token punctuation">.</span><span class="token function">executeQuery</span><span class="token punctuation">(</span>sql<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 5. Extract data from result set</span>
+<span class="token keyword">while</span><span class="token punctuation">(</span>rs<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> id <span class="token operator">=</span> rs<span class="token punctuation">.</span><span class="token function">getInt</span><span class="token punctuation">(</span><span class="token string">"id"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">// 6. clean-up environment</span>
+rs<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+stmt<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+conn<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+
+<h3 id="5-2-Demo02"><a href="#5-2-Demo02" class="headerlink" title="5.2 Demo02"></a>5.2 Demo02</h3><p><strong>创建测试数据库</strong></p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">CREATE DATABASE jdbcStudy CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+USE jdbcStudy;
+
+CREATE TABLE users(
+	id INT PRIMARY KEY,
+    NAME VARCHAR(40),
+    PASSWORD VARCHAR(40),
+    email VARCHAR(60),
+    birthday DATE
+);
+
+INSERT INTO users(id,NAME,PASSWORD,email,birthday)
+VALUES(1,&#39;zhansan&#39;,&#39;123456&#39;,&#39;zs@163.com&#39;,&#39;1990-10-4&#39;),
+(2,&#39;lisi&#39;,&#39;123456&#39;,&#39;lisi@sina.com&#39;,&#39;1981-01-23&#39;),
+(3,&#39;wangwu&#39;,&#39;123456&#39;,&#39;wangwu@sina.com&#39;,&#39;1999-12-4&#39;);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">String</span> URL <span class="token operator">=</span> <span class="token string">"jdbc:mysql://localhost:3306/jdbcstudy?useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=true"</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/october/image-20211028113217795.png" alt="image-20211028113217795"></p>
+<p><strong>Connection 代表数据库</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 回滚connection.rollback();// 提交connection.commit();// 设置自动提交connection.setAutoCommit();</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong>URL</strong></p>
+<blockquote>
+<p>  mysql – 3306</p>
+<p>  协议 : //主机地址 : 端口号 / 数据库名 ? 参数1 &amp; 参数2 &amp; 参数3</p>
+<p>  oralce – 1521</p>
+<p>  jdbc:oracle:thin:@localhost:1521:sid</p>
+</blockquote>
+<p><strong>Statement 执行SQL的对象</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">String</span> sql <span class="token operator">=</span> <span class="token string">"SELECT * FROM users"</span><span class="token punctuation">;</span>statement<span class="token punctuation">.</span><span class="token function">executeQuery</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 查询操作 返回ResultSetstatement.execute(); // 执行任何SQLstatement.executeUpdate(); // 更新、插入、删除，返回一个受影响的行数</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong>ResultSet</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 不知道类型resultSet.getObject();resultSet.getDate();// 遍历指针resultSet.beforeFirst();resultSet.afterLast();resultSet.next();resultSet.previous();resultSet.absolute(row); // 移动到指定行</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="5-3-Statement"><a href="#5-3-Statement" class="headerlink" title="5.3 Statement"></a>5.3 Statement</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Statement</span> st <span class="token operator">=</span> conn<span class="token punctuation">.</span><span class="token function">createStatement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token class-name">String</span> sql <span class="token operator">=</span><span class="token string">""</span><span class="token punctuation">;</span><span class="token comment">/*"insert into user(...) values(...)""delete from user where id=1""update user set name='' where name=''"*/</span><span class="token keyword">int</span> num <span class="token operator">=</span> st<span class="token punctuation">.</span><span class="token function">executeUpdate</span><span class="token punctuation">(</span>sql<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token keyword">if</span><span class="token punctuation">(</span>num<span class="token operator">></span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>    <span class="token punctuation">&#125;</span><span class="token comment">/*"select * from user where id=1"*/</span><span class="token class-name">ResultSet</span> rs <span class="token operator">=</span> st<span class="token punctuation">.</span><span class="token function">executeUpdate</span><span class="token punctuation">(</span>sql<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token keyword">while</span><span class="token punctuation">(</span>rs<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>     <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="5-4-封装工具类"><a href="#5-4-封装工具类" class="headerlink" title="5.4 封装工具类"></a>5.4 封装工具类</h3><p><strong>将配置写入文件中</strong><code>src/db.properties</code></p>
+<blockquote>
+<p>  JDBC_DRIVER = com.mysql.jdbc.Driver<br>  DB_URL = jdbc:mysql://localhost/test?useSSL=false<br>  USER = ysama<br>  PASS = 123456</p>
+</blockquote>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">JdbcUtils</span> <span class="token punctuation">&#123;</span>    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token class-name">String</span> JDBC_DRIVER <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>    <span class="token keyword">static</span> <span class="token punctuation">&#123;</span>        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>            <span class="token class-name">InputStream</span> in <span class="token operator">=</span> <span class="token class-name">JdbcUtils</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">.</span><span class="token function">getClassLoader</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getResourceAsStream</span><span class="token punctuation">(</span><span class="token string">"db.properties"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>            <span class="token class-name">Properties</span> properties <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Properties</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>            properties<span class="token punctuation">.</span><span class="token function">load</span><span class="token punctuation">(</span>in<span class="token punctuation">)</span><span class="token punctuation">;</span>            JDBC_DRIVER <span class="token operator">=</span> properties<span class="token punctuation">.</span><span class="token function">getProperty</span><span class="token punctuation">(</span><span class="token string">"JDBC_DRIVER"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>            <span class="token comment">// URL..            Class.forName(driver);        &#125; catch (IOException e) &#123;            e.printStackTrace();        &#125;    &#125;&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<blockquote>
+<p>  Connection getConnection()</p>
+<p>  void release(Connection conn, Statement st, ResultSet rs) {</p>
+<p>  // rs –&gt; st –&gt; conn .close()</p>
+<p>  }</p>
+</blockquote>
+<h3 id="5-5-sql注入-amp-PreparedStatement"><a href="#5-5-sql注入-amp-PreparedStatement" class="headerlink" title="5.5 sql注入 &amp; PreparedStatement"></a>5.5 sql注入 &amp; PreparedStatement</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">String</span> username <span class="token operator">=</span> <span class="token string">" 'or'1=1 "</span><span class="token punctuation">;</span><span class="token class-name">String</span> password <span class="token operator">=</span> <span class="token string">" 'or'1=1 "</span><span class="token punctuation">;</span> <span class="token comment">// 空格不影响String sql = "select * from users where `NAME` = '" + username +"' AND `password` ='" + password + "'";</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong>PreparedStatement 可以防止SQL注入并且效率更高</strong></p>
+<p>使用占位符 <code>?</code> 代替参数</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">conn <span class="token operator">=</span> <span class="token class-name">JdbcUtils</span><span class="token punctuation">.</span><span class="token function">getConnection</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token class-name">String</span> sql <span class="token operator">=</span> <span class="token string">"insert into users(id,`NAME`,`PASSWORD`,`email`,`birthday`) valuse(?,?,?,?,?)"</span><span class="token punctuation">;</span><span class="token comment">/*"delete from users where id=?""update users set `NAME`=? where id=?""select * from users where id=?"*/</span><span class="token operator">/</span><span class="token operator">/</span> 预编译SQL 先写sql不执行st <span class="token operator">=</span> conn<span class="token punctuation">.</span><span class="token function">prepareStatement</span><span class="token punctuation">(</span>sql<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// idst.setInt(1,4); // index value// namest.setString(2,"papiko");// passwordst.setString(3,"12121");// emailst.setString(4,"3334342@sina.com");// datest.setDate(5,new java.sql.Date(new Date().getTime()));// 执行/* queryrs = st.executeQuery();if(rs.next())&#123;&#125;*/int i = st.executeUpdate();if (i>0) &#123;    System.out.println("插入成功");&#125; catch()&#123;&#125; finally &#123;    JdbcUtils.release(conn,st,null);&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong>关于时间日期</strong></p>
+<blockquote>
+<p>  sql.Date | 数据库 | java.sql.Date()</p>
+<p>  util.Date | Java | new Date().getTime() 获取时间戳</p>
+</blockquote>
+<p><strong>防止注入的本质：把传递进来的参数当做字符，忽略转义字符。</strong></p>
+<h3 id="5-6-IDEA连接数据库"><a href="#5-6-IDEA连接数据库" class="headerlink" title="5.6 IDEA连接数据库"></a>5.6 IDEA连接数据库</h3><p>自动下载驱动文件</p>
+<p>修改数据需要提交</p>
+<p>进入Console 切换数据库</p>
+<p><img src="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/october/image-20211028224401500.png" alt="image-20211028224401500"></p>
+<p><img src="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/october/image-20211028224746635.png" alt="image-20211028224746635"></p>
+<h3 id="5-7-JDBC操作事务"><a href="#5-7-JDBC操作事务" class="headerlink" title="5.7 JDBC操作事务"></a>5.7 JDBC操作事务</h3><ol>
+<li>  开启事务。</li>
+<li>  一组事务执行完毕，提交事务。</li>
+<li>  在catch语句中显示定义回滚语句，默认失败回滚。</li>
+</ol>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Connection</span> conn <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span><span class="token class-name">PreparedStatement</span> st <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span><span class="token class-name">ResultSet</span> rs <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span><span class="token keyword">try</span> <span class="token punctuation">&#123;</span>    conn <span class="token operator">=</span> <span class="token class-name">JdbcUtils</span><span class="token punctuation">.</span><span class="token function">getConnection</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 关闭自动提交 开启了事务    conn.setAutoCommit(false);    String sql1 = "UPDATE account SET cash=cash-100 WHERE name='A'";    st = conn.prepareStatement(sql1);    st.executeUpdate();    // int x = 1/0;    String sql2 = "UPDATE account SET cash=cash+100 WHERE name='B'";    st = conn.prepareStatement(sql2);    st.executeUpdate();    // 事务完毕 提交    conn.commit();    System.out.println("成功");&#125; catch (SQLException throwables) &#123;    try &#123;        // 失败回滚        conn.rollback();    &#125; catch (SQLException e) &#123;        e.printStackTrace();    &#125;    throwables.printStackTrace();&#125; finally &#123;    JdbcUtils.release(conn,st,rs);&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="5-8-数据库连接池"><a href="#5-8-数据库连接池" class="headerlink" title="5.8 数据库连接池"></a>5.8 数据库连接池</h3><p><strong>池化技术</strong></p>
+<ul>
+<li>  最小最大连接数</li>
+<li>  等待超时</li>
+</ul>
+<p><strong>编写一个连接池只需要实现接口 DataSource</strong></p>
+<blockquote>
+<p>  开源数据库连接池实现</p>
+<p>  DBCP C3P0</p>
+</blockquote>
+<p><strong>DBCP 需要 jar 包</strong></p>
+<p><strong>commons-dbcp-1.4 commons-pool-1.6</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 加载数据流InputStream in = JdbcUtils_DBCP.class.getClassLoader().getResourceAsStream("dbcpconfig.properties");Properties properties = new Properties();properties.load(in);//创建数据源 工厂模式创建DataSource dataSouce = BasicDataSourceFactory.createDataSource(properties);// 获取连接conn = JdbcUtils_DBCP.getConnection();// 使用prepareStatement(sql)// 释放连接JdbcUtils_DBCP.release(conn,st,null);</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong>C3P0 需要 jar 包</strong></p>
+<p><strong>c3p0-0.9.5.5 mchange-commons-java-0.2.19</strong></p>
+<p> <strong>配置文件 c3p0-config.xml</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// xml文件自动导入dataSource = new ComboPooledDataSource("MySQL");</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 代码版配置dataSource = ne ComboPooledDataSource();dataSource.setDriverClass();dataSource.setUser();dataSource.setPassword();dataSource.setJdbcUrl();dataSource.setMaxPoolSize();dataSource.setMi</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
+              <a href="/tags/mysql/" rel="tag"><i class="fa fa-tag"></i> mysql</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/11/15/Ren-PyNote/" rel="prev" title="Ren'PyNote">
+                  <i class="fa fa-chevron-left"></i> Ren'PyNote
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/02/18/webgl-programming-guide-note/" rel="next" title="《WebGL编程指南》笔记">
+                  《WebGL编程指南》笔记 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nova-mist</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+    <div class="pjax">
+
+
+    </div>
+</body>
+</html>

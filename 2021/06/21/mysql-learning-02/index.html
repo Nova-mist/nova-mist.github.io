@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"nova-mist.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+<meta name="description" content="今天复习一些基础知识。（准备专业课期末考试中 Busy 🥛） 准备 安装了 MySQL Workbench 图形化界面 下载了书中附录的建库代码  资料参考：  https:&#x2F;&#x2F;www.runoob.com&#x2F;mysql&#x2F;mysql-tutorial.html https:&#x2F;&#x2F;www.liaoxuefeng.com&#x2F;wiki&#x2F;1177760294764384  登录命令mysql -uroot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql学习02——概述与常用命令">
+<meta property="og:url" content="https://nova-mist.github.io/2021/06/21/mysql-learning-02/index.html">
+<meta property="og:site_name" content="novamist blog">
+<meta property="og:description" content="今天复习一些基础知识。（准备专业课期末考试中 Busy 🥛） 准备 安装了 MySQL Workbench 图形化界面 下载了书中附录的建库代码  资料参考：  https:&#x2F;&#x2F;www.runoob.com&#x2F;mysql&#x2F;mysql-tutorial.html https:&#x2F;&#x2F;www.liaoxuefeng.com&#x2F;wiki&#x2F;1177760294764384  登录命令mysql -uroot">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/JulyNicePng_mysql-logo-transparent-png_2693138.png">
+<meta property="article:published_time" content="2021-06-21T03:32:30.000Z">
+<meta property="article:modified_time" content="2022-02-20T15:46:41.374Z">
+<meta property="article:author" content="Nova-mist">
+<meta property="article:tag" content="mysql">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/JulyNicePng_mysql-logo-transparent-png_2693138.png">
+
+
+<link rel="canonical" href="https://nova-mist.github.io/2021/06/21/mysql-learning-02/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>mysql学习02——概述与常用命令 | novamist blog</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">novamist blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">75</span></a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">28</span></a></li>
+        <li class="menu-item menu-item-stars"><a href="/stars/" rel="section"><i class="fa fa-heart fa-fw"></i>收集</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87"><span class="nav-number">1.</span> <span class="nav-text">准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%99%BB%E5%BD%95%E5%91%BD%E4%BB%A4"><span class="nav-number">1.1.</span> <span class="nav-text">登录命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">2.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E7%B3%BB%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">关系模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E9%94%AE"><span class="nav-number">3.1.</span> <span class="nav-text">主键</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%81%94%E5%90%88%E4%B8%BB%E9%94%AE"><span class="nav-number">3.2.</span> <span class="nav-text">联合主键</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%96%E9%94%AE"><span class="nav-number">3.3.</span> <span class="nav-text">外键</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95"><span class="nav-number">3.4.</span> <span class="nav-text">索引</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SQL-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.</span> <span class="nav-text">SQL 数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">4.1.</span> <span class="nav-text">字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E5%80%BC"><span class="nav-number">4.2.</span> <span class="nav-text">数值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A5%E6%9C%9F%E5%92%8C%E6%97%B6%E9%97%B4"><span class="nav-number">4.3.</span> <span class="nav-text">日期和时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E7%BA%A7%E5%88%B6%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.4.</span> <span class="nav-text">二级制数据类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8SQL%E8%AF%AD%E5%8F%A5%E7%9A%84%E8%AF%AD%E6%B3%95"><span class="nav-number">5.</span> <span class="nav-text">常用SQL语句的语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ALTER-TABLE"><span class="nav-number">5.1.</span> <span class="nav-text">ALTER　TABLE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#COMMIT"><span class="nav-number">5.2.</span> <span class="nav-text">COMMIT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CREATE-INDEX"><span class="nav-number">5.3.</span> <span class="nav-text">CREATE INDEX</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CREATE-PROCEDURE"><span class="nav-number">5.4.</span> <span class="nav-text">CREATE PROCEDURE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CREATE-TALBE"><span class="nav-number">5.5.</span> <span class="nav-text">CREATE TALBE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CREATE-VIEW"><span class="nav-number">5.6.</span> <span class="nav-text">CREATE VIEW</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DELETE"><span class="nav-number">5.7.</span> <span class="nav-text">DELETE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DROP"><span class="nav-number">5.8.</span> <span class="nav-text">DROP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#INSERT"><span class="nav-number">5.9.</span> <span class="nav-text">INSERT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#INSERT-SELECT"><span class="nav-number">5.10.</span> <span class="nav-text">INSERT SELECT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ROLLBACK"><span class="nav-number">5.11.</span> <span class="nav-text">ROLLBACK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SELECT"><span class="nav-number">5.12.</span> <span class="nav-text">SELECT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UPDATE"><span class="nav-number">5.13.</span> <span class="nav-text">UPDATE</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nova-mist"
+      src="/uploads/avatar.png">
+  <p class="site-author-name" itemprop="name">Nova-mist</p>
+  <div class="site-description" itemprop="description">My blog about daily life and learning. :b</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Nova-mist" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Nova-mist" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fas fa-cat fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.bilibili.com/" title="https:&#x2F;&#x2F;www.bilibili.com&#x2F;" rel="noopener" target="_blank">Bilibili</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2021/06/21/mysql-learning-02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="Nova-mist">
+      <meta itemprop="description" content="My blog about daily life and learning. :b">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="novamist blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          mysql学习02——概述与常用命令
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-06-21 11:32:30" itemprop="dateCreated datePublished" datetime="2021-06-21T11:32:30+08:00">2021-06-21</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-02-20 23:46:41" itemprop="dateModified" datetime="2022-02-20T23:46:41+08:00">2022-02-20</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <img src="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/JulyNicePng_mysql-logo-transparent-png_2693138.png" alt="NicePng_mysql-logo-transparent-png_2693138" style="zoom:50%;" />
+
+<p><strong>今天复习一些基础知识。</strong>（准备专业课期末考试中 Busy 🥛）</p>
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><ul>
+<li>安装了 <code>MySQL Workbench</code> 图形化界面</li>
+<li>下载了书中附录的<a target="_blank" rel="noopener" href="https://forta.com/books/0672336073/">建库代码</a></li>
+</ul>
+<p>资料参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.runoob.com/mysql/mysql-tutorial.html">https://www.runoob.com/mysql/mysql-tutorial.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/1177760294764384">https://www.liaoxuefeng.com/wiki/1177760294764384</a></li>
+</ul>
+<h3 id="登录命令"><a href="#登录命令" class="headerlink" title="登录命令"></a>登录命令</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mysql -uroot -p
+Enter<span class="token comment"># 输入密码</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+
+
+<span id="more"></span>
+
+
+
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>数据库（database）是一个以某种有组织的方式存储的数据集合。</p>
+<p>数据库管理系统（DBMS）创建和操纵数据库这个容器。</p>
+<p>表（table）是某种特定类型数据的结构化清单。<strong>每个数据库中的表名唯一。</strong></p>
+<p><em>每个表存储一组相关的数据</em></p>
+<p>表由列（column）组成，列是表中的一个字段。<strong>每个列都有相应的数据类型。</strong></p>
+<p>表中的数据按行（row）存储.</p>
+<p><strong>主键：每一行中可以唯一标识自己的一列或一组列。ID 编号</strong></p>
+<p><strong>SQL ( Structured Query Language)</strong></p>
+<p><strong>SQL语言定义了操作数据库的能力</strong></p>
+<blockquote>
+<p><strong>DDL：Data Definition Language</strong></p>
+<p>DDL允许用户定义数据，也就是创建表、删除表、修改表结构这些操作。通常，DDL由数据库管理员执行。</p>
+<p>CREATE, DROP, ALTER, TRUNCATE</p>
+<p><strong>DML：Data Manipulation Language</strong></p>
+<p>DML为用户提供添加、删除、更新数据的能力，这些是应用程序对数据库的日常操作。</p>
+<p>UPDATE, DELETE, INSERT</p>
+<p><strong>DQL：Data Query Language</strong></p>
+<p>DQL允许用户查询数据，这也是通常最频繁的数据库日常操作。</p>
+<p>SELECT</p>
+</blockquote>
+<h2 id="关系模型"><a href="#关系模型" class="headerlink" title="关系模型"></a>关系模型</h2><h3 id="主键"><a href="#主键" class="headerlink" title="主键"></a>主键</h3><p>主键是用来唯一定位记录的，最好不要修改。</p>
+<ul>
+<li>自增整数类型</li>
+<li>全局唯一 GUID 类型</li>
+</ul>
+<blockquote>
+<p>任意列都可以作为主键，只要</p>
+<ul>
+<li>每行的主键值唯一</li>
+<li>主键列中的值不允许修改或更新</li>
+<li>主键值不能重用，删除一行，他的主键也不能赋给新的行。</li>
+</ul>
+</blockquote>
+<h3 id="联合主键"><a href="#联合主键" class="headerlink" title="联合主键"></a>联合主键</h3><p>多个字段设置为主键</p>
+<p><strong>允许重复，只要不是所有主键列都重复。</strong></p>
+<h3 id="外键"><a href="#外键" class="headerlink" title="外键"></a>外键</h3><p>实现 一对多、多对多、一对一 的关系。</p>
+<blockquote>
+<p>在<code>students</code>表中，通过<code>class_id</code>的字段，可以把数据与另一张表关联起来，这种列称为<code>外键</code>。</p>
+</blockquote>
+<p><strong>外键并不是通过列名实现的，而是通过定义外键约束实现的。</strong></p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">ALTER TABLE students
+ADD CONSTRAINT fk_class_id
+FOREIGN KEY (class_id)
+REFERENCES classes (id);
+ 
+# 删除外键
+ALTER TABLE students
+DROP FOREIGN KEY fk_class_id;
+ 
+# 删除列
+DROP COLUMN ...<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>外键约束的名称<code>fk_class_id</code>可以任意，<code>FOREIGN KEY (class_id)</code>指定了<code>class_id</code>作为外键，<code>REFERENCES classes (id)</code>指定了这个外键将关联到<code>classes</code>表的<code>id</code>列（即<code>classes</code>表的主键）。</p>
+<p><strong>通过定义外键约束，关系数据库可以保证无法插入无效的数据。即如果<code>classes</code>表不存在<code>id=99</code>的记录，<code>students</code>表就无法插入<code>class_id=99</code>的记录。</strong></p>
+</blockquote>
+<h3 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h3><blockquote>
+<p>索引是关系数据库中对某一列或多给个列的值进行预排序的数据结构。通过使用索引，可以让数据库系统不必扫描整个表，而是直接定位到符合条件的记录，这样就大大加快了查询速度。</p>
+</blockquote>
+<p><strong>索引的效率取决于索引列的值是否散列，即该列的值如果越互不相同，那么索引效率越高。</strong></p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">ALTER TABLE students
+ADD INDEX idx_score (score);
+ 
+ALTER TABLE students
+ADD INDEX idx_name_score (name, score);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>添加唯一索引保持唯一性约束：不能出现同一个身份证号</strong></p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">ALTER TABLE students
+ADD UNIQUE INDEX uni_name (name);
+ 
+# 或者只对某一列添加一个唯一约束而不创建唯一索引
+ALTER TABLE students
+ADD CONSTRAINT uni_name UNIQUE (name);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="SQL-数据类型"><a href="#SQL-数据类型" class="headerlink" title="SQL 数据类型"></a><a target="_blank" rel="noopener" href="https://www.runoob.com/mysql/mysql-data-types.html">SQL 数据类型</a></h2><ul>
+<li>数据类型可以限制存储的数据。</li>
+<li>数据类型允许在内部更有效的存储数据。</li>
+<li>数据类型允许变换排序顺序。例如字符串中 1&gt;10&gt;2</li>
+</ul>
+<h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><p>字符串值必须阔在<strong>单引号</strong>中。</p>
+<ul>
+<li>CHAR 定长字符，<strong>长度必须在创建时规定</strong>。</li>
+<li>TEXT（LONG 、VARCHAR） 边长文本，处理效率低。</li>
+</ul>
+<h3 id="数值"><a href="#数值" class="headerlink" title="数值"></a>数值</h3><ul>
+<li>BIT 0/1</li>
+<li>DECIMAL （NUMERIC）定点或精度可变的浮点值</li>
+<li>FLOAT （NUMBER） 浮点值</li>
+<li>INT （INTEGER）4 Bytes 整数值</li>
+<li>REAL 4 Bytes 浮点值</li>
+<li>SMALLINT 2 Bytes 整数</li>
+<li>TINYINT 1 Bytes 整数，0~255</li>
+</ul>
+<h3 id="日期和时间"><a href="#日期和时间" class="headerlink" title="日期和时间"></a>日期和时间</h3><ul>
+<li>DATE 日期</li>
+<li>TIME 时间</li>
+<li>DATETIME （TIMESTAMP） 日期时间</li>
+</ul>
+<h3 id="二级制数据类型"><a href="#二级制数据类型" class="headerlink" title="二级制数据类型"></a>二级制数据类型</h3><h2 id="常用SQL语句的语法"><a href="#常用SQL语句的语法" class="headerlink" title="常用SQL语句的语法"></a>常用SQL语句的语法</h2><h3 id="ALTER-TABLE"><a href="#ALTER-TABLE" class="headerlink" title="ALTER　TABLE"></a>ALTER　TABLE</h3><p>更新已存在表的结构。</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">ALTER TABLE tablename
+&#123;
+	ADD|DROP column datatype [NULL|NOT NULL] [CONSTRAINS],
+	ADD|DROP column datatype [NULL|NOT NULL] [CONSTRAINS]
+&#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="COMMIT"><a href="#COMMIT" class="headerlink" title="COMMIT"></a>COMMIT</h3><p>用来将事务写入数据库。</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">COMMIT [TRANSACTION];<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h3 id="CREATE-INDEX"><a href="#CREATE-INDEX" class="headerlink" title="CREATE INDEX"></a>CREATE INDEX</h3><p>在一个或多个列上创建索引。</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">CREATE INDEX indexname
+ON tablename (colunm, ...);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="CREATE-PROCEDURE"><a href="#CREATE-PROCEDURE" class="headerlink" title="CREATE PROCEDURE"></a>CREATE PROCEDURE</h3><p>创建存储过程。</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">CREATE PROCEDURE procedurename [parameters] [options]
+AS
+SQL statement;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="CREATE-TALBE"><a href="#CREATE-TALBE" class="headerlink" title="CREATE TALBE"></a>CREATE TALBE</h3><p>创建新数据库表。</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">CREATE TABLE tablename
+&#123;
+	column datatype [NULL|NOT NULL] [CONSTRAINTS],
+	column datatype [NULL|NOT NULL] [CONSTRAINTS]
+&#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="CREATE-VIEW"><a href="#CREATE-VIEW" class="headerlink" title="CREATE VIEW"></a>CREATE VIEW</h3><p>创建一个或多个表上的新视图。</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">CREATE VIEW viewname AS
+SELECT columns, ...
+FROM tables, ...
+[WHERE ...]
+[GROUP BY ...]
+[HAVING ...];<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="DELETE"><a href="#DELETE" class="headerlink" title="DELETE"></a>DELETE</h3><p>从表中删除一行或多行。</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">DELETE FROM tablename
+[WHERE ...];<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="DROP"><a href="#DROP" class="headerlink" title="DROP"></a>DROP</h3><p>​    永久的删除数据库对象（表、视图、对象）。</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">DROP INDEX|PROCEDURE|TABLE|VIEW
+indexname|procedurename|tablename|viewname;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="INSERT"><a href="#INSERT" class="headerlink" title="INSERT"></a>INSERT</h3><p>为表添加一行。</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">INSERT INTO tablename [(columns, ...)]
+VALUES(values, ...);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="INSERT-SELECT"><a href="#INSERT-SELECT" class="headerlink" title="INSERT SELECT"></a>INSERT SELECT</h3><p>将 SELECT 结果插入到一个表。</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">INSERT INTO tablename [(columns, ...)]
+SELECT columns, ... FROM tablename, ...
+[WHERE ...];<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="ROLLBACK"><a href="#ROLLBACK" class="headerlink" title="ROLLBACK"></a>ROLLBACK</h3><p>用于撤销一个事务块。</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">ROLLBACK [TO savepointname];
+ROLLBACK TRANSACITON;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="SELECT"><a href="#SELECT" class="headerlink" title="SELECT"></a>SELECT</h3><p>从一个或多个表（视图）中检索数据。</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT columnname, ...
+FROM table, ...
+[WHERE ...]
+[UNION ...]
+[GROUP BY ...]
+[HAVING ...]
+[ORDER BY ...];<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="UPDATE"><a href="#UPDATE" class="headerlink" title="UPDATE"></a>UPDATE</h3><p>更新表中的一行或多行。</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">UPDATE tablename
+SET colummname &#x3D; value, ...
+[WHERE ...];<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/mysql/" rel="tag"><i class="fa fa-tag"></i> mysql</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/06/20/mysql-learning-01/" rel="prev" title="mysql学习01——配置环境">
+                  <i class="fa fa-chevron-left"></i> mysql学习01——配置环境
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/07/07/mysql-learning-03/" rel="next" title="mysql学习03——书的内容">
+                  mysql学习03——书的内容 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nova-mist</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+    <div class="pjax">
+
+
+    </div>
+</body>
+</html>

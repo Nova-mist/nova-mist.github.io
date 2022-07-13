@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"nova-mist.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+<meta name="description" content="《心跳文学部》就是用 Ren’Py 引擎制作的。 在玩过《白色相簿2》后对 Galgame 的制作流程有点感兴趣，正如其他游戏一样，Galgame 的制作也离不开优秀的引擎，而以文本为主要玩法也使其制作有着独特之处。 制作一款文字游戏并非一件容易的事情，素材方面的生疏令和文字功底的缺乏令我遇到困难，哪怕是照着教程的步骤走也有一些难以解决的错误，于是对 Ren’Py 的了解也是浅尝辄止，我觉得如果要">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ren&#39;PyNote">
+<meta property="og:url" content="https://nova-mist.github.io/2021/11/15/Ren-PyNote/index.html">
+<meta property="og:site_name" content="novamist blog">
+<meta property="og:description" content="《心跳文学部》就是用 Ren’Py 引擎制作的。 在玩过《白色相簿2》后对 Galgame 的制作流程有点感兴趣，正如其他游戏一样，Galgame 的制作也离不开优秀的引擎，而以文本为主要玩法也使其制作有着独特之处。 制作一款文字游戏并非一件容易的事情，素材方面的生疏令和文字功底的缺乏令我遇到困难，哪怕是照着教程的步骤走也有一些难以解决的错误，于是对 Ren’Py 的了解也是浅尝辄止，我觉得如果要">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-15T06:10:30.000Z">
+<meta property="article:modified_time" content="2021-11-15T06:29:04.864Z">
+<meta property="article:author" content="Nova-mist">
+<meta property="article:tag" content="GameDev">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://nova-mist.github.io/2021/11/15/Ren-PyNote/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>Ren'PyNote | novamist blog</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">novamist blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">75</span></a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">28</span></a></li>
+        <li class="menu-item menu-item-stars"><a href="/stars/" rel="section"><i class="fa fa-heart fa-fw"></i>收集</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Tips"><span class="nav-number">1.</span> <span class="nav-text">Tips</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#New-Project"><span class="nav-number">2.</span> <span class="nav-text">New Project</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E5%9B%BE"><span class="nav-number">3.</span> <span class="nav-text">插图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E6%8D%A2"><span class="nav-number">4.</span> <span class="nav-text">变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SoundTrack"><span class="nav-number">5.</span> <span class="nav-text">SoundTrack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%89%E6%8B%A9"><span class="nav-number">6.</span> <span class="nav-text">选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Input"><span class="nav-number">7.</span> <span class="nav-text">Input</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Video-Playback"><span class="nav-number">8.</span> <span class="nav-text">Video Playback</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NVL-mode-%E7%AB%96%E5%B1%8F%E6%96%87%E5%AD%97%E7%89%88"><span class="nav-number">9.</span> <span class="nav-text">NVL-mode 竖屏文字版</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7"><span class="nav-number">10.</span> <span class="nav-text">开发工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%91%E5%B8%83"><span class="nav-number">11.</span> <span class="nav-text">发布</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nova-mist"
+      src="/uploads/avatar.png">
+  <p class="site-author-name" itemprop="name">Nova-mist</p>
+  <div class="site-description" itemprop="description">My blog about daily life and learning. :b</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Nova-mist" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Nova-mist" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fas fa-cat fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.bilibili.com/" title="https:&#x2F;&#x2F;www.bilibili.com&#x2F;" rel="noopener" target="_blank">Bilibili</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2021/11/15/Ren-PyNote/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="Nova-mist">
+      <meta itemprop="description" content="My blog about daily life and learning. :b">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="novamist blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Ren'PyNote
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-11-15 14:10:30 / 修改时间：14:29:04" itemprop="dateCreated datePublished" datetime="2021-11-15T14:10:30+08:00">2021-11-15</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>《心跳文学部》就是用 Ren’Py 引擎制作的。</p>
+<p>在玩过《白色相簿2》后对 Galgame 的制作流程有点感兴趣，正如其他游戏一样，Galgame 的制作也离不开优秀的引擎，而以文本为主要玩法也使其制作有着独特之处。</p>
+<p>制作一款文字游戏并非一件容易的事情，素材方面的生疏令和文字功底的缺乏令我遇到困难，哪怕是照着教程的步骤走也有一些难以解决的错误，于是对 Ren’Py 的了解也是浅尝辄止，我觉得如果要真正学会使用它还得真正创作一个 Demo 才行，可我目前没有精力与念想，只得以后再说吧。</p>
+<span id="more"></span>
+
+<h2 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h2><p><code>Control</code> skip</p>
+<p><code>s</code> 截图</p>
+<h2 id="New-Project"><a href="#New-Project" class="headerlink" title="New Project"></a>New Project</h2><p>‘sript.rpy’</p>
+<p><code>\&quot;</code></p>
+<p>narrator: a character’s thoughts</p>
+<pre class="line-numbers language-none"><code class="language-none">label start:
+	&quot;string&quot;
+# 定义
+define I &#x3D; Character(&quot;Lucy&quot;, color&#x3D;&quot;#ffcccc&quot;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="插图"><a href="#插图" class="headerlink" title="插图"></a>插图</h2><p>命令：小写开头，lower-case letters, numbers and underscores 下划线</p>
+<p>空格分开的前部分是tag</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">label start<span class="token punctuation">:</span>
+    scene bg cave
+    show lucy happy
+    I <span class="token string">"sss"</span>
+    show lucy mad at right<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>位置at可以自定义 前后behind图片tag</strong></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">show logo base at rightish behind eileen
+hide logo <span class="token comment"># with given tag</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><strong>图片位置</strong></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">show a_happy<span class="token punctuation">:</span>
+    xalign <span class="token number">0.75</span>
+    yalign <span class="token number">1.0</span> <span class="token comment"># most sprites stick to the bottom</span>
+    <span class="token comment"># decimal place is important</span>
+<span class="token comment"># define a transform</span>
+transform slightleft<span class="token punctuation">:</span>
+    xalign <span class="token number">0.25</span>
+    yalign <span class="token number">1.0</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>位置是惯性的，重新放置图片会保留位置。</p>
+<h2 id="变换"><a href="#变换" class="headerlink" title="变换"></a>变换</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python">scene bg whitehouse
+<span class="token keyword">with</span> Dissolve<span class="token punctuation">(</span><span class="token number">.5</span><span class="token punctuation">)</span>
+
+pause <span class="token number">.5</span>
+
+scene bg washington
+show eileen happy
+<span class="token keyword">with</span> Dissolve<span class="token punctuation">(</span><span class="token number">.5</span><span class="token punctuation">)</span>
+<span class="token comment"># 定义变量</span>
+define slowdissolve <span class="token operator">=</span> Dissolve<span class="token punctuation">(</span><span class="token number">1.0</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>  dissolve</li>
+<li>  fade</li>
+<li>  move</li>
+</ul>
+<p><strong>Transitions Gallery</strong></p>
+<h2 id="SoundTrack"><a href="#SoundTrack" class="headerlink" title="SoundTrack"></a>SoundTrack</h2><blockquote>
+<p>  When a sound is played on the music channel, it is looped, and it is saved when the game is saved. </p>
+<p>  when the channel named sound is used, the sound is played once and then stopped. It isn’t saved.</p>
+</blockquote>
+<p><strong>music channel 循环播放，sound channel 单次播放</strong></p>
+<p>支持 Opus / Ogg Vorbis / mp3 格式</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># 替换正在播放的音乐</span>
+play music <span class="token string">"hello.ogg"</span> fadeout <span class="token number">1</span>
+<span class="token comment"># 加入播放队列</span>
+queue music <span class="token string">"hi.ogg"</span>
+<span class="token comment"># 停止播放</span>
+stop music fadeout <span class="token number">1</span>
+<span class="token comment"># 单次播放</span>
+play sound <span class="token string">"tower_clock.ogg"</span>
+queue sound <span class="token string">""</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>sound, music, voices 各自有着单独的混音器</p>
+<h2 id="选择"><a href="#选择" class="headerlink" title="选择"></a>选择</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python">menu<span class="token punctuation">:</span>
+    
+    <span class="token string">"yes"</span><span class="token punctuation">:</span>
+        jump choice1_yes
+        
+	<span class="token string">"no"</span><span class="token punctuation">:</span>
+        jump choice1_no
+        
+label choice1_yes<span class="token punctuation">:</span>
+    
+    $menu_flag <span class="token operator">=</span> <span class="token boolean">True</span> <span class="token comment"># python code</span>
+    
+    e <span class="token string">"hello"</span>
+    
+    jump choice1_done
+    
+label choice1_no<span class="token punctuation">:</span>
+    
+    $menu_flag <span class="token operator">=</span> <span class="token boolean">False</span>
+    
+    e <span class="token string">"haha"</span>
+    
+    jump choice1_done
+    
+label choice1_done<span class="token punctuation">:</span>
+    
+    <span class="token comment"># ...</span>
+    
+<span class="token keyword">if</span> menu_flag<span class="token punctuation">:</span>
+    e <span class="token string">"sss"</span>
+<span class="token keyword">else</span><span class="token punctuation">:</span>
+    e <span class="token string">"sfsf"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="Input"><a href="#Input" class="headerlink" title="Input"></a>Input</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python">python<span class="token punctuation">:</span>
+    name <span class="token operator">=</span> renpy<span class="token punctuation">.</span><span class="token builtin">input</span><span class="token punctuation">(</span><span class="token string">"What's your name?"</span><span class="token punctuation">)</span>
+    
+    name <span class="token operator">=</span> name<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">or</span> <span class="token string">"Guy Shy"</span>
+
+<span class="token comment"># use variable</span>
+e <span class="token string">"hello,[name]"</span>
+define g <span class="token operator">=</span> Character<span class="token punctuation">(</span><span class="token string">"[name]"</span><span class="token punctuation">)</span>
+
+<span class="token comment"># 变量的插入</span>
+$answer <span class="token operator">=</span> <span class="token number">42</span>
+$flag <span class="token operator">=</span> <span class="token boolean">True</span>
+
+e <span class="token string">"The answer is [anser] and the flag is [flag]"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="Video-Playback"><a href="#Video-Playback" class="headerlink" title="Video Playback"></a>Video Playback</h2><p>方法一：像播放图片一样播放视频</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">image launch <span class="token operator">=</span> Movie<span class="token punctuation">(</span>play<span class="token operator">=</span><span class="token string">"video.webm"</span><span class="token punctuation">,</span> pos<span class="token operator">=</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">,</span> anchor<span class="token operator">=</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+show launch behind eileen 
+hide launch<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>方法二：全屏播放视频</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">$renpy<span class="token punctuation">.</span>movie_cutscene<span class="token punctuation">(</span><span class="token string">"test.webm"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<blockquote>
+<p>  A Movie displayable can also take a mask with an alpha channel, which lets you make movie sprites.</p>
+</blockquote>
+<p>TODO</p>
+<h2 id="NVL-mode-竖屏文字版"><a href="#NVL-mode-竖屏文字版" class="headerlink" title="NVL-mode 竖屏文字版"></a>NVL-mode 竖屏文字版</h2><p>普通版本 ADV-mode 与 NVL-mode 之间切换 通过语句中的<code>nvl</code> 例如 <code>nvle</code> &amp; <code>e</code></p>
+<p>NVL模式的文字可以使用{w} {b} 等标签 <strong>extend</strong> ??</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">define nvle <span class="token operator">=</span> Character<span class="token punctuation">(</span><span class="token string">"Eileen"</span><span class="token punctuation">,</span> color<span class="token operator">=</span><span class="token string">"#c8ffc8"</span><span class="token punctuation">,</span> kind<span class="token operator">=</span>nvl<span class="token punctuation">)</span>
+nvle <span class="token string">"hello"</span>
+
+nvl clear
+
+nvle <span class="token string">"sfsfs"</span>
+
+nvl hide dissolve
+nvl show dissolve
+
+<span class="token comment"># 选择</span>
+menu<span class="token punctuation">:</span>
+    nvle <span class="token string">"sfsf"</span>
+    
+    <span class="token string">"Yes"</span><span class="token punctuation">:</span>
+        
+        nvl clear
+        
+        nvle <span class="token string">"Good"</span>
+        
+	<span class="token string">"No"</span><span class="token punctuation">:</span>
+        
+        nvl clear
+        
+        nvle <span class="token string">"sfsfs"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="开发工具"><a href="#开发工具" class="headerlink" title="开发工具"></a>开发工具</h2><p><code>Shift+R</code> 重新加载</p>
+<p><code>Shift+O</code> 命令行</p>
+<p><code>Shift+D</code> 开发菜单</p>
+<p><code>D</code> 交互模式</p>
+<h2 id="发布"><a href="#发布" class="headerlink" title="发布"></a>发布</h2><ol>
+<li>  lint</li>
+<li>  Build Distributions</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/GameDev/" rel="tag"><i class="fa fa-tag"></i> GameDev</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/11/15/ReactNote/" rel="prev" title="ReactNote">
+                  <i class="fa fa-chevron-left"></i> ReactNote
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/11/15/JDBCNote/" rel="next" title="JDBCNote">
+                  JDBCNote <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nova-mist</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+    <div class="pjax">
+
+
+    </div>
+</body>
+</html>

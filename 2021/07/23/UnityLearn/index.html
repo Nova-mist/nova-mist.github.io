@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"nova-mist.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+<meta name="description" content="前些日子专业分了方向，选了媒体融合，应该可以不碰python了，但同时以后要接触很多Unity，所以小学期实践选了Unity。老师也是自话自说地讲课，内容竟然和之前看的书的内容很像，所以也没怎么听课，看了PlayMaker插件的视频、逐渐学会了搜谷歌翻官方文档。 使用Unity还是要多靠平时的积累，经验真的很重要，不然就要去查文档与google。 不过我真的不想深入学习Unity，因为我发现我自">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学了点Unity以及小学期">
+<meta property="og:url" content="https://nova-mist.github.io/2021/07/23/UnityLearn/index.html">
+<meta property="og:site_name" content="novamist blog">
+<meta property="og:description" content="前些日子专业分了方向，选了媒体融合，应该可以不碰python了，但同时以后要接触很多Unity，所以小学期实践选了Unity。老师也是自话自说地讲课，内容竟然和之前看的书的内容很像，所以也没怎么听课，看了PlayMaker插件的视频、逐渐学会了搜谷歌翻官方文档。 使用Unity还是要多靠平时的积累，经验真的很重要，不然就要去查文档与google。 不过我真的不想深入学习Unity，因为我发现我自">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/JulySnipaste_2021-07-18_21-06-29.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/Julyimage-20210601194012732.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Nova-mist/nova-mist.github.io/main/img/github/2021/icIM79UYAZDFGTx.png">
+<meta property="article:published_time" content="2021-07-23T07:46:00.000Z">
+<meta property="article:modified_time" content="2021-07-23T08:15:16.815Z">
+<meta property="article:author" content="Nova-mist">
+<meta property="article:tag" content="数媒技">
+<meta property="article:tag" content="Unity">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/JulySnipaste_2021-07-18_21-06-29.png">
+
+
+<link rel="canonical" href="https://nova-mist.github.io/2021/07/23/UnityLearn/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>学了点Unity以及小学期 | novamist blog</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">novamist blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">75</span></a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">28</span></a></li>
+        <li class="menu-item menu-item-stars"><a href="/stars/" rel="section"><i class="fa fa-heart fa-fw"></i>收集</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Day01"><span class="nav-number">1.</span> <span class="nav-text">Day01</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A4%E8%AF%86%E7%95%8C%E9%9D%A2"><span class="nav-number">1.1.</span> <span class="nav-text">认识界面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF%E8%A7%86%E5%9B%BE%E5%B7%A5%E5%85%B7%E6%9D%A1"><span class="nav-number">1.1.1.</span> <span class="nav-text">场景视图工具条</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%85%E5%8A%A9%E7%BA%BF%E6%A1%86%E8%8F%9C%E5%8D%95-Gizmos"><span class="nav-number">1.1.2.</span> <span class="nav-text">辅助线框菜单 Gizmos</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-number">1.1.3.</span> <span class="nav-text">常用快捷键</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Day02"><span class="nav-number">2.</span> <span class="nav-text">Day02</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%AD%E5%BB%BA%E5%9C%BA%E6%99%AF"><span class="nav-number">2.1.</span> <span class="nav-text">搭建场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E4%BA%A43D%E6%B8%B8%E6%88%8F"><span class="nav-number">2.2.</span> <span class="nav-text">正交3D游戏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6"><span class="nav-number">2.3.</span> <span class="nav-text">组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%84%9A%E6%9C%AC%E4%B8%8E%E7%BB%84%E4%BB%B6%E6%93%8D%E4%BD%9C"><span class="nav-number">2.4.</span> <span class="nav-text">脚本与组件操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BF%E9%97%AE%E7%BB%84%E4%BB%B6"><span class="nav-number">2.4.1.</span> <span class="nav-text">访问组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E6%89%BE%E5%AD%90%E7%89%A9%E4%BD%93"><span class="nav-number">2.4.2.</span> <span class="nav-text">查找子物体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E4%BA%8B%E4%BB%B6%E5%87%BD%E6%95%B0"><span class="nav-number">2.4.3.</span> <span class="nav-text">常用事件函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E5%B8%A7%E7%8E%87%E5%8F%98%E9%80%9F"><span class="nav-number">2.4.4.</span> <span class="nav-text">解决帧率变速</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%8E%E9%94%80%E6%AF%81"><span class="nav-number">2.4.5.</span> <span class="nav-text">创建与销毁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A4%E6%96%AD%E7%89%A9%E4%BD%93%E6%BF%80%E6%B4%BB"><span class="nav-number">2.4.6.</span> <span class="nav-text">判断物体激活</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Day03"><span class="nav-number">3.</span> <span class="nav-text">Day03</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MonoBehavior%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">3.1.</span> <span class="nav-text">MonoBehavior生命周期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%87%E7%AD%BE"><span class="nav-number">3.2.</span> <span class="nav-text">标签</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%82%E7%BA%A7-Layer"><span class="nav-number">3.3.</span> <span class="nav-text">层级 Layer</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E5%88%B6%E4%BD%93"><span class="nav-number">3.3.1.</span> <span class="nav-text">预制体</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%93%E5%85%A5"><span class="nav-number">3.4.</span> <span class="nav-text">输入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E8%AE%BE%E5%A4%87%E7%9A%84%E8%BE%93%E5%85%A5"><span class="nav-number">3.4.1.</span> <span class="nav-text">移动设备的输入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E5%90%91%E4%B8%8E%E6%97%8B%E8%BD%AC"><span class="nav-number">3.5.</span> <span class="nav-text">方向与旋转</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%81%AF%E5%85%89"><span class="nav-number">3.6.</span> <span class="nav-text">灯光</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%84%E5%83%8F%E6%9C%BA"><span class="nav-number">3.7.</span> <span class="nav-text">摄像机</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%B2%E6%9F%93%E8%B4%B4%E5%9B%BE"><span class="nav-number">3.7.1.</span> <span class="nav-text">渲染贴图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%86%E5%9B%BE%E7%9F%A9%E9%98%B5"><span class="nav-number">3.7.2.</span> <span class="nav-text">视图矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%94%E9%99%A4%E9%81%AE%E7%BD%A9"><span class="nav-number">3.7.3.</span> <span class="nav-text">剔除遮罩</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%85%E6%B7%B1%E5%BA%A6"><span class="nav-number">3.7.4.</span> <span class="nav-text">仅深度</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Day04"><span class="nav-number">4.</span> <span class="nav-text">Day04</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">4.1.</span> <span class="nav-text">资源工作流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E5%AF%BC%E5%85%A5"><span class="nav-number">4.1.1.</span> <span class="nav-text">资源导入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%A9%E7%90%86"><span class="nav-number">4.2.</span> <span class="nav-text">物理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E9%87%8F%E5%8A%9B%E7%BB%84%E4%BB%B6"><span class="nav-number">4.2.1.</span> <span class="nav-text">常量力组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%A6%E8%BD%AE%E7%A2%B0%E6%92%9E%E4%BD%93"><span class="nav-number">4.2.2.</span> <span class="nav-text">车轮碰撞体</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Day05"><span class="nav-number">5.</span> <span class="nav-text">Day05</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E7%94%BB"><span class="nav-number">5.1.</span> <span class="nav-text">动画</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E7%94%BB%E7%B3%BB%E7%BB%9F%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">5.1.1.</span> <span class="nav-text">动画系统工作流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E7%94%BB%E5%89%AA%E8%BE%91"><span class="nav-number">5.1.2.</span> <span class="nav-text">动画剪辑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%BA%E5%BD%A2%E8%A7%92%E8%89%B2%E5%8A%A8%E7%94%BB"><span class="nav-number">5.1.3.</span> <span class="nav-text">人形角色动画</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%BA%E5%BD%A2%E5%8A%A8%E7%94%BB%E8%BA%AB%E4%BD%93%E9%81%AE%E7%BD%A9"><span class="nav-number">5.1.4.</span> <span class="nav-text">人形动画身体遮罩</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%BA%E5%BD%A2%E5%8A%A8%E7%94%BB%E7%9A%84%E9%87%8D%E5%AE%9A%E5%90%91"><span class="nav-number">5.1.5.</span> <span class="nav-text">人形动画的重定向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%86%E5%90%91%E8%BF%90%E5%8A%A8%E5%AD%A6"><span class="nav-number">5.1.6.</span> <span class="nav-text">逆向运动学</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8blender-%E5%AF%BC%E5%87%BAFBX%E6%96%87%E4%BB%B6"><span class="nav-number">5.2.</span> <span class="nav-text">用blender 导出FBX文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Day06"><span class="nav-number">6.</span> <span class="nav-text">Day06</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E5%AE%9E%E8%B7%B5"><span class="nav-number">6.1.</span> <span class="nav-text">物理实践</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%8F%E5%AD%A6%E6%9C%9F"><span class="nav-number">7.</span> <span class="nav-text">小学期</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%92%AD%E6%94%BE%E9%9F%B3%E4%B9%90"><span class="nav-number">7.1.</span> <span class="nav-text">播放音乐</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E6%9C%BA"><span class="nav-number">7.2.</span> <span class="nav-text">相机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UI"><span class="nav-number">7.3.</span> <span class="nav-text">UI</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%B2%E6%9F%93%E6%A8%A1%E5%BC%8F"><span class="nav-number">7.3.1.</span> <span class="nav-text">渲染模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87"><span class="nav-number">7.3.2.</span> <span class="nav-text">插入图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Rect-Transform"><span class="nav-number">7.3.3.</span> <span class="nav-text">Rect Transform</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sprite-Editor"><span class="nav-number">7.3.4.</span> <span class="nav-text">Sprite Editor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Immediate-Mode-GUI-IMGUI"><span class="nav-number">7.3.5.</span> <span class="nav-text">Immediate Mode GUI (IMGUI)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E5%AF%BB%E8%B7%AF"><span class="nav-number">7.4.</span> <span class="nav-text">自动寻路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PlayMaker"><span class="nav-number">7.5.</span> <span class="nav-text">PlayMaker</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#UI-with-PlayMaker"><span class="nav-number">7.5.1.</span> <span class="nav-text">UI with PlayMaker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Variables"><span class="nav-number">7.5.2.</span> <span class="nav-text">Variables</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Instantiating"><span class="nav-number">7.5.3.</span> <span class="nav-text">Instantiating</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Raycast"><span class="nav-number">7.5.4.</span> <span class="nav-text">Raycast</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#First-Person-Controller"><span class="nav-number">7.5.5.</span> <span class="nav-text">First Person Controller</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Trigger-to-Open-Door"><span class="nav-number">7.5.6.</span> <span class="nav-text">Trigger to Open Door</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FSM-Inspector-%E5%91%BD%E5%90%8D-%E6%8F%8F%E8%BF%B0"><span class="nav-number">7.5.7.</span> <span class="nav-text">FSM Inspector 命名&#x2F;描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E7%A0%B4%E5%9D%8F%E7%9A%84%E7%89%A9%E4%BD%93"><span class="nav-number">7.5.8.</span> <span class="nav-text">可破坏的物体</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%8F%E5%AD%A6%E6%9C%9F%E6%80%BB%E7%BB%93"><span class="nav-number">8.</span> <span class="nav-text">小学期总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E6%A6%82%E5%BF%B5"><span class="nav-number">8.1.</span> <span class="nav-text">新概念</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nova-mist"
+      src="/uploads/avatar.png">
+  <p class="site-author-name" itemprop="name">Nova-mist</p>
+  <div class="site-description" itemprop="description">My blog about daily life and learning. :b</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Nova-mist" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Nova-mist" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fas fa-cat fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.bilibili.com/" title="https:&#x2F;&#x2F;www.bilibili.com&#x2F;" rel="noopener" target="_blank">Bilibili</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2021/07/23/UnityLearn/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="Nova-mist">
+      <meta itemprop="description" content="My blog about daily life and learning. :b">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="novamist blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          学了点Unity以及小学期
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-07-23 15:46:00 / 修改时间：16:15:16" itemprop="dateCreated datePublished" datetime="2021-07-23T15:46:00+08:00">2021-07-23</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><img src="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/JulySnipaste_2021-07-18_21-06-29.png" alt="Snipaste_2021-07-18_21-06-29"></p>
+<p>前些日子专业分了方向，选了媒体融合，应该可以不碰python了，但同时以后要接触很多Unity，所以小学期实践选了Unity。老师也是自话自说地讲课，内容竟然和之前看的书的内容很像，所以也没怎么听课，看了PlayMaker插件的视频、逐渐学会了搜谷歌翻官方文档。</p>
+<p>使用Unity还是要多靠平时的积累，经验真的很重要，不然就要去查文档与google。</p>
+<p>不过我真的不想深入学习Unity，因为我发现我自己并不适合做游戏（缺乏新奇的想法与思路）。我固然知道做游戏是有不同分工的（美术、策划、技术……），但我并不对与游戏相关的技术岗位感兴趣，其实连游戏都谈不上太感兴趣罢了。</p>
+<p>我只不过是一个普通人，看着某同学行云流水般地制作游戏心里也很明确人与人之间的差距，还好我并不想走与游戏相关的道路，也就暗自为厉害的同学们加油吧。</p>
+<span id="more"></span>
+
+<h1 id="Day01"><a href="#Day01" class="headerlink" title="Day01"></a>Day01</h1><h2 id="认识界面"><a href="#认识界面" class="headerlink" title="认识界面"></a>认识界面</h2><p>Graphics Tier 图形层</p>
+<p>Lens Flare 镜头光晕</p>
+<p>Hierarchy Window 层级窗口</p>
+<p>ALT点击 递归展开文件夹</p>
+<p><code>falsh t:Material t:Texture l:Weapon</code> 搜索 类型为材质或贴图 标签为 Weapon 的资源</p>
+<p>F2 重命名 Enter 打开 Backspace 返回 （ALT）左右箭头 展开文件</p>
+<p>切换视角 正交视角</p>
+<p>shift 方向键移动</p>
+<p>小手工具 Q  (shift 加快速度)</p>
+<ul>
+<li>ALT 左键 旋转视角</li>
+<li>ALT 右键 缩放视角</li>
+</ul>
+<p>飞行浏览 右键 shift WASDQE</p>
+<p><strong>快捷浏览</strong></p>
+<ul>
+<li>ALT 中键 移动</li>
+<li>ALT 左键 旋转</li>
+<li>滚轮 或 ALT右键 前进后退</li>
+</ul>
+<p><strong>Focus</strong></p>
+<ul>
+<li>F</li>
+<li>Shift-F 追踪运动物体</li>
+</ul>
+<p>WERETY Move Rotate Scale Rect</p>
+<p>沿平面拖动 沿轴线旋转</p>
+<p><strong>Local 局部坐标系 Global 世界坐标系</strong>   切换快捷键X</p>
+<p>Pivot：该游戏对象（不包括子对象）的中心。</p>
+<p>Center：该游戏对象（包括子对象）的中心。切换快捷键Z</p>
+<blockquote>
+<ul>
+<li>pivot就是模型坐标轴的真实位置，也就是说再模型软件中设定的坐标轴。<br>center是unity自己根据模型的mesh计算的中心位置，和模型真实坐标轴没关系了。</li>
+<li>transform.position 的坐标轴就是这个 pivot</li>
+<li>因此在实际操作时候，注意把工具栏设置为pivot</li>
+</ul>
+</blockquote>
+<p>按照单位坐标移动 Ctrl 默认设定在 Edit&gt;Snap Settings</p>
+<p>吸附到平面 Shift + Ctrl’</p>
+<p>顶点吸附模式 V （Shift+V）</p>
+<h3 id="场景视图工具条"><a href="#场景视图工具条" class="headerlink" title="场景视图工具条"></a>场景视图工具条</h3><p>渲染模式 DrawMode</p>
+<ul>
+<li>Shading Mode</li>
+<li>Miscellaneous</li>
+</ul>
+<p>2D模式，摄像机保持指向Z轴，X轴在右侧、Y轴指向上方</p>
+<p>渲染效果开关</p>
+<ul>
+<li>flares 灯光光晕</li>
+<li>Animated Materials</li>
+</ul>
+<h3 id="辅助线框菜单-Gizmos"><a href="#辅助线框菜单-Gizmos" class="headerlink" title="辅助线框菜单 Gizmos"></a>辅助线框菜单 Gizmos</h3><h3 id="常用快捷键"><a href="#常用快捷键" class="headerlink" title="常用快捷键"></a>常用快捷键</h3><p>​    QWERT</p>
+<p>Z 基准点模式切换 X世界局部坐标切换 V顶点吸附 Ctrl + LMB 单位吸附</p>
+<p>Ctrl 1 2 3 4 5 6 7 场景视图 游戏视图 检视窗口</p>
+<p>1 2 3 4 5</p>
+<table>
+<thead>
+<tr>
+<th>Ctrl + 1</th>
+<th>场景视图 Scene</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Ctrl + 2</td>
+<td>游戏视图 Game</td>
+</tr>
+<tr>
+<td>Ctrl + 3</td>
+<td>检视窗口 Inspector</td>
+</tr>
+<tr>
+<td>Ctrl + 4</td>
+<td>层级窗口 Hierarchy</td>
+</tr>
+<tr>
+<td>Ctrl + 5</td>
+<td>工程窗口 Project</td>
+</tr>
+<tr>
+<td>Ctrl + 6</td>
+<td>动画窗口 Animation</td>
+</tr>
+<tr>
+<td>Ctrl + 7</td>
+<td>性能分析 Profiler</td>
+</tr>
+<tr>
+<td>Ctrl + Shift + C</td>
+<td>控制台窗口 Console</td>
+</tr>
+<tr>
+<td>Ctrl + P</td>
+<td>播放游戏</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>Ctrl + Shift + N 新建物体</p>
+<p>Alt + Shift + N 新建物体作为当前选中物体的子物体</p>
+<p>Ctrl + Alt + F 场景试视图移动到该物体上</p>
+<p>Shift + F 或 FF 持续 Foucus</p>
+<p><strong>Shift + Space 放大 Scene</strong></p>
+<p><strong>F2 重命名</strong></p>
+<p>Ctrl-D 组合复制</p>
+<h1 id="Day02"><a href="#Day02" class="headerlink" title="Day02"></a>Day02</h1><h2 id="搭建场景"><a href="#搭建场景" class="headerlink" title="搭建场景"></a>搭建场景</h2><ul>
+<li>如果创建之前选中了某个物体，会创建子物体。</li>
+<li>在<strong>工程窗口</strong>新建材质文件</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/Julyimage-20210601194012732.png" alt="image-20210601194012732"></p>
+<ul>
+<li>新建 <code>Texture</code> 文件夹，指定材质球贴图</li>
+<li>材质拖拽到场景中或 <code>Inspector</code> 窗口中</li>
+<li><strong>查看场景：</strong> 1. 预览窗口 2.  “2 by 3” 窗口中游戏视图</li>
+<li>调整相机位置可以使用本地坐标系，方便调整 Z轴</li>
+<li>添加球体 Sphere 并在 Inspector 窗口中添加 <code>rigid</code> 刚体组件</li>
+</ul>
+<h2 id="正交3D游戏"><a href="#正交3D游戏" class="headerlink" title="正交3D游戏"></a>正交3D游戏</h2><ul>
+<li>3D模型</li>
+<li>正交摄像机代替透视摄像机，<strong>没有近大远小的效果</strong>，适用于鸟瞰视角的游戏，如摩尔庄园手游。</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/Nova-mist/nova-mist.github.io/main/img/github/2021/icIM79UYAZDFGTx.png" alt="image-20210712162936795"></p>
+<h2 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h2><p><strong>物体只是装载组件的容器，组件是实现具体游戏功能的基石。</strong>所有的游戏物体默认至少具有变换组件，定义位置和方向信息。</p>
+<p>组件选项菜单：</p>
+<ul>
+<li>Reset</li>
+<li>Remove Component <strong>某些组件之间具有依赖关系</strong></li>
+<li>Move Up/Down</li>
+<li>Copy/Paste Component</li>
+</ul>
+<p><strong>游戏运行时修改的组件参数不会保存</strong></p>
+<h2 id="脚本与组件操作"><a href="#脚本与组件操作" class="headerlink" title="脚本与组件操作"></a>脚本与组件操作</h2><ul>
+<li>编写脚本，并作为组件挂载到游戏物体上。</li>
+<li>每一个新的脚本都定义了一种新的组件类型。</li>
+<li>每个类都继承 MonoBehaviour</li>
+<li>挂载脚本到物体上实际上是创建了该脚本的实例。</li>
+<li><strong>通常不使用构造函数</strong></li>
+<li>update() 函数会在每一帧调用，用来实现用户输入、查找、修改该组件信息等。</li>
+</ul>
+<h3 id="访问组件"><a href="#访问组件" class="headerlink" title="访问组件"></a>访问组件</h3><pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">void Start() &#123;
+    Rigidbody rb &#x3D; GetComponent&lt;Rigidbody&gt;();
+    &#x2F;&#x2F; 改变刚体的质量为10kg
+    rb.mass &#x3D; 10f;
+    &#x2F;&#x2F; 施加向上的力
+    rb.AddForce(Vector3.up * 10f);
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>用变量引用游戏物体，被拖拽的游戏物体只要有 <code>public Transform playerTransform</code> 组件就可以</li>
+</ul>
+<h3 id="查找子物体"><a href="#查找子物体" class="headerlink" title="查找子物体"></a>查找子物体</h3><pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">public Transform[] waypoints;
+    &#x2F;&#x2F; Start is called before the first frame update
+    void Start()
+    &#123;
+        waypoints &#x3D; new Transform[transform.childCount];
+        int i &#x3D; 0;
+        foreach(Transform t in transform)
+        &#123;
+            waypoints[i++] &#x3D; t;
+        &#125;
+        transform.Find(&quot;Gun&quot;);
+    &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>尽量不在 Update 函数中执行，影响效率</strong></p>
+<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">&#x2F;&#x2F; 在场景中查找特定物体
+player &#x3D; GameObject.Find(&quot;MainHeroCharacter&quot;);
+&#x2F;&#x2F; 标签查找
+GameObject player;
+GameObject[] enemies;
+player &#x3D; GameObject.FindWithTag(&quot;Player&quot;);
+enemies &#x3D; GameObject.FindGameObjectsWithTag(&quot;Enemy&quot;); &#x2F;&#x2F; 一组对象<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="常用事件函数"><a href="#常用事件函数" class="headerlink" title="常用事件函数"></a>常用事件函数</h3><p>传统的游戏：在一个主循环中处理游戏逻辑。</p>
+<p>Unity：在特定的事件发生时，调用脚本中特定的函数。</p>
+<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">void Update() &#123;
+    float distance &#x3D; speed * Time.deltaTime * Input.GetAxis(&quot;Horizontal&quot;);
+    transform.Translate(Vector3.right * distance);
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>物理引擎的更新在 <code>FixedUpdate()</code> 函数中</p>
+<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">void FixedUpdate() &#123;
+    Vector 3 force &#x3D; transform.forward * driveForce * Input.GetAxis(&quot;Vertical&quot;);
+    rigidbody.AddForce(force);
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>更新摄像机的位置</p>
+<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">void LateUpdate() &#123;
+    Camera.main.transform.LookAt(target.transform);
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="解决帧率变速"><a href="#解决帧率变速" class="headerlink" title="解决帧率变速"></a>解决帧率变速</h3><p>将两帧之间的事件间隔 <code>Time.deltaTime</code> 考虑进去，会随游戏环境改变。引擎默认60fps</p>
+<p><code>transform.Translate(0, 0, distancePerSecond * Time.deltaTime);</code></p>
+<p>TimeManager 修改物理更新的时间间隔。对应脚本中 <code>Time.fixedDeltaTime</code></p>
+<h3 id="创建与销毁"><a href="#创建与销毁" class="headerlink" title="创建与销毁"></a>创建与销毁</h3><pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">public GameObject enemy;
+void Start() &#123;
+    for (int i &#x3D; 0; i &lt; 5; i++) &#123;
+        Instantiate(enemy);
+    &#125;
+&#125;
+&#x2F;&#x2F; 子弹碰撞时 0.5s后销毁
+void OnCollisionEnter(Collision otherObj) &#123;
+    if (otherObj.gameObject.tag &#x3D;&#x3D; &quot;Missile&quot;) &#123;
+        Destroy(gameObject, 0.5f);
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>注意：<code>Destroy(this)</code> 会从物体上删除脚本组件而不是销毁物体。4</p>
+<h3 id="判断物体激活"><a href="#判断物体激活" class="headerlink" title="判断物体激活"></a>判断物体激活</h3><p><strong>父物体的未激活会覆盖子物体的激活</strong></p>
+<p>使用 <code>gameObject.activeInHierarchy</code> 属性来判断是否激活，不受父物体影响</p>
+<h1 id="Day03"><a href="#Day03" class="headerlink" title="Day03"></a>Day03</h1><h2 id="MonoBehavior生命周期"><a href="#MonoBehavior生命周期" class="headerlink" title="MonoBehavior生命周期"></a>MonoBehavior生命周期</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/kanekiken/p/7533501.html">MonoBehaviour生命周期 - Quintinz - 博客园 (cnblogs.com)</a></p>
+<h2 id="标签"><a href="#标签" class="headerlink" title="标签"></a>标签</h2><p>标记在游戏物体上的记号。方便查找和指定物体，处理碰撞。</p>
+<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">&#x2F;&#x2F; 用标签查找物体并用其参数实例化新的物体
+public GameObject respawnPrefab;
+public GameObject respawn;
+void Start() &#123;
+    if (respawn &#x3D;&#x3D; null) &#123;
+        respawn &#x3D; GameObject.FindWithTag(&quot;Respawn&quot;);
+    &#125;
+    Instantiate(respawnPrefab, respawn..transform.position, respawn.transform.rotation) as GameObject;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="层级-Layer"><a href="#层级-Layer" class="headerlink" title="层级 Layer"></a>层级 Layer</h2><p>用来让摄像机仅渲染场景中的一部分物体，让灯光只照亮一部分物体，碰撞检测、射线检测。</p>
+<p>配合摄像机的 Culling Mask ，选择性显示某些层级的物体。</p>
+<p><strong>选择性的射线检测</strong></p>
+<p>int 型变量的32个位来表示，0不发生碰撞</p>
+<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">int layerMask &#x3D; 1 &lt;&lt; 8;
+&#x2F;&#x2F; 和非自身物体碰撞
+&#x2F;&#x2F; layerMask &#x3D; ~layerMask;
+RaycastHit hit;
+if (Physics.RayCast(transform.position, Vector3.forward,
+                   Mathf.Infinity, layerMask));<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="预制体"><a href="#预制体" class="headerlink" title="预制体"></a>预制体</h3><p>区别于模型的引用。预制体是在场景中创建物体的模板，既可以关联修改所有物体，也可以由单个物体重载一些组件和参数。</p>
+<p>在运行时实例化预制体。</p>
+<p><strong>建造一堵墙</strong></p>
+<ul>
+<li>创建空白物体并挂载脚本</li>
+<li>创建具有<strong>刚体组件</strong>的预制体并关联到脚本</li>
+</ul>
+<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">public Transform brick;
+    &#x2F;&#x2F; Start is called before the first frame update
+    void Start()
+    &#123;
+        for (int y &#x3D; 0; y &lt; 5; y++)
+        &#123;
+            for(int x &#x3D; 0; x &lt; 5; x++)
+            &#123;
+                Instantiate(brick, new Vector3(x, y, 0), Quaternion.identity);
+            &#125;
+        &#125;
+    &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>多个物体按特定的形状摆放</strong></p>
+<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">public GameObject prefab; &#x2F;&#x2F; 预制体
+public int numberOfObjects &#x3D; 20; &#x2F;&#x2F; 物体总数
+public float radius &#x3D; 5f; &#x2F;&#x2F; 圆圈半径
+void Start() &#123;
+    for (int i&#x3D;0; i &lt; numberOfObjects; i++) &#123;
+        &#x2F;&#x2F; 算出物体间隔角度
+        float angle &#x3D; i * Mathf.PI * 2 &#x2F; numberOfObjects;
+        &#x2F;&#x2F; 利用三角函数求位置
+        Vector3 pos &#x3D; new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * radius;
+        Instantiate(prefab, pos, Quaternion.identity);
+    &#125;
+&#125;
+&#x2F;&#x2F; 矩形
+public GameObject prefab;
+public float gridX &#x3D; 5f;
+public float gridY &#x3D; 5f;
+public float spacing &#x3D; 2f; &#x2F;&#x2F; 物体之间间隔
+void Start() &#123;
+    for (int y&#x3D;0; y &lt; gridY; y++) &#123;
+        for (int x&#x3D;0; x &lt;gridX; x++) &#123;
+            Vector3 pos &#x3D; new Vector3(x, 0, y) * spacing;
+            Instantiate(prefab, pos, Quaternion.identity);
+        &#125;
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><p>不同设备统一映射到虚拟输入轴。</p>
+<p>编辑：<code>Edit &gt; Project Settings &gt; Input</code></p>
+<ul>
+<li>Gravity 轴回中的力度，现代游戏的输入默认是多梯度的模式。</li>
+</ul>
+<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">&#x2F;&#x2F; 读取输入轴
+float value &#x3D; Input.GetAxis(&quot;Horizontal&quot;);
+&#x2F;&#x2F; 监听按键
+value &#x3D; Input.GetKey(&quot;a&quot;);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="移动设备的输入"><a href="#移动设备的输入" class="headerlink" title="移动设备的输入"></a>移动设备的输入</h3><p><code>Input.touches</code> 多点触摸</p>
+<p>实例：用户点击屏幕发射一条射线，射线碰触到物体以后，实例化一个预制体。</p>
+<ul>
+<li>脚本挂载到 Main Camera 上面</li>
+<li>在（0，0，0）点放置一个平面，让射线碰撞</li>
+<li>创建一个预制体，并关联到脚本上</li>
+<li>运行游戏，单机地面进行实例化</li>
+</ul>
+<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">public GameObject prefab;
+&#x2F;&#x2F; Update is called once per frame
+void Update()
+&#123;
+    &#x2F;&#x2F;foreach(var touch in Input.touches)
+    &#x2F;&#x2F;&#123;
+    &#x2F;&#x2F; 某个手指刚开始接触
+    &#x2F;&#x2F;if(touch.phase &#x3D;&#x3D; TouchPhase.Began)
+    if (Input.GetMouseButtonDown(0))
+    &#123;
+        &#x2F;&#x2F; 利用摄像机和屏幕上的点 确定出一条从手指到场景内的射线
+        &#x2F;&#x2F;var ray &#x3D; Camera.main.ScreenPointToRay(touch.position);
+        var ray &#x3D; Camera.main.ScreenPointToRay(Input.mousePosition);
+        &#x2F;&#x2F; 用物理引擎发射射线，碰到物体返回 true
+        RaycastHit hitInfo;
+        if (Physics.Raycast(ray, out hitInfo))
+        &#123;
+            &#x2F;&#x2F; 如果碰到 碰撞信息保存在 hitInfo
+            Instantiate(prefab, hitInfo.point, Quaternion.identity);
+        &#125;
+    &#125;
+    &#x2F;&#x2F;&#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>在移动平台的游戏的开发阶段暂时用鼠标操作代替触屏操作。</strong></p>
+<h2 id="方向与旋转"><a href="#方向与旋转" class="headerlink" title="方向与旋转"></a>方向与旋转</h2><ul>
+<li>欧拉角，简单直观，但会遇到万向节锁定问题（Gimbal Lock）</li>
+<li>Unity 的旋转工具使用四元数系统，不会产生万向节锁定，但一个四元数无法超过 180°旋转，数值不直观。</li>
+<li><strong>检视窗口中还是以欧拉角表示旋转，引擎内部是四元数，所以超过角度的数值会自动改变。</strong></li>
+</ul>
+<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">transform.Rotate(0,30,0); &#x2F;&#x2F; 绕Y轴转30°<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h2 id="灯光"><a href="#灯光" class="headerlink" title="灯光"></a>灯光</h2><ul>
+<li>灯光组件可以直接添加到游戏物体上，Rendering 分类。</li>
+<li>不同的渲染路径影响光照和阴影。</li>
+</ul>
+<p>灯光分类：</p>
+<ul>
+<li>点光源，空间中的一个点向每个方向都发射同样强度的光。光照强度与距离的平方成反比。模拟灯泡、蜡烛、枪口的照明。</li>
+<li>探照灯，发射角度被限制在一个固定的角度，人造光源。</li>
+<li>方向光，自然光，没有发射源位置，即所在的位置不会对效果产生影响。<strong>修改 Skybox 的设置。</strong></li>
+<li>矩形光，光线柔和</li>
+<li>发光材质，shader 中的 Emission 勾选</li>
+<li>环境光，不属于组件， 在 <code>Scene &gt; Environment Lighting</code></li>
+</ul>
+<h2 id="摄像机"><a href="#摄像机" class="headerlink" title="摄像机"></a>摄像机</h2><p><strong>作为组件挂载到物体上。</strong></p>
+<h3 id="渲染贴图"><a href="#渲染贴图" class="headerlink" title="渲染贴图"></a>渲染贴图</h3><p>Render Texture 将摄像机拍摄到的画面渲染到一张贴图上，镜子、显示器、小屏幕、监视器、画中画。</p>
+<h3 id="视图矩阵"><a href="#视图矩阵" class="headerlink" title="视图矩阵"></a>视图矩阵</h3><p>Normalized Viewport Rectangle 用来指定摄像机所拍摄的内容固定显示在屏幕的某一个矩形范围内。<strong>小地图、双人分屏。</strong></p>
+<h3 id="剔除遮罩"><a href="#剔除遮罩" class="headerlink" title="剔除遮罩"></a>剔除遮罩</h3><p>Culling Mask</p>
+<h3 id="仅深度"><a href="#仅深度" class="headerlink" title="仅深度"></a>仅深度</h3><p>用于混合两个摄像机的画面使其不叠加。</p>
+<p>摄像机根据深度先后绘制，后一个保留前一个的画面但清除深度信息，画面会叠加。</p>
+<p><strong>应用：FPS游戏中，枪放在远离场景的位置用另一个摄像机单独渲染再叠加到游戏画面，不会被物体挡住。</strong></p>
+<h1 id="Day04"><a href="#Day04" class="headerlink" title="Day04"></a>Day04</h1><h2 id="资源工作流程"><a href="#资源工作流程" class="headerlink" title="资源工作流程"></a>资源工作流程</h2><h3 id="资源导入"><a href="#资源导入" class="headerlink" title="资源导入"></a>资源导入</h3><p><strong>在文件浏览器中移动或重命名文件，要同样修改 <code>.meta</code> 文件。所以只在 Unity 编辑器下操作。</strong></p>
+<blockquote>
+<p>导入3D建模软件的自有3D格式的文件，Unity 会回调3D软件的FBX导出插件。</p>
+</blockquote>
+<h2 id="物理"><a href="#物理" class="headerlink" title="物理"></a>物理</h2><p>3D引擎和2D引擎。</p>
+<ul>
+<li>刚体，不建议通过在脚本中直接修改 Transform 属性而是通过对刚体施加力来推动物体。</li>
+<li>休眠 Sleeping</li>
+<li>碰撞体 Collider，通常使用近似的物理形状，组合碰撞体<ul>
+<li>静态碰撞体，地形、障碍物</li>
+<li>刚体碰撞体</li>
+<li>Kinermatic 让物体在物理系统控制和动画系统控制之间切换</li>
+</ul>
+</li>
+<li>物理材质 3D Physic Materials / 2D Physics Material 2D</li>
+<li>触发器，Is Trigger ，OnCollisionEnter 方法</li>
+<li><strong>碰撞事件触发表，Collision Message / Trigger Message</strong></li>
+<li>物理关节 Joints</li>
+<li>角色控制器，因为刚体组件会让人物难以控制。</li>
+</ul>
+<blockquote>
+<p>在Unity 中使用人物模型，要确保人物的高度在2米左右，两个默认 Cube</p>
+</blockquote>
+<p>阻尼：0.001（金属）~ 10（羽毛）</p>
+<h3 id="常量力组件"><a href="#常量力组件" class="headerlink" title="常量力组件"></a>常量力组件</h3><ul>
+<li>Force 世界坐标力</li>
+<li>Relative Force 局部坐标力</li>
+<li>Torque 世界坐标扭矩 越大转越快</li>
+<li>Relative Torque</li>
+</ul>
+<h3 id="车轮碰撞体"><a href="#车轮碰撞体" class="headerlink" title="车轮碰撞体"></a>车轮碰撞体</h3><p>内置了碰撞检测、轮子物理模型和基于滑动摩擦力的驱动模型，不能模拟车轮但能模拟轮胎？</p>
+<p><strong>一般将车轮的物理系统和车轮模型的外观完全区分开。</strong></p>
+<p>实例：车辆创建入门</p>
+<ul>
+<li>添加空白物体作为车的根节点 car_root</li>
+<li>添加刚体组件</li>
+<li>创建车身的盒子碰撞体，创建Cube作为子物体</li>
+<li>添加车轮的根节点，car_root 的空子物体 wheels</li>
+<li>创建轮子们</li>
+<li>编写 SimpleCarControllers.cs 挂载到 car_root 上，修改每个轮子的具体参数</li>
+<li>利用在脚本中查找相应的结点，添加能转动的车轮模型</li>
+</ul>
+<h1 id="Day05"><a href="#Day05" class="headerlink" title="Day05"></a>Day05</h1><h2 id="动画"><a href="#动画" class="headerlink" title="动画"></a>动画</h2><ul>
+<li>模型动画：定点动画、骨骼动画</li>
+<li>非模型动画：对游戏内游戏物体的动画，通过曲线编辑工具配置</li>
+</ul>
+<p><strong>动画混合的核心——插值与权重</strong></p>
+<blockquote>
+<p>在 Unity 引擎中，任何功能系统最后都可以简单拆分为三个模块：资源模块、控制&amp;编辑模块、实体模块。</p>
+</blockquote>
+<h3 id="动画系统工作流程"><a href="#动画系统工作流程" class="headerlink" title="动画系统工作流程"></a>动画系统工作流程</h3><p>动画剪辑：资源模块，对象如何随着事件改变属性信息。</p>
+<p>控制器：记录动画之间的关系，用来对动画剪辑进行管理。<code>Animator Controller</code> <code>Window &gt; Animator</code> 流程的窗口</p>
+<p>动画组件：Animator  游戏实际运行时动画功能的实体模块，对当前对象读取动画控制器、设置动画刷新时间。<strong>所有动画剪辑都存放于动画控制器中。</strong></p>
+<h3 id="动画剪辑"><a href="#动画剪辑" class="headerlink" title="动画剪辑"></a>动画剪辑</h3><ul>
+<li>Model</li>
+<li>Rig</li>
+<li>Animation</li>
+<li>Materials </li>
+</ul>
+<h3 id="人形角色动画"><a href="#人形角色动画" class="headerlink" title="人形角色动画"></a>人形角色动画</h3><p>Avatar：一个骨架结构到用户实际骨架结构的映射。</p>
+<ul>
+<li>在导入模型资源的 Rig 选项中 修改 Animation Type 参数为 Huamnoid</li>
+<li>将非关键骨骼也进行匹配，并使模型处于T形姿态</li>
+<li>骨骼映射信息、存储信息保存为一个人形模板文件 <code>xx.hit</code> 可以复用</li>
+</ul>
+<h3 id="人形动画身体遮罩"><a href="#人形动画身体遮罩" class="headerlink" title="人形动画身体遮罩"></a>人形动画身体遮罩</h3><p>控制身体的一部分受动画影响，其他部分被屏蔽。</p>
+<p><code>Animation &gt; Mask</code></p>
+<p>通过 <code>Asset &gt; Create &gt; Avatar Mask</code> 创建 Mask 资源，并保存为 <code>.mask</code> 文件。</p>
+<h3 id="人形动画的重定向"><a href="#人形动画的重定向" class="headerlink" title="人形动画的重定向"></a>人形动画的重定向</h3><blockquote>
+<p>重新利用现有的动画以供多个模型使用，从而无须创建全新的动画方法。</p>
+</blockquote>
+<p>只支持人形模型（可以创建骨架映射）。</p>
+<p>两种形式：</p>
+<ul>
+<li>两个模型使用相同的骨架，所有层级和命名都相同，因为动画根据名字和路径去查找操作的骨骼。</li>
+<li>通过 Avatar ，让动画通过映射在多个不同骨架下产生相同的模型动作。<ul>
+<li>拖入动画模型，在模型根节点上创建一个动画控制器并加入一组动画片段。</li>
+<li>在挂载的动画控制器的 Avatar 选项中生成人形骨架映射 Avatra 。</li>
+<li>拖入另一个模型，同样创建动画控制组件。</li>
+<li>Animator 下将 Avatar 选项拖入自身的 Avatar ，Controller 选项选择之前模型的动画控制器。</li>
+</ul>
+</li>
+</ul>
+<h3 id="逆向运动学"><a href="#逆向运动学" class="headerlink" title="逆向运动学"></a>逆向运动学</h3><ul>
+<li>正向运动 FK ：通过各个关节的扭动实现 </li>
+<li>逆向运动 IK：由末端结点控制整体位置</li>
+</ul>
+<p>默认脚用 IK，手臂用 FK。如果手要拿东西或贴在物体上切换 IK。</p>
+<h2 id="用blender-导出FBX文件"><a href="#用blender-导出FBX文件" class="headerlink" title="用blender 导出FBX文件"></a>用blender 导出FBX文件</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/yaoling1997/p/13983109.html">原神可莉、七七、迪奥娜、胡桃、甘雨…模型下载(带骨骼贴图) - 菜鸟少侠 - 博客园 (cnblogs.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/9071e54ac7a2">blender视角控制 - 简书 (jianshu.com)</a></p>
+<blockquote>
+<p>视角旋转：按住鼠标中键（滚轮）拖动<br>视角平移：按住<code>Shift</code>+鼠标中键拖动<br>视角缩放：旋转鼠标滚轮</p>
+</blockquote>
+<p>Bleander 2.8 + <a target="_blank" rel="noopener" href="https://github.com/GiveMeAllYourCats/cats-blender-plugin">cats-blender-plugin</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv10390832">Unity知识记录–PMX模型转换FBX - 哔哩哔哩专栏 (bilibili.com)</a></p>
+<h1 id="Day06"><a href="#Day06" class="headerlink" title="Day06"></a>Day06</h1><h2 id="物理实践"><a href="#物理实践" class="headerlink" title="物理实践"></a>物理实践</h2><ul>
+<li>不倒翁 Tumbler</li>
+</ul>
+<p>为模型创建空的根节点，挂载刚体、碰撞体、脚本组件。</p>
+<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">Rigidbody rigid;
+void Start() &#123;
+    rigid &#x3D; GetComponent&lt;Rigidbody&gt;();
+    &#x2F;&#x2F; 指定重心
+    rigid.centerOfMass &#x3D; new Vector3(0, -1, 0);
+&#125;
+&#x2F;&#x2F; or 通过键盘施加力
+void Update() &#123;
+    Vector3 input &#x3D; new Vector3(Input.GetAxis(&quot;Horizontal&quot;), 0, Input.GetAxis(&quot;Vertical&quot;));
+    &#x2F;&#x2F; 输入向量转换为力
+    Vector3 force &#x3D; input * 7;
+    &#x2F;&#x2F; 在物体上方的某个点施加外力
+    Vector3 localPos &#x3D; new Vector3(0,1,0);
+    Vector3 worldPos &#x3D; transform.localToWorldMatrix * localPos;
+    rigid.AddForceAtPosition(input, worldPos);
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>锁链 Rope</li>
+</ul>
+<p>第一个环的刚体组件中，勾选 Kinermatic 不受物理系统影响。</p>
+<p>其他的环添加自定义关节组件。Configurable Joint</p>
+<p><strong>物理系统可视化调试</strong> <code>Window &gt; Physics Debug</code> 在场景中勾选右下角</p>
+<h1 id="小学期"><a href="#小学期" class="headerlink" title="小学期"></a>小学期</h1><h2 id="播放音乐"><a href="#播放音乐" class="headerlink" title="播放音乐"></a>播放音乐</h2><ul>
+<li>创建空物体</li>
+</ul>
+<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">GameObject n &#x3D; (GameObject) Instantiate(Resources.Load(&quot;prebabs&quot;));
+SceenManager.LoadScene(&quot;SampleScene&quot;);
+SceenManager.LoadScene(&quot;SampleScene&quot;,LoadSceneMode.Single); &#x2F;&#x2F; Additive
+
+&#x2F;&#x2F; 指定物体保存
+GameObject objToKeep &#x3D; GameObject.FinWithTag(&quot;&quot;);
+
+&#x2F;&#x2F; 碰撞检测并施加力
+GameObject xx &#x3D; collision.collider.gameObject
+    theCollidingObj.GetComponent&lt;Rigidbody&gt;().AddForce(New Vector())
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="相机"><a href="#相机" class="headerlink" title="相机"></a>相机</h2><p><a target="_blank" rel="noopener" href="http://dreamphp.cn/blog/detail?blog_id=22489">完美起航-Cinemachine（一）VirtualCamera和Brain的简单介绍 (dreamphp.cn)</a></p>
+<ul>
+<li><p>Add Cinemachine Virtual Camera</p>
+<ul>
+<li><p>会为 MainCamera 创建 Cinemachine Brain</p>
+</li>
+<li><blockquote>
+<p>Follow | Look At</p>
+<p>Body 移动规则</p>
+<p>Damping 阻尼 数值为0 摄像机视角与player同步，否则画面会慢一些回到人物。😍</p>
+<p>Shoulder Offset  调整相机位置</p>
+<p>Aim 旋转规则</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>调整虚拟相机视角</p>
+</li>
+</ul>
+<h2 id="UI"><a href="#UI" class="headerlink" title="UI"></a>UI</h2><p><a target="_blank" rel="noopener" href="https://docs.unity3d.com/550/Documentation/Manual/UISystem.html">Unity - Manual: UI (unity3d.com)</a></p>
+<p>Canvas 是一个有着 Canvas组件的 Game Object，所有的 UI 元素都是其子元素。</p>
+<p><a target="_blank" rel="noopener" href="https://docs.unity3d.com/Packages/com.unity.ugui@1.0/api/UnityEngine.EventSystems.html">Namespace UnityEngine.EventSystems | Unity UI | 1.0.0 (unity3d.com)</a></p>
+<h3 id="渲染模式"><a href="#渲染模式" class="headerlink" title="渲染模式"></a><strong>渲染模式</strong></h3><ul>
+<li>屏幕空间：面向屏幕、面向摄像机，<strong>会自适应屏幕</strong>。</li>
+<li>世界空间：相当于一个物体，可以被遮挡。</li>
+</ul>
+<h3 id="插入图片"><a href="#插入图片" class="headerlink" title="插入图片"></a><strong>插入图片</strong></h3><p>要将图片从 Texture 设置为 Sprite</p>
+<p>调整图片最好设置为 <strong>Pivot</strong> and <strong>Local</strong>. 真实位置&amp;局部坐标</p>
+<h3 id="Rect-Transform"><a href="#Rect-Transform" class="headerlink" title="Rect Transform"></a><strong>Rect Transform</strong></h3><ul>
+<li>pivot 枢轴</li>
+<li>Anchors 两个锚点的锚框</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/w-wfy/p/7800757.html">关于Anchor锚点的理解</a></p>
+<ul>
+<li>Anchor presets 锚点预设</li>
+</ul>
+<p>POS X和POS Y值表示枢轴相对于锚点的位置。</p>
+<blockquote>
+<p>Blueprint mode：Rect白框一直处于原始状态，不会随着UI物体的缩放旋转进行变化。</p>
+<p>Raw edit mode：改变Anchors锚点与Pivot的数值时，使UI物体的Position始终不会发生改变。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/chongzi_daima/article/details/100560799">(23条消息) UGUI基础篇 第(3)课: RectTransform组件常用小技巧与困惑知识点讲解_专注游戏研发-CSDN博客</a></p>
+</blockquote>
+<h3 id="Sprite-Editor"><a href="#Sprite-Editor" class="headerlink" title="Sprite Editor"></a>Sprite Editor</h3><p>用于对 2D Sprite 素材进行九宫格区域划分，只有中间部分拉伸。</p>
+<p>适用于组件的边框，包含内容。</p>
+<h3 id="Immediate-Mode-GUI-IMGUI"><a href="#Immediate-Mode-GUI-IMGUI" class="headerlink" title="Immediate Mode GUI (IMGUI)"></a>Immediate Mode GUI (IMGUI)</h3><p>由代码控制的 UI</p>
+<p>主要的游戏内容还要用0础的 UI 组件来制作</p>
+<h2 id="自动寻路"><a href="#自动寻路" class="headerlink" title="自动寻路"></a>自动寻路</h2><p><a target="_blank" rel="noopener" href="https://www.jb51.net/article/190869.htm">Unity3D实现自动寻路_C#教程_脚本之家 (jb51.net)</a></p>
+<ul>
+<li>设置静态物体</li>
+<li>打开AI进行导航网格烘培</li>
+<li>在add component中添加Nav Mesh Agent(导航网格代理)</li>
+<li>附加AI脚本给圆柱体</li>
+</ul>
+<h2 id="PlayMaker"><a href="#PlayMaker" class="headerlink" title="PlayMaker"></a><a target="_blank" rel="noopener" href="https://hutonggames.com/">PlayMaker</a></h2><ul>
+<li>官方 Visual Scripting</li>
+<li>Bolt</li>
+<li>Player Maker 有限状态机</li>
+</ul>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Demon01 变色的Cube</li>
+<li><input checked="" disabled="" type="checkbox"> 在 PlayerMaker 中调用自己的脚本（Button）：UI CLICK-&gt;Call Method 拖入挂载在物体上的脚本，选择public method，取消勾选脚本</li>
+<li><input checked="" disabled="" type="checkbox"> 使用 prefabs 预制体，在预制体中更改所有物体的属性，<strong>Overrides Apply ALL</strong></li>
+<li><input checked="" disabled="" type="checkbox"> Global Transition 简化状态图 共用同一个状态</li>
+<li><input checked="" disabled="" type="checkbox"> System Events: TRIGGER 进入触发 / COLLISION 碰撞触发，需要有刚体组件</li>
+</ul>
+<h3 id="UI-with-PlayMaker"><a href="#UI-with-PlayMaker" class="headerlink" title="UI with PlayMaker"></a>UI with PlayMaker</h3><blockquote>
+<p>  Button:</p>
+<ul>
+<li>  UI Text Set Text</li>
+<li>  UI CLICK (Global T UI Events)</li>
+</ul>
+<p>  Toggle:</p>
+<ul>
+<li>  Get Event Bool Data</li>
+<li>  Bool Test</li>
+<li>  UI BOOL VALUE CHANGED</li>
+</ul>
+<p>  Slider / ScrollBar</p>
+<ul>
+<li>  Get Event Float Data</li>
+<li>  Convert Float To String</li>
+<li>  UI FLOAT VALUE CHANGED</li>
+<li>  勾选 Every Frame</li>
+</ul>
+<p>  DropDown</p>
+<ul>
+<li>  UI Drop Down Clear Options</li>
+<li>  UI Drop Down Add Options</li>
+<li>  Get Event Int Data</li>
+<li>  UI INT VALUE CHANGED</li>
+<li>  新建变量 color</li>
+<li>  Array Get</li>
+<li>  UI Graphic Set Color</li>
+</ul>
+<p>  <strong>注意：设置颜色时候 透明度也要设置</strong></p>
+<p>  InputField</p>
+<ul>
+<li>  UI END EDIT</li>
+</ul>
+<p>  注意：挂载的是 Placeholder</p>
+</blockquote>
+<h3 id="Variables"><a href="#Variables" class="headerlink" title="Variables"></a>Variables</h3><blockquote>
+<p>  Get Axis Vector</p>
+<p>  Wait</p>
+<p>  Set Float Value</p>
+</blockquote>
+<h3 id="Instantiating"><a href="#Instantiating" class="headerlink" title="Instantiating"></a>Instantiating</h3><p>Create Object，Create Empty Object</p>
+<p>Get Mouse Button Down -&gt; SendEvent(spawn)</p>
+<p>做一个鼠标点击生成物体碰来碰去。</p>
+<p>GameObject 生成体 Spawn Point 使用物体的位置作为生成位置</p>
+<p><strong>注意：要将组件挂载到负责生成的空物体上，而不是生成的物体，可以使用预制体。</strong></p>
+<h3 id="Raycast"><a href="#Raycast" class="headerlink" title="Raycast"></a>Raycast</h3><p> 开启 Debug 数值 显示射线</p>
+<p>Layer Mask -&gt; add Layer 通过修改物体层级改变碰撞情况</p>
+<p>Invert Mask</p>
+<p><strong>Raycast All</strong></p>
+<h3 id="First-Person-Controller"><a href="#First-Person-Controller" class="headerlink" title="First Person Controller"></a>First Person Controller</h3><blockquote>
+<p>  脚本 Player Move</p>
+<ul>
+<li>  Controller Simple Move</li>
+<li>  Get Axis Vector （Relative to <Player>）</li>
+</ul>
+<p>  脚本 Player Look  添加一个相机组件</p>
+<ul>
+<li>  MouseLook 只控制相机 Y轴</li>
+<li>  MouseLook 只控制物体 X轴</li>
+<li>  Set Mouse Cursor (Hide Cursor + Lock Cursor)</li>
+</ul>
+<p>  <strong>制作了一个伊森</strong></p>
+</blockquote>
+<h3 id="Trigger-to-Open-Door"><a href="#Trigger-to-Open-Door" class="headerlink" title="Trigger to Open Door"></a>Trigger to Open Door</h3><blockquote>
+<p>  制作墙体和门还有按钮</p>
+<p>  Button:</p>
+<ul>
+<li>  MOUSE DOWN &lt;-&gt; Set Material Color</li>
+<li>  Get Position (Door)</li>
+<li>  Tween Positon (Door) <strong>World Position</strong> + <strong>Local Offset</strong></li>
+<li>  Ease Type -&gt; Ease In Out Quad</li>
+</ul>
+<p>  Trigger 近距离开门</p>
+<ul>
+<li>  在Button下新建button Trigger 关闭 Mesh Renderer 放大到一定区域 <strong>供角色碰撞</strong></li>
+<li>  Trigger Event (Collide Tag / Send Event)  勾选碰撞体组件的 Is Trigger 才能进入</li>
+<li>  与按钮交互 Enable FSM</li>
+<li>  解决墙体一直上升 取消勾选 Reset State On Disable</li>
+</ul>
+</blockquote>
+<h3 id="FSM-Inspector-命名-描述"><a href="#FSM-Inspector-命名-描述" class="headerlink" title="FSM Inspector 命名/描述"></a>FSM Inspector 命名/描述</h3><ul>
+<li>  FSM Description</li>
+<li>  Input / Output Variables</li>
+<li>  碰撞不同的物体进入不同的<strong>状态</strong>，最后触发 Camera Fade Out</li>
+<li>  勾选 Events 的 Inspector 选项，可以在 Inspector 面板中触发事件。</li>
+</ul>
+<h3 id="可破坏的物体"><a href="#可破坏的物体" class="headerlink" title="可破坏的物体"></a>可破坏的物体</h3><blockquote>
+<p>  在预制体中，箱子有一个隐藏的子物体——碎片。当箱子被碰撞时，比较碰撞大小并相应减少生命，当生命为0时将子物体的父级设为None并激活，对其施加一个位移的表现力，最后移除木箱子。</p>
+<p>  BreakableCrate:Health</p>
+<p>  (1) State</p>
+<ul>
+<li>  Compare health -&gt; next</li>
+<li>  Active planks -&gt; FINISHED</li>
+<li>  Deactive crate</li>
+</ul>
+<p>  (2) Action</p>
+<ul>
+<li>  Float Compare</li>
+<li>  Activate Game Object (Deactive)</li>
+<li>  Set Parent</li>
+<li>  Explosion</li>
+</ul>
+<p>  BreakableCrate:damage</p>
+<p>  (1) State</p>
+<ul>
+<li>  Wait for collision</li>
+<li>  Check force</li>
+<li>  Deal 1 point</li>
+</ul>
+<p>  (2) Action</p>
+<ul>
+<li>  Collision Event</li>
+<li>  Float Compare</li>
+<li>  Get Fsm Float</li>
+<li>  Float Subtract</li>
+<li>  Set Fsm Float</li>
+</ul>
+<p>  让物体可抓取</p>
+<p>  isgrabbable</p>
+</blockquote>
+<h1 id="小学期总结"><a href="#小学期总结" class="headerlink" title="小学期总结"></a>小学期总结</h1><h2 id="新概念"><a href="#新概念" class="headerlink" title="新概念"></a>新概念</h2><ul>
+<li>  可视化编程 Bolt插件、PlayMaker插件</li>
+<li>  素材风格：lowpoly 低多边形</li>
+<li>  素材商店，<strong>第一人称角色控制器资源包</strong></li>
+</ul>
+<p><strong>以及，我必然不适合做游戏这条路线。</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E5%AA%92%E6%8A%80/" rel="tag"><i class="fa fa-tag"></i> 数媒技</a>
+              <a href="/tags/Unity/" rel="tag"><i class="fa fa-tag"></i> Unity</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/07/18/Adblocker/" rel="prev" title="Adblocker">
+                  <i class="fa fa-chevron-left"></i> Adblocker
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/07/27/steam-shortcuts/" rel="next" title="steam/epic 桌面游戏图标错误">
+                  steam/epic 桌面游戏图标错误 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nova-mist</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+    <div class="pjax">
+
+
+    </div>
+</body>
+</html>

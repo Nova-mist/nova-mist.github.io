@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"nova-mist.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+<meta name="description" content="Vim 很好用，但我选择 IDE。 ♥">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vim 笔记">
+<meta property="og:url" content="https://nova-mist.github.io/2021/04/17/Vim/index.html">
+<meta property="og:site_name" content="novamist blog">
+<meta property="og:description" content="Vim 很好用，但我选择 IDE。 ♥">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/ysamaImage/blog_image2021/main/img/github/2021/958154-20180525110739711-549070329.png">
+<meta property="article:published_time" content="2021-04-17T00:36:00.000Z">
+<meta property="article:modified_time" content="2022-02-20T15:24:39.151Z">
+<meta property="article:author" content="Nova-mist">
+<meta property="article:tag" content="软件">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/ysamaImage/blog_image2021/main/img/github/2021/958154-20180525110739711-549070329.png">
+
+
+<link rel="canonical" href="https://nova-mist.github.io/2021/04/17/Vim/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>Vim 笔记 | novamist blog</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">novamist blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">75</span></a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">28</span></a></li>
+        <li class="menu-item menu-item-stars"><a href="/stars/" rel="section"><i class="fa fa-heart fa-fw"></i>收集</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">打开文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AB%E8%A1%8C%E6%A8%A1%E5%BC%8F%E5%91%BD%E4%BB%A4"><span class="nav-number">3.</span> <span class="nav-text">末行模式命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">4.</span> <span class="nav-text">移动命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%89%E4%B8%AD"><span class="nav-number">5.</span> <span class="nav-text">选中</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%81%A2%E5%A4%8D-%E5%88%A0%E9%99%A4"><span class="nav-number">6.</span> <span class="nav-text">恢复&#x2F;删除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E5%AF%B9%E8%B1%A1"><span class="nav-number">7.</span> <span class="nav-text">文本对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E6%80%A7%E4%BF%9D%E5%AD%98%E5%91%BD%E4%BB%A4v"><span class="nav-number">8.</span> <span class="nav-text">选择性保存命令v</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-number">9.</span> <span class="nav-text">更改操作符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%8D%E5%88%B6-%E7%B2%98%E8%B4%B4-%E5%89%AA%E5%88%87"><span class="nav-number">10.</span> <span class="nav-text">复制&#x2F;粘贴&#x2F;剪切</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%88%E5%B9%B6%E8%A1%8C"><span class="nav-number">11.</span> <span class="nav-text">合并行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%BF%E6%8D%A2-%E6%9F%A5%E6%89%BE"><span class="nav-number">12.</span> <span class="nav-text">替换&#x2F;查找</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%BE%91%E5%A4%9A%E4%B8%AA%E6%96%87%E4%BB%B6"><span class="nav-number">13.</span> <span class="nav-text">编辑多个文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E5%85%A5%E5%91%BD%E4%BB%A4"><span class="nav-number">14.</span> <span class="nav-text">插入命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E8%A1%8C%E4%BB%A3%E7%A0%81%E6%B3%A8%E9%87%8A"><span class="nav-number">14.1.</span> <span class="nav-text">多行代码注释</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TODO-%E5%88%86%E5%B1%8F%E5%91%BD%E4%BB%A4"><span class="nav-number">15.</span> <span class="nav-text">TODO: 分屏命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AB%E8%A1%8C%E5%91%BD%E4%BB%A4%E8%A1%A5%E5%85%85"><span class="nav-number">15.1.</span> <span class="nav-text">末行命令补充</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%8F"><span class="nav-number">16.</span> <span class="nav-text">宏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E7%B1%BB%E5%91%BD%E4%BB%A4%E7%9A%84%E9%80%89%E9%A1%B9"><span class="nav-number">17.</span> <span class="nav-text">设置类命令的选项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E5%A4%96%E9%83%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">18.</span> <span class="nav-text">执行外部命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%BE%E7%A4%BA%E8%A1%8C%E5%8F%B7"><span class="nav-number">19.</span> <span class="nav-text">显示行号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TODO%EF%BC%9A"><span class="nav-number">20.</span> <span class="nav-text">TODO：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">21.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nova-mist"
+      src="/uploads/avatar.png">
+  <p class="site-author-name" itemprop="name">Nova-mist</p>
+  <div class="site-description" itemprop="description">My blog about daily life and learning. :b</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Nova-mist" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Nova-mist" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fas fa-cat fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.bilibili.com/" title="https:&#x2F;&#x2F;www.bilibili.com&#x2F;" rel="noopener" target="_blank">Bilibili</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2021/04/17/Vim/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="Nova-mist">
+      <meta itemprop="description" content="My blog about daily life and learning. :b">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="novamist blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vim 笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-04-17 08:36:00" itemprop="dateCreated datePublished" datetime="2021-04-17T08:36:00+08:00">2021-04-17</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-02-20 23:24:39" itemprop="dateModified" datetime="2022-02-20T23:24:39+08:00">2022-02-20</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Vim 很好用，但我选择 IDE。 ♥</p>
+<p><img src="https://raw.githubusercontent.com/ysamaImage/blog_image2021/main/img/github/2021/958154-20180525110739711-549070329.png" alt="img"></p>
+<span id="more"></span>
+
+
+
+
+<h2 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h2><p>操作符-次数-动作(motion)</p>
+<p>d 3 w</p>
+<h2 id="打开文件"><a href="#打开文件" class="headerlink" title="打开文件"></a>打开文件</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vi</span> 文件名 +行数 <span class="token comment"># 跳到某行</span>
+<span class="token function">vi</span> 文件名 + <span class="token comment"># 跳转到末尾</span>
+<span class="token function">ls</span> -la<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="末行模式命令"><a href="#末行模式命令" class="headerlink" title="末行模式命令"></a>末行模式命令</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">:w
+:w nihao.txt <span class="token comment"># 另存</span>
+:q
+:<span class="token operator">!</span>q
+:wq <span class="token operator">=</span> :x <span class="token comment"># 保存并退出</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="移动命令"><a href="#移动命令" class="headerlink" title="移动命令"></a>移动命令</h2><p><strong>在动作前输入数字n会使命令重复执行n次</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">w/b <span class="token comment"># 后/前移动一个单词 W/B 忽略标点</span>
+e <span class="token comment"># 到当前单词末尾</span>
+<span class="token number">0</span> ^ $ <span class="token comment">#  行首 本行第一个非空字符 行尾</span>
+gg/G <span class="token comment"># 文件头部/尾部</span>
+num gg/G <span class="token operator">=</span> :num <span class="token comment"># 跳转某行</span>
+ctrl b/f <span class="token comment"># 移动屏幕 上/下</span>
+H/M/L <span class="token comment"># 屏幕顶/中/底</span>
+<span class="token punctuation">&#123;</span>/<span class="token punctuation">&#125;</span> <span class="token comment"># 上/下一段落</span>
+% <span class="token comment"># 括号匹配</span>
+f<span class="token punctuation">&#123;</span>char<span class="token punctuation">&#125;</span>/F<span class="token punctuation">&#123;</span>char<span class="token punctuation">&#125;</span> <span class="token comment">#跳到下一个字符为 char 的位置/跳到上一个字符为 char 的位置    `;` 重复这个命令</span>
+Ctrl-F/B 下上翻页
+```<span class="token variable"><span class="token variable">`</span>
+
+ 
+
+ 
+
+ 
+
+
+<span class="token comment">## 标记 &amp; 跳转</span>
+
+ 
+
+
+<span class="token variable">`</span></span>`<span class="token variable"><span class="token variable">`</span> <span class="token function">bash</span>
+mx
+m:mark
+x:a-z/A-Z
+<span class="token variable">`</span></span>x <span class="token comment"># 返回标记</span>
+ 
+% <span class="token comment"># 匹配括号</span>
+<span class="token string">''</span> <span class="token comment"># 上次光标</span>
+<span class="token punctuation">&#123;</span>/<span class="token punctuation">&#125;</span> <span class="token comment"># 上一段/下一段开头</span>
+<span class="token punctuation">(</span>/<span class="token punctuation">)</span> <span class="token comment"># 这个/下个句子开头</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="选中"><a href="#选中" class="headerlink" title="选中"></a>选中</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">v/V/ctrl+V <span class="token comment"># 可视模式/可视行模式/可视块模式（像鼠标）</span>
+ggVG <span class="token comment"># 选中所有</span>
+V <span class="token punctuation">[</span>/<span class="token punctuation">]</span> <span class="token comment"># 选中一段</span>
+<span class="token operator">>></span>/<span class="token operator">&lt;&lt;</span> <span class="token comment"># 缩排</span>
+V <span class="token operator">&lt;</span>/<span class="token operator">></span> <span class="token comment"># 选中模式下调整缩进</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="恢复-删除"><a href="#恢复-删除" class="headerlink" title="恢复/删除"></a>恢复/删除</h2><p><strong>许多改变文本的命令都由一个操作符和一个动作构成。</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">u/ctrl+r <span class="token comment"># 撤销/恢复</span>
+U <span class="token comment"># 撤销整行的修改</span>
+x
+d <span class="token comment"># 结合移动命令 dw d0 d&#123;/&#125; d4G d‘a删除标记</span>
+<span class="token function">dd</span> <span class="token comment"># 删除所在行 num+dd删除多行</span>
+D <span class="token comment"># 删至行尾</span>
+diw <span class="token comment"># 删除当前光标所在的单词</span>
+dt<span class="token punctuation">&#123;</span>char<span class="token punctuation">&#125;</span> <span class="token comment"># 从当前位置删除到某个字符前为止  `.` 重复这一步骤</span>
+3x
+5dd
+dW <span class="token comment"># 下一个单词起始</span>
+d$ <span class="token comment"># 到末尾</span>
+d0 <span class="token comment"># 当前行启示</span>
+d^ <span class="token comment"># 下一个非空字符</span>
+dG <span class="token comment"># 到行尾</span>
+d20G <span class="token comment"># 当前行到文件第20</span>
+de<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="文本对象"><a href="#文本对象" class="headerlink" title="文本对象"></a><strong>文本对象</strong></h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">d + iw <span class="token comment"># 命令 + 对象</span>
+aw <span class="token comment"># 当前单词以及空格</span>
+i<span class="token punctuation">(</span> <span class="token comment"># 括号内的内容</span>
+a<span class="token punctuation">(</span> <span class="token comment"># 括号以及括号内的内容</span>
+ 
+yiw <span class="token comment"># 来复制光标下的单词：</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="选择性保存命令v"><a href="#选择性保存命令v" class="headerlink" title="选择性保存命令v"></a>选择性保存命令v</h2><p>第一步：按v进入可视模式，选择要复制的内容<br>第二部：按：，屏幕底部出现:’&lt;, ‘&gt;，此时输入w filename即可将选中的内容复制到文件filename中去</p>
+<h2 id="更改操作符"><a href="#更改操作符" class="headerlink" title="更改操作符"></a>更改操作符</h2><p>更改类操作符的工作方式跟删除类是一致的。操作格式是：<br>c [number] motion<br>动作参数(motion)也是一样的，比如 w 代表单词，$代表行末等等。</p>
+<h2 id="复制-粘贴-剪切"><a href="#复制-粘贴-剪切" class="headerlink" title="复制/粘贴/剪切"></a>复制/粘贴/剪切</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">y 移动命令 p
+yy <span class="token comment"># 复制一行</span>
+n yy <span class="token comment"># 复制多行</span>
+
+p 下一行粘贴
+P 本行粘贴
+ 
+ 
+<span class="token builtin class-name">shift</span> + <span class="token function">v</span> <span class="token comment"># 进入选择模式</span>
+d y p <span class="token comment"># 剪切 复制 粘贴</span>
+n + 命令 <span class="token comment"># 多次</span>
+ 
+yy
+5yy
+yW <span class="token comment"># 到下一单词的开头</span>
+y$
+y0
+y^
+yG
+y20G<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="合并行"><a href="#合并行" class="headerlink" title="合并行"></a>合并行</h2><p>J 命令</p>
+<h2 id="替换-查找"><a href="#替换-查找" class="headerlink" title="替换/查找"></a>替换/查找</h2><p><strong>f 行内搜索</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">r/R <span class="token comment"># 当前字符/替换模式</span>
+<span class="token builtin class-name">.</span> <span class="token comment"># 重复上一次操作</span>
+<span class="token comment">#更改文本直到一个单词的末尾 - ce</span>
+?str <span class="token comment"># 逆向查找</span>
+/str n/N <span class="token comment"># 查找 下一个/上一个</span>
+*/<span class="token comment"># #光标移到当前str 快速匹配 光标向上/</span>
+:%s/ / /g <span class="token comment">#查找替换</span>
+<span class="token comment"># 范围 % 头到尾 也可指定 1,5 1,$</span>
+<span class="token comment"># s 替换操作</span>
+:%s/old_str/new_str/g <span class="token comment"># 全局</span>
+:s/old_str/new_str/g <span class="token comment"># 先选中文本</span>
+:%s/old_str/new_str/gc <span class="token comment"># 确认替换</span>
+<span class="token comment"># 选项y(es)/n(o)/a(ll)/q(uit)/l(ast最后一个替换返回行首)/^E/^Y上滚/下滚</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="编辑多个文件"><a href="#编辑多个文件" class="headerlink" title="编辑多个文件"></a>编辑多个文件</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vi</span> file1 file2 fil3
+:n <span class="token comment"># 切换下一个文件</span>
+:N <span class="token comment"># 上一个</span>
+:buffers <span class="token comment"># 文件列表</span>
+:buffer <span class="token number">1</span> :buffer <span class="token number">2</span> <span class="token comment"># 切换</span>
+:e hello.txt <span class="token comment"># 载入更多文件</span>
+<span class="token comment"># 文件间复制</span>
+:r foo.txt <span class="token comment"># 插入整个文件</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="插入命令"><a href="#插入命令" class="headerlink" title="插入命令"></a>插入命令</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">i/I/a/A/o/O <span class="token comment"># 当前/行首/当前字符后/行末/后空行/前空行</span>
+I <span class="token operator">==</span> ^i
+A <span class="token operator">==</span> <span class="token variable">$a</span>
+O <span class="token operator">==</span> ko<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="多行代码注释"><a href="#多行代码注释" class="headerlink" title="多行代码注释"></a>多行代码注释</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yy5p <span class="token comment"># 复制多次本行</span>
+num i <span class="token variable"><span class="token variable">`</span>*<span class="token variable">`</span></span> Esc <span class="token comment"># 插入多个字符 进入编辑模式下不要输入数字 会重复多次</span>
+^/0 ctrl V j I <span class="token comment"># Esc # 移动到行首 可视块模式 下移 行首插入`#` 退出</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+<h2 id="TODO-分屏命令"><a href="#TODO-分屏命令" class="headerlink" title="TODO: 分屏命令"></a>TODO: 分屏命令</h2><h3 id="末行命令补充"><a href="#末行命令补充" class="headerlink" title="末行命令补充"></a>末行命令补充</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">:e :e. :e 文件名 <span class="token comment"># 文件名字 查看目录 打开文件</span>
+:n <span class="token comment"># 新建文件</span>
+:w <span class="token comment"># 另存/保存阶段副本 不会切换文件</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">:sp/vsp 文件名 <span class="token comment"># 横向/纵向显示</span>
+ctrl+W + w/r/c/q/o <span class="token comment"># 切换窗口/互换/关闭/退出/关闭其他</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h2 id="宏"><a href="#宏" class="headerlink" title="宏"></a>宏</h2><p>录制宏 qq</p>
+<p>结束录制 q<br>使用宏 8@q 8次</p>
+<h2 id="设置类命令的选项"><a href="#设置类命令的选项" class="headerlink" title="设置类命令的选项"></a>设置类命令的选项</h2><blockquote>
+<p>:set ic - 搜索字符串时忽略大小写<br>:set noic - 禁用忽略大小写<br>:set hls - 高亮搜索结果（或者使用:set hlsearch）<br>:set nohlsearch</p>
+<p>来源：  <a target="_blank" rel="noopener" href="https://www.cnblogs.com/laizhenghong2012/p/9131207.html">https://www.cnblogs.com/laizhenghong2012/p/9131207.html</a></p>
+</blockquote>
+<h2 id="执行外部命令"><a href="#执行外部命令" class="headerlink" title="执行外部命令"></a>执行外部命令</h2><blockquote>
+<p>:! [command]</p>
+</blockquote>
+<h2 id="显示行号"><a href="#显示行号" class="headerlink" title="显示行号"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/electrocrazy/article/details/79035216">显示行号</a></h2><p>临时： <code>:set number</code>  <code>:set nonumber</code> number = nu</p>
+<p>永久： <code>.vimrc</code> 最后一行添加 <code>:set number</code></p>
+<h2 id="TODO："><a href="#TODO：" class="headerlink" title="TODO："></a>TODO：</h2><ul>
+<li><input disabled="" type="checkbox"> <strong>配置 vimrc</strong></li>
+<li><input checked="" disabled="" type="checkbox"> <strong>读书 Vim实用技巧</strong></li>
+<li><input disabled="" type="checkbox"> <a target="_blank" rel="noopener" href="https://coolshell.cn/articles/5426.html">简明 VIM 练级攻略</a></li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>11-30 <a target="_blank" rel="noopener" href="https://www.ahonn.me/blog/the-vim-guide-for-vs-code-users">写给 VS Code 用户的 Vim 入坑指南</a></p>
+<p>12-1 <a target="_blank" rel="noopener" href="https://blog.csdn.net/caisini_vc/article/details/38351133">vim括号匹配等跳转技巧</a></p>
+<p>4-17 <a href="%5B%E6%BA%90%E8%A7%86%E9%A2%91%5D(https://www.bilibili.com/video/BV17E411377Z)">看过的学习视频</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%BD%AF%E4%BB%B6/" rel="tag"><i class="fa fa-tag"></i> 软件</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/04/11/watch-film-with-friend/" rel="prev" title="一起看的多种方法">
+                  <i class="fa fa-chevron-left"></i> 一起看的多种方法
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/04/21/QR-Code-Learn/" rel="next" title="二维码学习">
+                  二维码学习 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nova-mist</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+    <div class="pjax">
+
+
+    </div>
+</body>
+</html>

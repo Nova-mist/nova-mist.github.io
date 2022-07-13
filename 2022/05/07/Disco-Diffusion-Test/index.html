@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"nova-mist.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+<meta name="description" content="Disco Diffusionhttps:&#x2F;&#x2F;weibo.com&#x2F;1757693565&#x2F;Lnu7RBqzI SettingsBasic Settings参数：  step 决定生成图片的精细程度 width_height 长宽需要是64的倍数 [1280, 768] [800, 800] [1280, 512] 电影风格    Init Settings init_image 路径，使用图片作为参">
+<meta property="og:type" content="article">
+<meta property="og:title" content="了解下Disco Diffusion">
+<meta property="og:url" content="https://nova-mist.github.io/2022/05/07/Disco-Diffusion-Test/index.html">
+<meta property="og:site_name" content="novamist blog">
+<meta property="og:description" content="Disco Diffusionhttps:&#x2F;&#x2F;weibo.com&#x2F;1757693565&#x2F;Lnu7RBqzI SettingsBasic Settings参数：  step 决定生成图片的精细程度 width_height 长宽需要是64的倍数 [1280, 768] [800, 800] [1280, 512] 电影风格    Init Settings init_image 路径，使用图片作为参">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources@main/images/2022/image-20220506165152918.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources@main/images/2022/image-20220506171045427.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources@main/images/2022/image-20220506171130906.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources@main/images/2022/image-20220506171157176.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources@main/images/2022/image-20220506171701442.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources@main/images/2022/image-20220506171443544.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources@main/images/2022/image-20220507114314348.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources@main/images/2022/image-20220507114430085.png">
+<meta property="article:published_time" content="2022-05-07T10:43:47.000Z">
+<meta property="article:modified_time" content="2022-05-07T10:46:04.544Z">
+<meta property="article:author" content="Nova-mist">
+<meta property="article:tag" content="tools">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources@main/images/2022/image-20220506165152918.png">
+
+
+<link rel="canonical" href="https://nova-mist.github.io/2022/05/07/Disco-Diffusion-Test/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>了解下Disco Diffusion | novamist blog</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">novamist blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">75</span></a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">28</span></a></li>
+        <li class="menu-item menu-item-stars"><a href="/stars/" rel="section"><i class="fa fa-heart fa-fw"></i>收集</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Disco-Diffusion"><span class="nav-number">1.</span> <span class="nav-text">Disco Diffusion</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Settings"><span class="nav-number">1.1.</span> <span class="nav-text">Settings</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Basic-Settings"><span class="nav-number">1.1.1.</span> <span class="nav-text">Basic Settings</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Init-Settings"><span class="nav-number">1.1.2.</span> <span class="nav-text">Init Settings</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Extra-Settings"><span class="nav-number">1.1.3.</span> <span class="nav-text">Extra Settings</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Prompts"><span class="nav-number">1.1.4.</span> <span class="nav-text">Prompts</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Diffuse"><span class="nav-number">1.2.</span> <span class="nav-text">Diffuse</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Run"><span class="nav-number">1.3.</span> <span class="nav-text">Run</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Error"><span class="nav-number">1.4.</span> <span class="nav-text">Error</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E8%AF%8D%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.5.</span> <span class="nav-text">关键词描述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%BB%E4%BD%9C%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.5.1.</span> <span class="nav-text">画作类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E4%BD%93%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.5.2.</span> <span class="nav-text">主体对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A3%8E%E6%A0%BC"><span class="nav-number">1.5.3.</span> <span class="nav-text">风格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%8F%E8%BF%B0%E7%BB%86%E8%8A%82"><span class="nav-number">1.5.4.</span> <span class="nav-text">描述细节</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%95%9C%E5%A4%B4%E8%AF%AD%E8%A8%80"><span class="nav-number">1.5.5.</span> <span class="nav-text">镜头语言</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Test"><span class="nav-number">1.6.</span> <span class="nav-text">Test</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nova-mist"
+      src="/uploads/avatar.png">
+  <p class="site-author-name" itemprop="name">Nova-mist</p>
+  <div class="site-description" itemprop="description">My blog about daily life and learning. :b</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Nova-mist" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Nova-mist" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fas fa-cat fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.bilibili.com/" title="https:&#x2F;&#x2F;www.bilibili.com&#x2F;" rel="noopener" target="_blank">Bilibili</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2022/05/07/Disco-Diffusion-Test/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="Nova-mist">
+      <meta itemprop="description" content="My blog about daily life and learning. :b">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="novamist blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          了解下Disco Diffusion
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-05-07 18:43:47 / 修改时间：18:46:04" itemprop="dateCreated datePublished" datetime="2022-05-07T18:43:47+08:00">2022-05-07</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="Disco-Diffusion"><a href="#Disco-Diffusion" class="headerlink" title="Disco Diffusion"></a>Disco Diffusion</h1><p><a target="_blank" rel="noopener" href="https://weibo.com/1757693565/Lnu7RBqzI">https://weibo.com/1757693565/Lnu7RBqzI</a></p>
+<h2 id="Settings"><a href="#Settings" class="headerlink" title="Settings"></a>Settings</h2><h3 id="Basic-Settings"><a href="#Basic-Settings" class="headerlink" title="Basic Settings"></a>Basic Settings</h3><p>参数：</p>
+<ul>
+<li>step 决定生成图片的精细程度</li>
+<li>width_height 长宽需要是64的倍数<ul>
+<li>[1280, 768]</li>
+<li>[800, 800]</li>
+<li>[1280, 512] 电影风格</li>
+</ul>
+</li>
+</ul>
+<h3 id="Init-Settings"><a href="#Init-Settings" class="headerlink" title="Init Settings"></a>Init Settings</h3><ul>
+<li>init_image 路径，使用图片作为参考模板</li>
+<li>init_scale 数值越大，与参考图片越相似</li>
+<li>skip_steps 设置前多少step使用参考图片</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources@main/images/2022/image-20220506165152918.png" alt="image-20220506165152918"></p>
+<h3 id="Extra-Settings"><a href="#Extra-Settings" class="headerlink" title="Extra Settings"></a>Extra Settings</h3><ul>
+<li>intermediate_saves 设置保存生成中的关键帧（百分率）</li>
+</ul>
+<h3 id="Prompts"><a href="#Prompts" class="headerlink" title="Prompts"></a>Prompts</h3><p>输入描述性的语句。</p>
+<blockquote>
+<p>主体，构成，作者风格，参考网站，补充细节。</p>
+</blockquote>
+<h2 id="Diffuse"><a href="#Diffuse" class="headerlink" title="Diffuse"></a>Diffuse</h2><ul>
+<li>display_rate 每隔多少step展示生成过程中的关键帧</li>
+<li>n_batches 最终生成的图片数（使用相同的描述）</li>
+</ul>
+<h2 id="Run"><a href="#Run" class="headerlink" title="Run"></a>Run</h2><p>Run all</p>
+<p>Run anyway</p>
+<p>Use Google Drive.</p>
+<p><strong>resume_run</strong></p>
+<span id="more"></span>
+
+
+
+<h2 id="Error"><a href="#Error" class="headerlink" title="Error"></a>Error</h2><blockquote>
+<p>1.3 No CUDA GPUs.</p>
+<p>可用资源用尽，需要等待冷却。登录不用也会消耗</p>
+</blockquote>
+<blockquote>
+<p>CUDA out of memory.</p>
+<p>图片分辨率过大 / 运行时间过长。</p>
+<p>终止会话，重新加载。</p>
+</blockquote>
+<blockquote>
+<p>1.3 加载错误导致 2 / 4 出现错误。</p>
+<p>清空云端，重新加载。</p>
+</blockquote>
+<h2 id="关键词描述"><a href="#关键词描述" class="headerlink" title="关键词描述"></a>关键词描述</h2><blockquote>
+<p> 类型、前置细节、环境、参考风格渲染方式和艺术家。</p>
+</blockquote>
+<ol>
+<li>结构不是必须的，缺少会随机补全。</li>
+<li>两个字符串的权重是相等，单个字符串中越靠前权重越大。</li>
+</ol>
+<h3 id="画作类型"><a href="#画作类型" class="headerlink" title="画作类型"></a>画作类型</h3><p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources@main/images/2022/image-20220506171045427.png" alt="image-20220506171045427"></p>
+<h3 id="主体对象"><a href="#主体对象" class="headerlink" title="主体对象"></a>主体对象</h3><p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources@main/images/2022/image-20220506171130906.png" alt="image-20220506171130906"></p>
+<h3 id="风格"><a href="#风格" class="headerlink" title="风格"></a>风格</h3><p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources@main/images/2022/image-20220506171157176.png" alt="image-20220506171157176"></p>
+<h3 id="描述细节"><a href="#描述细节" class="headerlink" title="描述细节"></a>描述细节</h3><ul>
+<li><p>不用否定</p>
+</li>
+<li><p>不要描述动作</p>
+<ul>
+<li>”people are swimming“ ❌</li>
+<li>”people wear swimsuits“ ✔</li>
+</ul>
+</li>
+<li><p>精准的数量、简练的语言、正确的时间</p>
+</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources@main/images/2022/image-20220506171701442.png" alt="image-20220506171701442"></p>
+<h3 id="镜头语言"><a href="#镜头语言" class="headerlink" title="镜头语言"></a>镜头语言</h3><p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources@main/images/2022/image-20220506171443544.png" alt="image-20220506171443544"></p>
+<h2 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h2><p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources@main/images/2022/image-20220507114314348.png" alt="image-20220507114314348"></p>
+<p>自己试了试，挺费时间的，效果也把握不住，浅尝辄止。</p>
+<p>直接生成的“坐在日本海边的孤独女性”，和用参考图片生成的“耶稣在天堂做DJ，周围是云和圣光”。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources@main/images/2022/image-20220507114430085.png" alt="image-20220507114430085"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/tools/" rel="tag"><i class="fa fa-tag"></i> tools</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/04/01/git-config-lf-crlf/" rel="prev" title="解决报错LF will be replaced by CRLF">
+                  <i class="fa fa-chevron-left"></i> 解决报错LF will be replaced by CRLF
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/05/07/react-native-learn/" rel="next" title="React Native学习">
+                  React Native学习 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nova-mist</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+    <div class="pjax">
+
+
+    </div>
+</body>
+</html>

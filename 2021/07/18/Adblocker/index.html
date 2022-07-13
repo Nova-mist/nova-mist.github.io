@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"nova-mist.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+<meta name="description" content="今天(2021&#x2F;7&#x2F;17)看科技爱好者周刊，本周的话题是关于广告拦截器。 自从使用上Chrome类的浏览器，广告拦截和油猴脚本几乎是我必装的拓展插件了。这些插件的功能很强大，但我一直都是保持一个开箱即用的使用方式，并不理解其使用的规则集和脚本。而且我在使用Adblocker之类的插件的时候，有时会遇到网页的一些功能失效的情况，然后今天才了解到应该是规则集中一些规则产生了误判。 所以今天顺着周刊中的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Adblocker">
+<meta property="og:url" content="https://nova-mist.github.io/2021/07/18/Adblocker/index.html">
+<meta property="og:site_name" content="novamist blog">
+<meta property="og:description" content="今天(2021&#x2F;7&#x2F;17)看科技爱好者周刊，本周的话题是关于广告拦截器。 自从使用上Chrome类的浏览器，广告拦截和油猴脚本几乎是我必装的拓展插件了。这些插件的功能很强大，但我一直都是保持一个开箱即用的使用方式，并不理解其使用的规则集和脚本。而且我在使用Adblocker之类的插件的时候，有时会遇到网页的一些功能失效的情况，然后今天才了解到应该是规则集中一些规则产生了误判。 所以今天顺着周刊中的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/July007qbcNPgy1grmg25pm3cg30m80m8qv6.gif">
+<meta property="og:image" content="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/Julyimage-20210723140814390.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/Julyimage-20210723140448956.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/Julyimage-20210723140610711.png">
+<meta property="article:published_time" content="2021-07-18T08:37:40.000Z">
+<meta property="article:modified_time" content="2022-02-20T15:47:48.673Z">
+<meta property="article:author" content="Nova-mist">
+<meta property="article:tag" content="技术">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/July007qbcNPgy1grmg25pm3cg30m80m8qv6.gif">
+
+
+<link rel="canonical" href="https://nova-mist.github.io/2021/07/18/Adblocker/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>Adblocker | novamist blog</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">novamist blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">75</span></a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">28</span></a></li>
+        <li class="menu-item menu-item-stars"><a href="/stars/" rel="section"><i class="fa fa-heart fa-fw"></i>收集</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5%F0%9F%94%97"><span class="nav-number">1.</span> <span class="nav-text">链接🔗</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%84%E5%88%99"><span class="nav-number">2.</span> <span class="nav-text">规则</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%A8%E5%88%8A%E4%B8%AD%E7%9A%84%E7%A4%BA%E4%BE%8B"><span class="nav-number">2.1.</span> <span class="nav-text">周刊中的示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%85%E8%AF%BB%E6%96%87%E6%A1%A3"><span class="nav-number">2.2.</span> <span class="nav-text">阅读文档</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E7%9A%84%E6%8B%A6%E6%88%AA%E8%A7%84%E5%88%99"><span class="nav-number">2.2.1.</span> <span class="nav-text">简单的拦截规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%84%E5%88%99%E9%80%89%E9%A1%B9"><span class="nav-number">2.2.2.</span> <span class="nav-text">规则选项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%99%BD%E5%90%8D%E5%8D%95%E8%A7%84%E5%88%99"><span class="nav-number">2.2.3.</span> <span class="nav-text">白名单规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%90%E8%97%8F%E5%85%83%E7%B4%A0"><span class="nav-number">2.2.4.</span> <span class="nav-text">隐藏元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E7%9A%84CSS%E9%80%89%E6%8B%A9%E5%99%A8"><span class="nav-number">2.2.5.</span> <span class="nav-text">扩展的CSS选择器</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BA%94%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%EF%BC%9A%E5%B1%8F%E8%94%BD%E7%99%BE%E5%BA%A6%E6%90%9C%E7%B4%A2%E7%83%AD%E6%90%9C%E6%A0%8F"><span class="nav-number">3.0.1.</span> <span class="nav-text">示例：屏蔽百度搜索热搜栏</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nova-mist"
+      src="/uploads/avatar.png">
+  <p class="site-author-name" itemprop="name">Nova-mist</p>
+  <div class="site-description" itemprop="description">My blog about daily life and learning. :b</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Nova-mist" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Nova-mist" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fas fa-cat fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.bilibili.com/" title="https:&#x2F;&#x2F;www.bilibili.com&#x2F;" rel="noopener" target="_blank">Bilibili</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2021/07/18/Adblocker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="Nova-mist">
+      <meta itemprop="description" content="My blog about daily life and learning. :b">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="novamist blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Adblocker
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-07-18 16:37:40" itemprop="dateCreated datePublished" datetime="2021-07-18T16:37:40+08:00">2021-07-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-02-20 23:47:48" itemprop="dateModified" datetime="2022-02-20T23:47:48+08:00">2022-02-20</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>今天(2021/7/17)看<a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2021/07/weekly-issue-167.html">科技爱好者周刊</a>，本周的话题是关于广告拦截器。</p>
+<p>自从使用上Chrome类的浏览器，广告拦截和油猴脚本几乎是我必装的拓展插件了。这些插件的功能很强大，但我一直都是保持一个开箱即用的使用方式，并不理解其使用的规则集和脚本。而且我在使用Adblocker之类的插件的时候，有时会遇到网页的一些功能失效的情况，然后今天才了解到应该是规则集中一些规则产生了误判。</p>
+<p>所以今天顺着周刊中的一些链接，简单学习一下广告拦截规则的过滤语法。</p>
+<img src="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/July007qbcNPgy1grmg25pm3cg30m80m8qv6.gif" alt="007qbcNPgy1grmg25pm3cg30m80m8qv6" style="zoom: 50%;" />
+
+<span id="more"></span>
+
+<h1 id="链接🔗"><a href="#链接🔗" class="headerlink" title="链接🔗"></a>链接🔗</h1><ul>
+<li>  <a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2021/07/weekly-issue-167.html">科技爱好者周刊（第 167 期）：广告拦截器太过分了 - 阮一峰的网络日志 (ruanyifeng.com)</a></li>
+<li>  <a target="_blank" rel="noopener" href="https://help.eyeo.com/adblockplus/how-to-write-filters">How to write filters | Adblock Plus Help Center (eyeo.com)</a> <strong>官方文档</strong></li>
+<li>  <a target="_blank" rel="noopener" href="https://adblockplus.org/filter-cheatsheet">Adblock Plus filters explained</a> <strong>速查表</strong></li>
+<li>  <a target="_blank" rel="noopener" href="https://easylist-downloads.adblockplus.org/easylistchina.txt">https://easylist-downloads.adblockplus.org/easylistchina.txt</a></li>
+</ul>
+<h1 id="规则"><a href="#规则" class="headerlink" title="规则"></a>规则</h1><h2 id="周刊中的示例"><a href="#周刊中的示例" class="headerlink" title="周刊中的示例"></a>周刊中的示例</h2><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token operator">!</span> 拦截脚本 checker<span class="token punctuation">.</span>js
+ruanyifeng<span class="token punctuation">.</span>com<span class="token operator">/</span>blog<span class="token operator">/</span>checker<span class="token punctuation">.</span>js
+
+<span class="token operator">!</span> 隐藏指向 t<span class="token punctuation">.</span>cn 的链接
+ruanyifeng<span class="token punctuation">.</span>com##a<span class="token punctuation">[</span>href<span class="token operator">^=</span><span class="token string">""</span><span class="token punctuation">]</span>
+
+<span class="token operator">!</span> 隐藏含有<span class="token string">"培训"</span>的段落
+ruanyifeng<span class="token punctuation">.</span>com##p<span class="token operator">:</span><span class="token operator">-</span>abp<span class="token operator">-</span><span class="token function">contains</span><span class="token punctuation">(</span>培训<span class="token punctuation">)</span>
+
+<span class="token operator">!</span> 禁掉所有<span class="token constant">JS</span>脚本
+ruanyifeng<span class="token punctuation">.</span>com<span class="token operator">^</span>$csp<span class="token operator">=</span>script<span class="token operator">-</span>src <span class="token string">'none'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="阅读文档"><a href="#阅读文档" class="headerlink" title="阅读文档"></a>阅读文档</h2><h3 id="简单的拦截规则"><a href="#简单的拦截规则" class="headerlink" title="简单的拦截规则"></a><strong>简单的拦截规则</strong></h3><pre class="line-numbers language-none"><code class="language-none">! 通过地址部分拦截 文本&#x2F;通配符&#x2F;分隔符(地址在此结束或使用分隔符 ? or &#x2F;)
+&#x2F;banner&#x2F;*&#x2F;img^
+! 不会拦截文件 因为分隔符为 .
+http:&#x2F;&#x2F;example.com&#x2F;banner&#x2F;foo&#x2F;img.gif
+
+! 按域名拦截 域名锚点 文本 分隔符(&#x2F; or :)
+||ads.example.com^
+! blocks http:&#x2F;&#x2F;serverl.ads.example.com&#x2F;foo.gif 域名根节点在后
+
+! 拦截确切的地址 起始锚点 文本 结束锚点
+|http:&#x2F;&#x2F;example.com&#x2F;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="规则选项"><a href="#规则选项" class="headerlink" title="规则选项"></a><strong>规则选项</strong></h3><p><img src="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/Julyimage-20210723140814390.png" alt="image-20210723140814390"></p>
+<p>当地址被加载作为脚本或图片时，并且加载来自特定的域名，规则才生效。</p>
+<h3 id="白名单规则"><a href="#白名单规则" class="headerlink" title="白名单规则"></a>白名单规则</h3><pre class="line-numbers language-none"><code class="language-none">! 允许特定的请求 例外符号 允许的地址 选项类型(避免应用到屏蔽脚本)
+@@||ads.example.com&#x2F;notbanner^$~script
+! 整个网站例外 此时adblocker 完全禁用
+@@||example.com^$document<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="隐藏元素"><a href="#隐藏元素" class="headerlink" title="隐藏元素"></a>隐藏元素</h3><pre class="line-numbers language-none"><code class="language-none">! 域名(可以多个) 分隔符(##) CSS选择器
+example.com,example.net##.advert
+! 排除规则分隔符 #@#
+##selector ! 在所有网站应用
+example.com,~mail.example.com##selector<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<table>
+<thead>
+<tr>
+<th>Selector</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>###advert</code></td>
+<td>Matches the element with the unique id “advert”</td>
+</tr>
+<tr>
+<td><code>##.advert</code></td>
+<td>Matches elements with the class “advert”</td>
+</tr>
+<tr>
+<td><code>##table[height=&quot;100&quot;][width=&quot;100&quot;]</code></td>
+<td>Matches a table with a height of 100 and a width of 100</td>
+</tr>
+<tr>
+<td><code>##a[href=&quot;http://example.com/&quot;]</code></td>
+<td>Matches links to <a target="_blank" rel="noopener" href="http://example.com/">http://example.com/</a></td>
+</tr>
+<tr>
+<td><code>##div[style=&quot;width:300px;height:250px;&quot;]</code></td>
+<td>Matches div elements that have exactly the style specified</td>
+</tr>
+<tr>
+<td><code>###advert &gt; .link</code></td>
+<td>Matches elements with the class “link” that are enclosed within elements with the id “advert” 匹配广告元素下级的链接</td>
+</tr>
+<tr>
+<td><code>###advert + .link</code></td>
+<td>Matches elements with the class “link” that are immediately preceded by elements with the id “advert” 匹配链接上级的元素</td>
+</tr>
+<tr>
+<td><code>##a[href^=&quot;http://example.com/&quot;]</code></td>
+<td>Matches links to any pages hosted on <a target="_blank" rel="noopener" href="http://example.com/">http://example.com/</a></td>
+</tr>
+<tr>
+<td><code>##div[style^=&quot;width:300px;height:250px;&quot;]</code></td>
+<td>匹配此样式开头的元素</td>
+</tr>
+<tr>
+<td><code>##div[style$=&quot;width:300px;height:250px;&quot;]</code></td>
+<td>匹配此样式结尾的元素</td>
+</tr>
+<tr>
+<td><code>##div[style*=&quot;width:300px;height:250px;&quot;]</code></td>
+<td>匹配包含此样式的元素</td>
+</tr>
+</tbody></table>
+<h3 id="扩展的CSS选择器"><a href="#扩展的CSS选择器" class="headerlink" title="扩展的CSS选择器"></a>扩展的CSS选择器</h3><pre class="line-numbers language-none"><code class="language-none">! 基于内容隐藏 域名 分隔符(#?#) 选择器
+example.com,example.net#?#div:-abp-has(&gt; div &gt; img.advert)
+! 排除分隔符 #@#<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>伪类</strong></p>
+<pre class="line-numbers language-none"><code class="language-none">! 包含指定字符串
+:-abp-contains()
+! 包含属性 支持正则
+:-abp-properties()
+! 内容子树匹配到指定的选择器
+:-abp-has()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<table>
+<thead>
+<tr>
+<th>Selector</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>example.com#?#div:-abp-properties(width:300px;height:250px;)</code></td>
+<td>Matches <code>div</code> elements whose style contain the specified properties</td>
+</tr>
+<tr>
+<td><code>example.com#?#div:-abp-has(&gt; div &gt; img.advert)</code></td>
+<td>Matches <code>div</code> elements that contain as a direct descendant a <code>div</code> element whose direct descendant is an <code>img</code> with the class “advert”</td>
+</tr>
+<tr>
+<td><code>example.com#?#div:-abp-has(&gt; div &gt; img:-abp-properties(width:300px;height:250px;))</code></td>
+<td>Matches <code>div</code> elements that contain as a direct descendant a <code>div</code> element whose direct descendant is an <code>img</code> element whose style properties contain the specified properties, a <code>width</code> of 300 pixels and an <code>height</code> of 250 pixels</td>
+</tr>
+<tr>
+<td><code>example.com#?#div:-abp-has(&gt; div &gt; img:-abp-properties(WidTh:300px;hEigHt:250px;))</code></td>
+<td>Since the CSS properties are matched case-insensitively, this filter matches the same thing as above</td>
+</tr>
+<tr>
+<td><code>example.com#?#div:-abp-has(&gt; span:-abp-contains(Advertisment))</code></td>
+<td>Matches <code>div</code> elements that have a direct descendent <code>span</code> element containing the text “Advertisment”</td>
+</tr>
+<tr>
+<td><code>example.com#?#div &gt; img:-abp-properties(width:*px;height:250px;)</code></td>
+<td>By using a wildcard <code>*</code>, this filter matches an <code>img</code> whose CSS style properties have a <code>width</code> specified in pixels and a <code>height</code> of 250 pixels</td>
+</tr>
+<tr>
+<td><code>example.com#?#div &gt; img:-abp-properties(/width: 3[2-8]px;/)</code></td>
+<td>By using a regular expression, this filter matches an <code>img</code> whose CSS style properties have a <code>width</code> between 32 and 38 pixels</td>
+</tr>
+</tbody></table>
+<h1 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h1><p>稍微了解了过滤语法之后就可以在一些网页上编写自己的过滤规则，隐藏一些不是广告的但却不想看到的内容，例如百度的热搜栏之类的。</p>
+<p>当然插件本身提供了<strong>「拦截元素」</strong>的功能，可以简单屏蔽一些内容，不过有些复杂的部分需要多次点击比较麻烦，如果编写过滤规则更简洁高效。<strong>同时，也可以借助「拦截元素」这个功能学习一些规则的编写。</strong></p>
+<p><img src="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/Julyimage-20210723140448956.png" alt="image-20210723140448956"></p>
+<h3 id="示例：屏蔽百度搜索热搜栏"><a href="#示例：屏蔽百度搜索热搜栏" class="headerlink" title="示例：屏蔽百度搜索热搜栏"></a>示例：屏蔽百度搜索热搜栏</h3><p><img src="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/Julyimage-20210723140610711.png" alt="image-20210723140610711"></p>
+<pre class="line-numbers language-none"><code class="language-none">! 不仅拦截了热搜栏还拦截了上面的推荐栏
+baidu.com##.result-op.xpath-log
+! 直接F12审查元素复制 selector 只屏蔽热搜栏
+baidu.com###con-ar &gt; div:nth-child(2)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>如果自己的过滤规则足够多，可以写成文本文件，由链接引用。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"><i class="fa fa-tag"></i> 技术</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/07/07/mysql-learning-03/" rel="prev" title="mysql学习03——书的内容">
+                  <i class="fa fa-chevron-left"></i> mysql学习03——书的内容
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/07/23/UnityLearn/" rel="next" title="学了点Unity以及小学期">
+                  学了点Unity以及小学期 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nova-mist</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+    <div class="pjax">
+
+
+    </div>
+</body>
+</html>

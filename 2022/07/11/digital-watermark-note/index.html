@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"nova-mist.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+<meta name="description" content="数字水印耳濡目染[toc]">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数字水印耳濡目染">
+<meta property="og:url" content="https://nova-mist.github.io/2022/07/11/digital-watermark-note/index.html">
+<meta property="og:site_name" content="novamist blog">
+<meta property="og:description" content="数字水印耳濡目染[toc]">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="c:/Users/ysama/AppData/Roaming/Typora/typora-user-images/image-20220610113146937.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/b7003af33a87e9500fd4dfa4eaf1424af9f2b40d.jpeg">
+<meta property="article:published_time" content="2022-07-11T01:08:39.000Z">
+<meta property="article:modified_time" content="2022-07-11T01:11:08.890Z">
+<meta property="article:author" content="Nova-mist">
+<meta property="article:tag" content="数媒技">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:/Users/ysama/AppData/Roaming/Typora/typora-user-images/image-20220610113146937.png">
+
+
+<link rel="canonical" href="https://nova-mist.github.io/2022/07/11/digital-watermark-note/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>数字水印耳濡目染 | novamist blog</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">novamist blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">75</span></a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">28</span></a></li>
+        <li class="menu-item menu-item-stars"><a href="/stars/" rel="section"><i class="fa fa-heart fa-fw"></i>收集</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E5%AD%97%E6%B0%B4%E5%8D%B0%E8%80%B3%E6%BF%A1%E7%9B%AE%E6%9F%93"><span class="nav-number">1.</span> <span class="nav-text">数字水印耳濡目染</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B0%B4%E5%8D%B0%E6%8A%80%E6%9C%AF%E5%88%86%E7%B1%BB"><span class="nav-number">1.1.</span> <span class="nav-text">水印技术分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%86%E9%A2%91%E6%B0%B4%E5%8D%B0"><span class="nav-number">1.2.</span> <span class="nav-text">视频水印</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A8%E7%BC%96%E5%85%A8%E8%A7%A3%E7%9A%84%E8%A7%86%E9%A2%91%E6%B0%B4%E5%8D%B0%E5%B5%8C%E5%85%A5"><span class="nav-number">1.3.</span> <span class="nav-text">全编全解的视频水印嵌入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#H-amp-G%E7%AE%97%E6%B3%95"><span class="nav-number">1.4.</span> <span class="nav-text">H&amp;G算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BC%B0-PSNR-SSIM"><span class="nav-number">1.5.</span> <span class="nav-text">图像质量评估 PSNR &#x2F; SSIM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#matplotlib%E5%AD%97%E4%BD%93%E5%BA%93%E9%97%AE%E9%A2%98"><span class="nav-number">1.6.</span> <span class="nav-text">matplotlib字体库问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BE%E5%83%8F%E5%A4%A7%E5%B0%8F"><span class="nav-number">1.7.</span> <span class="nav-text">图像大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%90%E8%97%8F%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">1.8.</span> <span class="nav-text">隐藏字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6"><span class="nav-number">1.9.</span> <span class="nav-text">读取文件</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nova-mist"
+      src="/uploads/avatar.png">
+  <p class="site-author-name" itemprop="name">Nova-mist</p>
+  <div class="site-description" itemprop="description">My blog about daily life and learning. :b</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Nova-mist" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Nova-mist" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fas fa-cat fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.bilibili.com/" title="https:&#x2F;&#x2F;www.bilibili.com&#x2F;" rel="noopener" target="_blank">Bilibili</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2022/07/11/digital-watermark-note/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="Nova-mist">
+      <meta itemprop="description" content="My blog about daily life and learning. :b">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="novamist blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数字水印耳濡目染
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-07-11 09:08:39 / 修改时间：09:11:08" itemprop="dateCreated datePublished" datetime="2022-07-11T09:08:39+08:00">2022-07-11</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="数字水印耳濡目染"><a href="#数字水印耳濡目染" class="headerlink" title="数字水印耳濡目染"></a>数字水印耳濡目染</h1><p>[toc]</p>
+<span id="more"></span>
+
+<h2 id="水印技术分类"><a href="#水印技术分类" class="headerlink" title="水印技术分类"></a>水印技术分类</h2><ul>
+<li><strong>按嵌入位置分类：空间域水印、变换域水印</strong></li>
+</ul>
+<p>空间域水印，简单，鲁棒性较差。</p>
+<p>LSB（最低有效位）水印，本质是在图像中添加了一些高频噪声。</p>
+<p>Patchwork算法，改变图像的统计数据来嵌入水印信息。</p>
+<p>变换域水印，首先对图像进行变换，减少图像像素之间的相关性，通过改变变换系数的方法将水印信息嵌入到图像中。</p>
+<p>DCT、DFT、DWT变换。</p>
+<p>变换域水印算法将水印信息通过变换系数扩散到空间的所有像素上，不可见性强，鲁棒性强。</p>
+<ul>
+<li><strong>按使用场景分类：脆弱性水印、半脆弱性水印、鲁棒性水印。</strong></li>
+</ul>
+<p>脆弱性，一旦篡改就能检测到，用于数字载体的完整性认证和内容保护。</p>
+<p>鲁棒性，对攻击有较高的抗干扰能力，保证一定的检出率，用于版权的保护。</p>
+<h2 id="视频水印"><a href="#视频水印" class="headerlink" title="视频水印"></a>视频水印</h2><table>
+<thead>
+<tr>
+<th>嵌入方案</th>
+<th>优点</th>
+<th>缺点</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>原始视频水印嵌入</td>
+<td>水印算法独立，不用考虑压缩标准和编解码器结构</td>
+<td>数据量大，有损压缩会破坏水印，检测时要完全解码</td>
+<td></td>
+</tr>
+<tr>
+<td>编码域压缩视频水印嵌入</td>
+<td>在码流中的编码参数中嵌入水印信息，不增加视频冗余度、不改变原视频码率</td>
+<td>对原视频码流的分析复杂，改变编码参数可能降低视频质量</td>
+<td></td>
+</tr>
+<tr>
+<td>压缩域压缩视频水印嵌入</td>
+<td>简单，不破坏原视频的结构、码流</td>
+<td>嵌入的水印信息量十分有限</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="全编全解的视频水印嵌入"><a href="#全编全解的视频水印嵌入" class="headerlink" title="全编全解的视频水印嵌入"></a>全编全解的视频水印嵌入</h2><p>I帧是参考帧，在I帧中嵌入水印，会在P帧和B帧造成扩散。</p>
+<p>人类视觉系统（HVS），人眼对颜色的变化更敏感，在色度块嵌入水印会破坏水印的不可见性，因此在YUV图像的亮度Y分量嵌入水印。</p>
+<blockquote>
+<p>Y亮度分量，U、V色度分量。</p>
+</blockquote>
+<p>将视频的每一帧看做静止的图像，应用图像水印算法，必须经历所有的图像编解码过程。</p>
+<h2 id="H-amp-G算法"><a href="#H-amp-G算法" class="headerlink" title="H&amp;G算法"></a>H&amp;G算法</h2><p><strong>压缩域水印嵌入。</strong></p>
+<p><img src="C:\Users\ysama\AppData\Roaming\Typora\typora-user-images\image-20220610113146937.png" alt="image-20220610113146937"></p>
+<p>将一个码流解码之后只处理需要嵌入水印信息的部分。</p>
+<p><strong>在码流中的DCT系数中嵌入水印信息。</strong></p>
+<p>MPEG-2视频压缩流中，只有I帧可以嵌入水印。</p>
+<p>H.264压缩流中，I帧使用帧内预测模式，I帧中的DCT系数也是残差数据，不能按正常流程在DCT系数中嵌入水印。</p>
+<p><strong>改进：将I帧完全解码获得原始图像，保留该帧所有编码参数，在I帧编码时对图像做分块、DCT变换、嵌入水印。</strong></p>
+<p><strong>密码管理盒子</strong></p>
+<p>文件加密盒子</p>
+<p>lsb图像水印</p>
+<h2 id="图像质量评估-PSNR-SSIM"><a href="#图像质量评估-PSNR-SSIM" class="headerlink" title="图像质量评估 PSNR / SSIM"></a>图像质量评估 PSNR / SSIM</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43605641/article/details/118088814">图像质量评估指标：PSNR / SSIM 原理及Python代码_秋山丶雪绪的博客-CSDN博客_psnr ssim</a></p>
+<p><strong>PSNR 峰值信噪比</strong><br>$$<br>\mathrm{PSNR}=10 \times lg \left( \frac{\mathrm{MaxValue}^2}{\mathrm{MSE}}\right)<br>$$</p>
+<blockquote>
+<p>MSE为两张图像的均方差，MaxValue为图像像素的最大值，例如8位图像2<sup>8</sup> - 1 = 255</p>
+<p>PSNR 最小值为 0，PSNR 越大，两张图像差异越小。PSNR相同，人眼视觉差距有可能也会很大。</p>
+</blockquote>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># 直接调库</span>
+<span class="token keyword">from</span> skimage<span class="token punctuation">.</span>measure <span class="token keyword">import</span> compare_psnr
+
+compare_psnr<span class="token punctuation">(</span>img1<span class="token punctuation">,</span> img2<span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">)</span> <span class="token comment"># 灰度图像</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>SSIM 相似结构特性</strong><br>$$<br>SSIM(x,y)=[l(x,y)]<br>^α<br> ⋅[c(x,y)]<br>^β<br> ⋅[s(x,y)]<br>^γ<br>$$</p>
+<blockquote>
+<p>基于人眼会提取图像中结构化信息的假设，比传统方式更符合人眼视觉感知。</p>
+<p>三个部分组成，l(x,y)亮度，c(x,y)对比度，s(x,y)结构</p>
+<p>SSIM≤1，SSIM 越大，两张图像越相似。</p>
+</blockquote>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> skimage<span class="token punctuation">.</span>measure <span class="token keyword">import</span> compare_ssim
+ssim <span class="token operator">=</span> compare_ssim<span class="token punctuation">(</span>encoded_image<span class="token punctuation">,</span> image<span class="token punctuation">,</span> win_size<span class="token operator">=</span><span class="token number">11</span><span class="token punctuation">,</span> multichannel<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><strong>PSNR 和 SSIM 都只适合画面复杂度低或完全对齐的图像</strong></p>
+<h2 id="matplotlib字体库问题"><a href="#matplotlib字体库问题" class="headerlink" title="matplotlib字体库问题"></a>matplotlib字体库问题</h2><blockquote>
+<p>Glyph 38754 missing from current font.</p>
+</blockquote>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> matplotlib
+
+<span class="token comment"># 查找字体路径</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>matplotlib<span class="token punctuation">.</span>matplotlib_fname<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment"># 查找字体缓存路径</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>matplotlib<span class="token punctuation">.</span>get_cachedir<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>修改文件 <code>matplotlibrc</code></p>
+<pre class="line-numbers language-none"><code class="language-none">font.family:  monospace
+font.monospace : Microsoft YaHei, SimHei, Bitstream Vera Sans, Lucida Grande, Verdana, Geneva, Lucid, Arial, Helvetica, Avant Garde, sans-serif<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+
+
+
+
+<h2 id="图像大小"><a href="#图像大小" class="headerlink" title="图像大小"></a>图像大小</h2><p>png也是压缩的格式</p>
+<p>bmp格式是没有压缩的格式，图像大小 = 分辨率 * 位深度 bit</p>
+<h2 id="隐藏字符串"><a href="#隐藏字符串" class="headerlink" title="隐藏字符串"></a>隐藏字符串</h2><p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/b7003af33a87e9500fd4dfa4eaf1424af9f2b40d.jpeg" alt="img"></p>
+<p><a target="_blank" rel="noopener" href="https://baijiahao.baidu.com/s?id=1710022322908010972&wfr=spider&for=pc">将文字偷偷藏在图片的算法！Python 实现 (baidu.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://towardsdatascience.com/hiding-data-in-an-image-image-steganography-using-python-e491b68b1372?gi=2b9944500032">Image Steganography using Python. Understanding LSB Image Steganography… | by Rupali Roy | Towards Data Science</a></p>
+<p>RGB图像的一个像素能使用3bit（lsb），一个char占8bit。</p>
+<p>将文本转换为二进制。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/smallfox233/article/details/120214050">(70条消息) Python-LSB隐写算法_梦之海岛的博客-CSDN博客_lsb隐写算法</a></p>
+<p>numpy.reshape(n, -1) 数组变n行</p>
+<p>reshape(m,n) m行n列</p>
+<h2 id="读取文件"><a href="#读取文件" class="headerlink" title="读取文件"></a>读取文件</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/tongchikaohongshu/article/details/80998057">(70条消息) python中的read、readline、readlines的区别_tongchikaohongshu的博客-CSDN博客_readlines()返回值是什么类型</a></p>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/19255832/converting-binary-to-utf-8-in-python">string - converting binary to utf-8 in python - Stack Overflow</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/kevin198528/article/details/107400854">(70条消息) python字符串格式化format数字左边补0_考拉不是大叔的博客-CSDN博客_python格式化输出数字补0</a></p>
+<p>由于 utf-8 不是固定编码，中英文混用会乱码</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E5%AA%92%E6%8A%80/" rel="tag"><i class="fa fa-tag"></i> 数媒技</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/07/05/convert-timestamp/" rel="prev" title="时间戳转换">
+                  <i class="fa fa-chevron-left"></i> 时间戳转换
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/07/11/redis-learn/" rel="next" title="redis-learn">
+                  redis-learn <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nova-mist</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+    <div class="pjax">
+
+
+    </div>
+</body>
+</html>

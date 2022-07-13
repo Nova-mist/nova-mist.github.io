@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"nova-mist.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+<meta name="description" content="我知道，就算写了笔记，不去做实际的项目也会忘记，和之前看的 Vue 和微信小程序一样，如今大部分东西已经想不起了。(。_。) 不过看过 React 之后，我还挺喜欢的，大概因为觉得 Twitter 的使用很舒服。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ReactNote">
+<meta property="og:url" content="https://nova-mist.github.io/2021/11/15/ReactNote/index.html">
+<meta property="og:site_name" content="novamist blog">
+<meta property="og:description" content="我知道，就算写了笔记，不去做实际的项目也会忘记，和之前看的 Vue 和微信小程序一样，如今大部分东西已经想不起了。(。_。) 不过看过 React 之后，我还挺喜欢的，大概因为觉得 Twitter 的使用很舒服。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/november/718153f4gy1gw4jq5kpboj20mj0dh45r.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/october/image-20211101195553387.png">
+<meta property="article:published_time" content="2021-11-15T05:50:50.000Z">
+<meta property="article:modified_time" content="2022-02-21T03:56:31.345Z">
+<meta property="article:author" content="Nova-mist">
+<meta property="article:tag" content="front-end">
+<meta property="article:tag" content="js">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/november/718153f4gy1gw4jq5kpboj20mj0dh45r.jpg">
+
+
+<link rel="canonical" href="https://nova-mist.github.io/2021/11/15/ReactNote/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>ReactNote | novamist blog</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">novamist blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">75</span></a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">28</span></a></li>
+        <li class="menu-item menu-item-stars"><a href="/stars/" rel="section"><i class="fa fa-heart fa-fw"></i>收集</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ReactNote"><span class="nav-number">1.</span> <span class="nav-text">ReactNote</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E7%9A%84%E5%9F%BA%E8%B0%83"><span class="nav-number">1.1.</span> <span class="nav-text">代码的基调</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-%E8%AF%AD%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">React 语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%83%E7%B4%A0%E6%B8%B2%E6%9F%93"><span class="nav-number">1.3.</span> <span class="nav-text">元素渲染</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6%E4%B8%8E%E5%8F%82%E6%95%B0"><span class="nav-number">1.4.</span> <span class="nav-text">组件与参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%84%E4%BB%B6"><span class="nav-number">1.4.1.</span> <span class="nav-text">自定义组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E5%90%88%E7%BB%84%E4%BB%B6"><span class="nav-number">1.4.2.</span> <span class="nav-text">组合组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E5%8F%96%E7%BB%84%E4%BB%B6"><span class="nav-number">1.4.3.</span> <span class="nav-text">提取组件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6%E7%9A%84%E7%8A%B6%E6%80%81%E4%B8%8E%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">1.5.</span> <span class="nav-text">组件的状态与生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#class%E7%BB%84%E4%BB%B6"><span class="nav-number">1.5.1.</span> <span class="nav-text">class组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E6%96%B9%E6%B3%95"><span class="nav-number">1.5.2.</span> <span class="nav-text">生命周期方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86"><span class="nav-number">1.6.</span> <span class="nav-text">事件处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6%E6%B8%B2%E6%9F%93"><span class="nav-number">1.7.</span> <span class="nav-text">条件渲染</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%97%E8%A1%A8"><span class="nav-number">1.8.</span> <span class="nav-text">列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A8%E5%8D%95"><span class="nav-number">1.9.</span> <span class="nav-text">表单</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%97%E6%8E%A7%E7%BB%84%E4%BB%B6"><span class="nav-number">1.9.1.</span> <span class="nav-text">受控组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E5%A4%9A%E4%B8%AA%E8%BE%93%E5%85%A5"><span class="nav-number">1.9.2.</span> <span class="nav-text">处理多个输入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%84%E5%90%88"><span class="nav-number">1.10.</span> <span class="nav-text">组合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%85%E5%90%AB%E5%85%B3%E7%B3%BB"><span class="nav-number">1.10.1.</span> <span class="nav-text">包含关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E5%86%8C%E7%AA%97%E5%8F%A3%E7%9A%84%E7%BB%83%E4%B9%A0"><span class="nav-number">1.10.2.</span> <span class="nav-text">注册窗口的练习</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React%E5%93%B2%E5%AD%A6"><span class="nav-number">1.11.</span> <span class="nav-text">React哲学</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nova-mist"
+      src="/uploads/avatar.png">
+  <p class="site-author-name" itemprop="name">Nova-mist</p>
+  <div class="site-description" itemprop="description">My blog about daily life and learning. :b</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Nova-mist" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Nova-mist" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fas fa-cat fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.bilibili.com/" title="https:&#x2F;&#x2F;www.bilibili.com&#x2F;" rel="noopener" target="_blank">Bilibili</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2021/11/15/ReactNote/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="Nova-mist">
+      <meta itemprop="description" content="My blog about daily life and learning. :b">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="novamist blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ReactNote
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-15 13:50:50" itemprop="dateCreated datePublished" datetime="2021-11-15T13:50:50+08:00">2021-11-15</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-02-21 11:56:31" itemprop="dateModified" datetime="2022-02-21T11:56:31+08:00">2022-02-21</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <img src="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/november/718153f4gy1gw4jq5kpboj20mj0dh45r.jpg" alt="718153f4gy1gw4jq5kpboj20mj0dh45r" style="zoom:;" />
+
+
+
+<p>我知道，就算写了笔记，不去做实际的项目也会忘记，和之前看的 Vue 和微信小程序一样，如今大部分东西已经想不起了。(。_。)</p>
+<p>不过看过 React 之后，我还挺喜欢的，大概因为觉得 Twitter 的使用很舒服。</p>
+<span id="more"></span>
+
+<h1 id="ReactNote"><a href="#ReactNote" class="headerlink" title="ReactNote"></a>ReactNote</h1><h2 id="代码的基调"><a href="#代码的基调" class="headerlink" title="代码的基调"></a>代码的基调</h2><p><strong>参考</strong> <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">JavaScript | MDN (mozilla.org)</a></p>
+<ol>
+<li>  方法的声明不带结尾分号，执行的语句、常量变量的声明结尾带分号。</li>
+</ol>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">func</span><span class="token punctuation">(</span><span class="token parameter">a</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<ol start="2">
+<li>  声明的变量是弱类型的。</li>
+<li>  字符串偏向使用单引号。</li>
+<li>  数组与列表的声明。</li>
+</ol>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">let</span> fruits <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'Apple'</span><span class="token punctuation">,</span> <span class="token string">'Banana'</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ol start="5">
+<li>json object 的声明<br>  <a target="_blank" rel="noopener" href="https://www.w3schools.com/js/js_json.asp">JavaScript JSON (w3schools.com)</a></li>
+</ol>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">const</span> user <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+	firstName<span class="token operator">:</span> <span class="token string">'Harper'</span><span class="token punctuation">,</span>
+    lastName<span class="token operator">:</span> <span class="token string">'Perez'</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ol start="6">
+<li>  使用 camelCase 小驼峰来定义属性的名称。</li>
+</ol>
+<h2 id="React-语法"><a href="#React-语法" class="headerlink" title="React 语法"></a>React 语法</h2><blockquote>
+<p>  JSX，JavaScript 的语法扩展。</p>
+</blockquote>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">const</span> element <span class="token operator">=</span> <span class="token generics"><span class="token punctuation">&lt;</span>h1<span class="token punctuation">></span></span><span class="token class-name">Hello</span><span class="token operator">&lt;</span><span class="token operator">/</span>h1<span class="token operator">></span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> element2 <span class="token operator">=</span> <span class="token punctuation">(</span>
+    <span class="token generics"><span class="token punctuation">&lt;</span>h1<span class="token punctuation">></span></span>hhh<span class="token operator">&lt;</span><span class="token operator">/</span>h1<span class="token operator">></span>
+    <span class="token generics"><span class="token punctuation">&lt;</span>h2<span class="token punctuation">></span></span>sss<span class="token operator">&lt;</span><span class="token operator">/</span>h2<span class="token operator">></span>
+    <span class="token generics"><span class="token punctuation">&lt;</span>div<span class="token punctuation">></span></span>test<span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+    <span class="token punctuation">&#123;</span>element<span class="token punctuation">&#125;</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// JSX中使用变量要加括号</span>
+
+<span class="token class-name">ReactDOM</span><span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span>
+	element<span class="token punctuation">,</span>
+    document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'root'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>  在编译之后，JSX 表达式会被转为普通 JavaScript 函数调用</p>
+</blockquote>
+<p>可以用在 if / for 代码块；赋值给变量；函数的参数与返回值。</p>
+<blockquote>
+<p>  <strong>React DOM 在渲染所有输入内容之前，默认会进行转移，可以防止注入攻击。</strong></p>
+</blockquote>
+<h2 id="元素渲染"><a href="#元素渲染" class="headerlink" title="元素渲染"></a>元素渲染</h2><blockquote>
+<p>  仅使用 React 构建的应用通常只有单一的根 DOM 节点。如果你在将 React 集成进一个已有应用，那么你可以在应用中包含任意多的独立根 DOM 节点。</p>
+</blockquote>
+<p>更新已渲染元素的唯一方法就是重新渲染新元素。</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 使用回调函数</span>
+<span class="token function">setInterval</span><span class="token punctuation">(</span>func<span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>  <strong>在实践中，大多数 React 应用只会调用一次ReactDOM.render() 通过将代码封装到有状态组件中</strong> </p>
+</blockquote>
+<h2 id="组件与参数"><a href="#组件与参数" class="headerlink" title="组件与参数"></a>组件与参数</h2><blockquote>
+<p>  <strong>所有 React 组件都必须像纯函数一样保护它们的 props 不被更改。</strong></p>
+</blockquote>
+<p><strong>定义组件：</strong></p>
+<ol>
+<li>  使用函数</li>
+<li>  使用 ES6 的 Class</li>
+</ol>
+<h3 id="自定义组件"><a href="#自定义组件" class="headerlink" title="自定义组件"></a><strong>自定义组件</strong></h3><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">Welcome</span><span class="token punctuation">(</span><span class="token parameter">props</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">return</span> <span class="token operator">&lt;</span>h1<span class="token operator">></span>Hello<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>props<span class="token punctuation">.</span>name<span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">/</span>h1<span class="token operator">></span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">const</span> element <span class="token operator">=</span> <span class="token operator">&lt;</span>Welcome name<span class="token operator">=</span><span class="token string">"Sara"</span> <span class="token operator">/</span><span class="token operator">></span><span class="token punctuation">;</span>
+ReactDOM<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span>
+  element<span class="token punctuation">,</span>
+  document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'root'</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>组件名称必须以大写字母开头</strong></p>
+<hr>
+<h3 id="组合组件"><a href="#组合组件" class="headerlink" title="组合组件"></a>组合组件</h3><blockquote>
+<p>  每个新的 React 应用程序的顶层组件都是 <code>App</code> 组件。</p>
+</blockquote>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">function <span class="token class-name">App</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>
+        <span class="token generics"><span class="token punctuation">&lt;</span>div<span class="token punctuation">></span></span>
+        	<span class="token operator">&lt;</span><span class="token class-name">Welcome</span> name<span class="token operator">=</span><span class="token string">"ss"</span><span class="token operator">/</span><span class="token operator">></span>
+        	<span class="token operator">&lt;</span><span class="token class-name">Welcome</span> name<span class="token operator">=</span><span class="token string">"tt"</span><span class="token operator">/</span><span class="token operator">></span>
+        <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<hr>
+<h3 id="提取组件"><a href="#提取组件" class="headerlink" title="提取组件"></a>提取组件</h3><p><a target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/redirect-to-codepen/components-and-props/extracting-components">Comment 组件的练习</a></p>
+<ol>
+<li>  常量存储数据结构。</li>
+<li>  参数 props 指代上一层组件中的数据对象。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/october/image-20211101195553387.png" alt="image-20211101195553387"></p>
+<h2 id="组件的状态与生命周期"><a href="#组件的状态与生命周期" class="headerlink" title="组件的状态与生命周期"></a>组件的状态与生命周期</h2><h3 id="class组件"><a href="#class组件" class="headerlink" title="class组件"></a>class组件</h3><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">class</span> <span class="token class-name">Clock</span> <span class="token keyword">extends</span> <span class="token class-name">React<span class="token punctuation">.</span>Component</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token punctuation">(</span>
+            <span class="token operator">&lt;</span>div<span class="token operator">></span>
+            	<span class="token operator">&lt;</span>h1<span class="token operator">></span>Hello<span class="token punctuation">,</span> world<span class="token operator">!</span><span class="token operator">&lt;</span><span class="token operator">/</span>h1<span class="token operator">></span>
+            	<span class="token operator">&lt;</span>h2<span class="token operator">></span>It is <span class="token punctuation">&#123;</span><span class="token keyword">this</span><span class="token punctuation">.</span>props<span class="token punctuation">.</span>date<span class="token punctuation">.</span><span class="token function">toLocaleTimeString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#125;</span><span class="token punctuation">.</span><span class="token operator">&lt;</span><span class="token operator">/</span>h2<span class="token operator">></span>
+			<span class="token operator">&lt;</span>div<span class="token operator">></span>
+        <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>  每次组件更新时 render 方法都会被调用，但只要在相同的 DOM 节点中渲染 <Clock /> ，就仅有一个 Clock 组件的 class 实例被创建使用。</p>
+</blockquote>
+<p><strong>将自定义组件中的属性放类的构造函数中</strong></p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// this.props.date --> this.state.dateconstructor(props) &#123;    super(props);    this.state = &#123;    	date: new Date()      &#125;;&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<hr>
+<h3 id="生命周期方法"><a href="#生命周期方法" class="headerlink" title="生命周期方法"></a>生命周期方法</h3><pre class="line-numbers language-react" data-language="react"><code class="language-react">componentDidMount() &#123;	this.timerID &#x3D; setInterval(        () &#x3D;&gt; this.tick(),        1000    );&#125;componentWillUnmount() &#123;     clearInterval(this.timerID);&#125;tick() &#123;    this.setState(&#123;    	date: new Date()    &#125;);&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>构造函数是唯一可以给 <code>this.state</code> 赋值的地方，只有使用 <code>setState()</code> 才会重新渲染组件。</p>
+<p><strong>同步更新 State</strong></p>
+<pre class="line-numbers language-react" data-language="react"><code class="language-react">this.setState((state, props) &#x3D;&gt; (&#123;	counter: state.counter + props.increment   &#125;));<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<hr>
+<h2 id="事件处理"><a href="#事件处理" class="headerlink" title="事件处理"></a>事件处理</h2><blockquote>
+<ul>
+<li>  React 事件的命名采用小驼峰式（camelCase），而不是纯小写。</li>
+<li>  使用 JSX 语法时你需要传入一个函数作为事件处理函数，而不是一个字符串。</li>
+</ul>
+</blockquote>
+<p><strong>阻止默认行为</strong></p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">e<span class="token punctuation">.</span><span class="token function">preventDefault</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><a target="_blank" rel="noopener" href="https://codepen.io/gaearon/pen/xEmzGg?editors=0010">Toggle 开关组件的练习</a></p>
+<ol>
+<li>  在 JavaScript 中，class 的方法默认不会<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_objects/Function/bind">绑定</a> <code>this</code>。<strong>需要显示绑定。</strong></li>
+</ol>
+<pre class="line-numbers language-react" data-language="react"><code class="language-react">&#x2F;&#x2F; 为了在回调中使用 thisthis.handleClick &#x3D; this.handleClick.bind(this);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ol start="2">
+<li>  使用箭头函数可以默认绑定。</li>
+</ol>
+<pre class="line-numbers language-react" data-language="react"><code class="language-react">handleClick &#x3D; () &#x3D;&gt; &#123;    console.log(&#39;this is:&#39;, &#39;hhh&#39;, this); &#x2F;&#x2F; 输出多个信息&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong>向事件处理程序传递参数</strong></p>
+<pre class="line-numbers language-react" data-language="react"><code class="language-react">&lt;button onClick&#x3D;&#123;(e) &#x3D;&gt; this.deleteRow(id, e)&#125;&gt;Delete Row&lt;&#x2F;button&gt;&lt;button onClick&#x3D;&#123;this.deleteRow.bind(this, id)&#125;&gt;Delete Row&lt;&#x2F;button&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<blockquote>
+<p>  上述两种方式是等价的，分别通过<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions">箭头函数</a>和 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind"><code>Function.prototype.bind</code></a> 来实现。</p>
+</blockquote>
+<h2 id="条件渲染"><a href="#条件渲染" class="headerlink" title="条件渲染"></a>条件渲染</h2><p><strong>声明变量进行 if 判断</strong></p>
+<pre class="line-numbers language-react" data-language="react"><code class="language-react">&#x2F;&#x2F; class LoginControlrender() &#123;    const isLoggedIn &#x3D; this.state.isLoggedIn;    let button;    if (isLoggedIn) &#123;      button &#x3D; &lt;LogoutButton onClick&#x3D;&#123;this.handleLogoutClick&#125; &#x2F;&gt;;    &#125; else &#123;      button &#x3D; &lt;LoginButton onClick&#x3D;&#123;this.handleLoginClick&#125; &#x2F;&gt;;    &#125;    return (      &lt;div&gt;        &lt;Greeting isLoggedIn&#x3D;&#123;isLoggedIn&#125; &#x2F;&gt;        &#123;button&#125;      &lt;&#x2F;div&gt;    );  &#125;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong>与运算符 &amp;&amp;</strong></p>
+<ol>
+<li>  可以根据条件渲染后位的组件。</li>
+<li>  返回 false 的表达式会使 <code>&amp;&amp;</code> 后面的元素被跳过。</li>
+</ol>
+<p><strong>三目运算符</strong></p>
+<pre class="line-numbers language-react" data-language="react"><code class="language-react">render() &#123;  const isLoggedIn &#x3D; this.state.isLoggedIn;  return (    &lt;div&gt;      &#123;isLoggedIn        ? &lt;LogoutButton onClick&#x3D;&#123;this.handleLogoutClick&#125; &#x2F;&gt;        : &lt;LoginButton onClick&#x3D;&#123;this.handleLoginClick&#125; &#x2F;&gt;      &#125;    &lt;&#x2F;div&gt;  );&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>如果条件复杂应考虑提取组件</p>
+<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><p><strong>map() 函数应用在基础列表组件</strong></p>
+<pre class="line-numbers language-react" data-language="react"><code class="language-react">function NumberList(props) &#123;  const numbers &#x3D; props.numbers;  const listItems &#x3D; numbers.map((number) &#x3D;&gt;    &lt;li key&#x3D;&#123;number.toString()&#125;&gt;&#123;number&#125;&lt;&#x2F;li&gt;  );  return (    &lt;ul&gt;&#123;listItems&#125;&lt;&#x2F;ul&gt;  );&#125;const numbers &#x3D; [1, 2, 3, 4, 5];ReactDOM.render(  &lt;NumberList numbers&#x3D;&#123;numbers&#125; &#x2F;&gt;,  document.getElementById(&#39;root&#39;));<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<blockquote>
+<p>  key 帮助 React 识别哪些元素改变了，比如被添加或删除。因此你应当给数组中的每一个元素赋予一个确定的标识。</p>
+</blockquote>
+<pre class="line-numbers language-react" data-language="react"><code class="language-react">const listItems &#x3D; numbers.map((number) &#x3D;&gt;    &lt;li key&#x3D;&#123;number.toString()&#125;&gt;&#123;number&#125;&lt;&#x2F;li&gt;  );&#x2F;&#x2F; &#123;number.id&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<blockquote>
+<p>   React 将默认使用索引用作为列表项目的 key 值。</p>
+</blockquote>
+<p><strong>在 <code>map()</code> 方法中的元素需要设置 key 属性。</strong></p>
+<pre class="line-numbers language-react" data-language="react"><code class="language-react">const numbers &#x3D; props.numbers;  const listItems &#x3D; numbers.map((number) &#x3D;&gt;    &#x2F;&#x2F; 正确！key 应该在数组的上下文中被指定    &lt;ListItem key&#x3D;&#123;number.toString()&#125; value&#x3D;&#123;number&#125; &#x2F;&gt;  );<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>组件可以读出 <code>props.id</code>，但是不能读出 <code>props.key</code>。</p>
+<pre class="line-numbers language-react" data-language="react"><code class="language-react">const content &#x3D; posts.map((post) &#x3D;&gt;  &lt;Post    key&#x3D;&#123;post.id&#125;    id&#x3D;&#123;post.id&#125;    title&#x3D;&#123;post.title&#125;&#x2F;&gt;);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>生成两个不同的数组时，可以使用相同的 key 值。</p>
+<p><strong>可以在 JSZX 中嵌入 map()</strong></p>
+<h2 id="表单"><a href="#表单" class="headerlink" title="表单"></a>表单</h2><h3 id="受控组件"><a href="#受控组件" class="headerlink" title="受控组件"></a>受控组件</h3><p><a target="_blank" rel="noopener" href="https://codepen.io/gaearon/pen/VmmPgp?editors=0010"><input>练习</a></p>
+<blockquote>
+<p>  在 React 中，可变状态（mutable state）通常保存在组件的 state 属性中，并且只能通过使用 <a target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/react-component.html#setstate"><code>setState()</code></a>来更新。</p>
+<p>  渲染表单的 React 组件还控制着用户输入过程中表单发生的操作。</p>
+</blockquote>
+<pre class="line-numbers language-react" data-language="react"><code class="language-react">handleChange(event) &#123;    this.setState(&#123;value: event.target.value&#125;);&#125;handleSubmit(event) &#123;    alert(&#39;提交的名字: &#39; + this.state.value);    event.preventDefault();&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong>select 标签多选</strong></p>
+<pre class="line-numbers language-react" data-language="react"><code class="language-react">&lt;select multiple&#x3D;&#123;true&#125; value&#x3D;&#123;[&#39;B&#39;, &#39;C&#39;]&#125;&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong>React 中不使用 selected value 而是在根 <code>select</code> 标签上使用 <code>value</code> 属性</strong></p>
+<p><strong>延迟函数</strong></p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>    ReactDOM<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token operator">&lt;</span>input value<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token keyword">null</span><span class="token punctuation">&#125;</span><span class="token operator">/</span><span class="token operator">></span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<hr>
+<h3 id="处理多个输入"><a href="#处理多个输入" class="headerlink" title="处理多个输入"></a>处理多个输入</h3><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/9f0abf7b965b">ES6 动态计算属性名 - 简书 (jianshu.com)</a></p>
+<pre class="line-numbers language-react" data-language="react"><code class="language-react">&#x2F;&#x2F; ES6this.setState(&#123;    [name]: value&#125;);&#x2F;&#x2F; ES5var partialState &#x3D; &#123;&#125;;partialState[name] &#x3D; value;this.setState(partialState);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-react" data-language="react"><code class="language-react">handleInputChange(event) &#123;    const target &#x3D; event.target;    const value &#x3D; target.type &#x3D;&#x3D; &#39;checkbox&#39; ? target.checked : target.value;    const name &#x3D; target.naem;    this.setState(&#123;   		[name]: value       &#125;);&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h2 id="组合"><a href="#组合" class="headerlink" title="组合"></a>组合</h2><p><a target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/composition-vs-inheritance.html">组合 vs 继承 – React (reactjs.org)</a></p>
+<h3 id="包含关系"><a href="#包含关系" class="headerlink" title="包含关系"></a>包含关系</h3><ol>
+<li>  children prop 别的组件可以通过 JSX 嵌套，将任意组件作为子组件传递给它们，继而将子组件传递到渲染结果中。</li>
+<li>  自定义 prop</li>
+</ol>
+<pre class="line-numbers language-react" data-language="react"><code class="language-react">function App() &#123;  return (    &lt;SplitPane      left&#x3D;&#123;        &lt;Contacts &#x2F;&gt;      &#125;      right&#x3D;&#123;        &lt;Chat &#x2F;&gt;      &#125; &#x2F;&gt;  );&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>可以传递对象，亦可以传递信息给组件的特殊实例。</p>
+<h3 id="注册窗口的练习"><a href="#注册窗口的练习" class="headerlink" title="注册窗口的练习"></a>注册窗口的练习</h3><p><a target="_blank" rel="noopener" href="https://codepen.io/gaearon/pen/gwZbYa?editors=0010">https://codepen.io/gaearon/pen/gwZbYa?editors=0010</a></p>
+<h2 id="React哲学"><a href="#React哲学" class="headerlink" title="React哲学"></a>React哲学</h2><p>准备：在编写前段代码之前需要：</p>
+<ol>
+<li>  UI 设计稿</li>
+<li>  后端 API 返回的 JSON 数据</li>
+</ol>
+<p><strong>第一步：将设计好的 UI 划分为组件层级</strong></p>
+<ul>
+<li>  一个组件原则上只能负责一个功能</li>
+<li>  每个组件需要与数据模型的某部分匹配</li>
+<li>  <strong>列出一个详细名称的层级表示</strong></li>
+</ul>
+<p><strong>第二步：用 React 创建一个静态版本</strong></p>
+<ul>
+<li>  用已有的数据模型渲染一个不包含交互功能的 UI。</li>
+<li>  通过 props 传入所需的数据，<strong>不应该使用 state</strong> 构建静态版本。</li>
+</ul>
+<blockquote>
+<p>  你可以自上而下或者自下而上构建应用：自上而下意味着首先编写层级较高的组件（比如 <code>FilterableProductTable</code>），自下而上意味着从最基本的组件开始编写（比如 <code>ProductRow</code>）。当你的应用比较简单时，使用自上而下的方式更方便；对于较为大型的项目来说，自下而上地构建，并同时为低层组件编写测试是更加简单的方式。</p>
+</blockquote>
+<p><strong>第三步：确定 UI state 的最小（且完整）表示</strong></p>
+<p><strong>只保留应用所需的可变 state 的最小集合，其他数据均由它们计算产生。</strong></p>
+<p>属于 state 的数据：</p>
+<ol>
+<li>  <strong>随时间发生改变的数据</strong></li>
+<li>  不能由其他数据计算出</li>
+<li>  不是由父组件通过 props 传递而来</li>
+</ol>
+<p><strong>第四步：确定 state 放置的位置</strong></p>
+<p>将低层级使用的 state 存放到共有的高层级中，通过 props 向下传递数据。</p>
+<p><strong>第五步：添加反向数据流</strong></p>
+<ol>
+<li>  state 只能由拥有它们的组件进行更改。</li>
+<li>  高层组件将<strong>回调函数（callback）</strong>传递给低层组件调用。通常绑定响应事件的函数 <code>onChange</code> 等，借助高层组件的 <code>handle</code> 方法调用 <code>setState()</code> 更新应用。</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/front-end/" rel="tag"><i class="fa fa-tag"></i> front-end</a>
+              <a href="/tags/js/" rel="tag"><i class="fa fa-tag"></i> js</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/11/15/MybatisNote/" rel="prev" title="MyBatis笔记">
+                  <i class="fa fa-chevron-left"></i> MyBatis笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/11/15/Ren-PyNote/" rel="next" title="Ren'PyNote">
+                  Ren'PyNote <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nova-mist</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+    <div class="pjax">
+
+
+    </div>
+</body>
+</html>

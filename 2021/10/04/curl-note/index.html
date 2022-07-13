@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"nova-mist.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+<meta name="description" content="这两天在看一个借助 GitHub 官方接口将 Markdown 源码转为 HTML 代码的项目MDcat 。 在看的过程中我发现 Markdown 文件中的图片都会被托管到 https:&#x2F;&#x2F;camo.githubusercontent.com&#x2F; 网址下。 如果不小心上传了包含敏感信息的图片该怎么？通过搜索文档，发现可以使用 curl 命令将图片删除。 $ curl -X PURGE https:&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="curl的笔记">
+<meta property="og:url" content="https://nova-mist.github.io/2021/10/04/curl-note/index.html">
+<meta property="og:site_name" content="novamist blog">
+<meta property="og:description" content="这两天在看一个借助 GitHub 官方接口将 Markdown 源码转为 HTML 代码的项目MDcat 。 在看的过程中我发现 Markdown 文件中的图片都会被托管到 https:&#x2F;&#x2F;camo.githubusercontent.com&#x2F; 网址下。 如果不小心上传了包含敏感信息的图片该怎么？通过搜索文档，发现可以使用 curl 命令将图片删除。 $ curl -X PURGE https:&#x2F;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-10-03T16:13:07.000Z">
+<meta property="article:modified_time" content="2022-04-01T01:37:33.686Z">
+<meta property="article:author" content="Nova-mist">
+<meta property="article:tag" content="技术">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://nova-mist.github.io/2021/10/04/curl-note/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>curl的笔记 | novamist blog</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">novamist blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">75</span></a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">28</span></a></li>
+        <li class="menu-item menu-item-stars"><a href="/stars/" rel="section"><i class="fa fa-heart fa-fw"></i>收集</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD"><span class="nav-number">2.</span> <span class="nav-text">下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#X"><span class="nav-number">3.</span> <span class="nav-text">-X</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#x"><span class="nav-number">4.</span> <span class="nav-text">-x</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v"><span class="nav-number">5.</span> <span class="nav-text">-v</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u"><span class="nav-number">6.</span> <span class="nav-text">-u</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#H"><span class="nav-number">7.</span> <span class="nav-text">-H</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AEReferer"><span class="nav-number">8.</span> <span class="nav-text">设置Referer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#POST"><span class="nav-number">9.</span> <span class="nav-text">POST</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cookie"><span class="nav-number">10.</span> <span class="nav-text">Cookie</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#User-Agent"><span class="nav-number">11.</span> <span class="nav-text">User-Agent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">12.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nova-mist"
+      src="/uploads/avatar.png">
+  <p class="site-author-name" itemprop="name">Nova-mist</p>
+  <div class="site-description" itemprop="description">My blog about daily life and learning. :b</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Nova-mist" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Nova-mist" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fas fa-cat fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.bilibili.com/" title="https:&#x2F;&#x2F;www.bilibili.com&#x2F;" rel="noopener" target="_blank">Bilibili</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2021/10/04/curl-note/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="Nova-mist">
+      <meta itemprop="description" content="My blog about daily life and learning. :b">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="novamist blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          curl的笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-10-04 00:13:07" itemprop="dateCreated datePublished" datetime="2021-10-04T00:13:07+08:00">2021-10-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-04-01 09:37:33" itemprop="dateModified" datetime="2022-04-01T09:37:33+08:00">2022-04-01</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>这两天在看一个借助 GitHub 官方接口将 Markdown 源码转为 HTML 代码的项目<a target="_blank" rel="noopener" href="https://github.com/calganaygun/MDcat">MDcat</a> 。</p>
+<p>在看的过程中我发现 Markdown 文件中的图片都会被托管到 <code>https://camo.githubusercontent.com/</code> 网址下。</p>
+<p><strong>如果不小心上传了包含敏感信息的图片该怎么？</strong><del>通过搜索文档，发现可以使用 curl 命令将图片删除。</del></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">curl</span> -X PURGE https://camo.githubusercontent.com/cc5b5e1d92bb63b4c11a31de77b7c0dc8d7109efa2fa61bc906930c7d7d10103/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230313230393139333930393432362e706e67<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong>结果是并不能删除图片。</strong>😪</p>
+<p><strong>无论如何，都可以顺便学习一些 curl 的知识。</strong></p>
+<span id="more"></span>
+
+<h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 跟随服务器重定向</span>
+$ <span class="token function">curl</span> -L 
+<span class="token comment"># 显示服务器回应的HTTP标头</span>
+$ <span class="token function">curl</span> -i
+<span class="token comment"># 只显示http response头信息</span>
+$ <span class="token function">curl</span> -I
+<span class="token comment"># 增加头信息</span>
+$ <span class="token function">curl</span> --header <span class="token string">"Content-Type:application/json"</span> http://example.com
+<span class="token comment"># User Agent</span>
+$ <span class="token function">curl</span> --user-agent <span class="token string">"[User Agent]"</span> <span class="token punctuation">[</span>URL<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">curl</span> -o <span class="token punctuation">[</span>file_name<span class="token punctuation">]</span> www.baidu.com 
+<span class="token comment"># 大O会自动命名</span>
+$ <span class="token function">curl</span> -O xxx.png -O xxx2.png
+<span class="token comment"># 恢复下载</span>
+$ <span class="token function">curl</span> -C - -O<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+
+<h2 id="X"><a href="#X" class="headerlink" title="-X"></a>-X</h2><p>指定HTTP请求的方法。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">curl</span> -X DELETE www.example.com<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="x"><a href="#x" class="headerlink" title="-x"></a>-x</h2><p>指定HTTP请求的代理。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">curl</span> -x socks5://<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">[</span>URL<span class="token punctuation">]</span>
+<span class="token comment"># 默认代理协议为HTTP</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h2 id="v"><a href="#v" class="headerlink" title="-v"></a>-v</h2><p>输出通信的整个过程 用于调试</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">curl</span> -v https://www.example.com<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="u"><a href="#u" class="headerlink" title="-u"></a>-u</h2><p>设置服务器认证的用户名和密码。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">curl</span> -u <span class="token string">'bob:12345'</span> https://google.com/login
+$ <span class="token function">curl</span> https://bob:12345@google.com/login
+$ <span class="token function">curl</span> https://bob:12345@google.com/login <span class="token comment"># 之后提示用户输入密码</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="H"><a href="#H" class="headerlink" title="-H"></a>-H</h2><p><strong>添加HTTP请求的标头</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">curl</span> -H <span class="token string">'Accept-Language: en-US'</span> -H <span class="token string">'Secret-Message: xyzzy'</span> https://google.com
+$ <span class="token function">curl</span> -d <span class="token string">'&#123;"login": "emma", "pass": "123"&#125;'</span> -H <span class="token string">'Content-Type: application/json'</span> https://google.com/login<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h2 id="设置Referer"><a href="#设置Referer" class="headerlink" title="设置Referer"></a>设置Referer</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 从哪里跳转来的</span>
+$ <span class="token function">curl</span> --referer http://www.example.com http://www.example.com
+$ <span class="token function">curl</span> -e <span class="token string">'https://google.com?q=example'</span> https://www.example.com
+$ <span class="token function">curl</span> -H <span class="token string">'Referer: https://google.com?q=example'</span> https://www.example.com<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="POST"><a href="#POST" class="headerlink" title="POST"></a>POST</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">curl</span> -d<span class="token string">'login=emma＆password=123'</span>-X POST https://google.com/login
+<span class="token comment"># 或者</span>
+$ <span class="token function">curl</span> -d <span class="token string">'login=emma'</span> -d <span class="token string">'password=123'</span> -X POST  https://google.com/login
+<span class="token comment"># 可以省略 -X POST</span>
+
+<span class="token comment"># 读取本地文本文件的数据，向服务器发送。</span>
+$ <span class="token function">curl</span> -d <span class="token string">'@data.txt'</span> https://google.com/login<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 向服务器发送Cookie</span>
+$ <span class="token function">curl</span> -b <span class="token string">'foo1=bar;foo2=bar2'</span> https://google.com
+$ <span class="token function">curl</span> -b cookies.txt https://www.google.com
+<span class="token comment"># 将服务器的 HTTP 回应所设置 Cookie 写入文本文件</span>
+$ <span class="token function">curl</span> -c cookies.txt https://www.google.com<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="User-Agent"><a href="#User-Agent" class="headerlink" title="User-Agent"></a>User-Agent</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 设置</span>
+$ <span class="token function">curl</span> -A <span class="token string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36'</span> https://google.com
+<span class="token comment"># 移除</span>
+$ <span class="token function">curl</span> -A <span class="token string">''</span> https://google.com
+<span class="token comment"># 更改</span>
+$ <span class="token function">curl</span> -H <span class="token string">'User-Agent: php/1.0'</span> https://google.com<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li>  <a target="_blank" rel="noopener" href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/about-anonymized-urls">About anonymized URLs - GitHub Docs</a></li>
+<li>  <a target="_blank" rel="noopener" href="https://docs.github.com/en/rest/reference/markdown">Markdown - GitHub Docs</a></li>
+<li>  <a target="_blank" rel="noopener" href="https://www.ruanyifeng.com/blog/2011/09/curl.html">curl网站开发指南 - 阮一峰的网络日志 (ruanyifeng.com)</a></li>
+<li>  <a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2019/09/curl-reference.html">curl 的用法指南 - 阮一峰的网络日志 (ruanyifeng.com)</a></li>
+<li>  <a target="_blank" rel="noopener" href="https://docs.github.com/en/rest/reference/markdown">Markdown - GitHub Docs</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"><i class="fa fa-tag"></i> 技术</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/03/chocolatey-proxy-config/" rel="prev" title="chocolatey">
+                  <i class="fa fa-chevron-left"></i> chocolatey
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/09/write-a-shell/" rel="next" title="自己写一个Shell">
+                  自己写一个Shell <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nova-mist</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+    <div class="pjax">
+
+
+    </div>
+</body>
+</html>

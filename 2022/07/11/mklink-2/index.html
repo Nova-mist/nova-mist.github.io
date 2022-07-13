@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"nova-mist.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+<meta name="description" content="再谈mklink 在一台 Windows 电脑中，硬盘被分割为卷用以保存数据，在每一个卷上，数据对象被 NTFS 文件系统赋予了独一无二的文件 ID 以及与之对应的文件路径，文件路径和文件 ID 对应，文件 ID 和数据对象绑定，最终才呈现为可供用户打开、编辑的文件。  一些供下次研究的笔记。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="再谈mklink">
+<meta property="og:url" content="https://nova-mist.github.io/2022/07/11/mklink-2/index.html">
+<meta property="og:site_name" content="novamist blog">
+<meta property="og:description" content="再谈mklink 在一台 Windows 电脑中，硬盘被分割为卷用以保存数据，在每一个卷上，数据对象被 NTFS 文件系统赋予了独一无二的文件 ID 以及与之对应的文件路径，文件路径和文件 ID 对应，文件 ID 和数据对象绑定，最终才呈现为可供用户打开、编辑的文件。  一些供下次研究的笔记。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources@main/images/2022/zeiteisen.png">
+<meta property="article:published_time" content="2022-07-11T01:21:09.000Z">
+<meta property="article:modified_time" content="2022-07-11T01:22:48.429Z">
+<meta property="article:author" content="Nova-mist">
+<meta property="article:tag" content="tips">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources@main/images/2022/zeiteisen.png">
+
+
+<link rel="canonical" href="https://nova-mist.github.io/2022/07/11/mklink-2/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>再谈mklink | novamist blog</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">novamist blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">75</span></a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">28</span></a></li>
+        <li class="menu-item menu-item-stars"><a href="/stars/" rel="section"><i class="fa fa-heart fa-fw"></i>收集</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%8D%E8%B0%88mklink"><span class="nav-number">1.</span> <span class="nav-text">再谈mklink</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A1%AC%E9%93%BE%E6%8E%A5%EF%BC%88%E6%96%87%E4%BB%B6%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">硬链接（文件）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%A6%E5%8F%B7%E9%93%BE%E6%8E%A5%EF%BC%88%E6%96%87%E4%BB%B6%E5%92%8C%E7%9B%AE%E5%BD%95%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">符号链接（文件和目录）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Link-Shell-Extension"><span class="nav-number">1.3.</span> <span class="nav-text">Link Shell Extension</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Smart-Copy"><span class="nav-number">1.3.1.</span> <span class="nav-text">Smart Copy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Smart-Mirror"><span class="nav-number">1.3.2.</span> <span class="nav-text">Smart Mirror</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DeLorean-Copy"><span class="nav-number">1.3.3.</span> <span class="nav-text">DeLorean Copy</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">1.4.</span> <span class="nav-text">使用</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nova-mist"
+      src="/uploads/avatar.png">
+  <p class="site-author-name" itemprop="name">Nova-mist</p>
+  <div class="site-description" itemprop="description">My blog about daily life and learning. :b</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Nova-mist" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Nova-mist" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fas fa-cat fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.bilibili.com/" title="https:&#x2F;&#x2F;www.bilibili.com&#x2F;" rel="noopener" target="_blank">Bilibili</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2022/07/11/mklink-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="Nova-mist">
+      <meta itemprop="description" content="My blog about daily life and learning. :b">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="novamist blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          再谈mklink
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-07-11 09:21:09 / 修改时间：09:22:48" itemprop="dateCreated datePublished" datetime="2022-07-11T09:21:09+08:00">2022-07-11</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="再谈mklink"><a href="#再谈mklink" class="headerlink" title="再谈mklink"></a>再谈mklink</h1><blockquote>
+<p>在一台 Windows 电脑中，硬盘被分割为卷用以保存数据，在每一个卷上，数据对象被 NTFS 文件系统赋予了独一无二的<strong>文件 ID</strong> 以及<strong>与之对应的文件路径</strong>，文件路径和文件 ID 对应，文件 ID 和数据对象绑定，最终才呈现为可供用户打开、编辑的文件。</p>
+</blockquote>
+<p>一些供下次研究的笔记。</p>
+<span id="more"></span>
+
+<h2 id="硬链接（文件）"><a href="#硬链接（文件）" class="headerlink" title="硬链接（文件）"></a>硬链接（文件）</h2><p>🟠概念：</p>
+<ul>
+<li>硬链接是文件之间的关系。</li>
+<li>同一<strong>卷</strong>上的数据对象有着唯一的ID。</li>
+<li>普通的<strong>文件</strong>指向的是数据对象，为文件创建的<strong>硬链接</strong>指向的是相同的数据对象</li>
+<li><strong>源文件</strong>和创建的<strong>硬链接文件</strong>有着相同的ID和不同的绝对路径。</li>
+</ul>
+<p>💥特性：</p>
+<ol>
+<li>因为指向同一个数据对象，对两个文件做出的修改是同步的。</li>
+<li>删除其中一个文件，另一个文件不受影响。</li>
+</ol>
+<h2 id="符号链接（文件和目录）"><a href="#符号链接（文件和目录）" class="headerlink" title="符号链接（文件和目录）"></a>符号链接（文件和目录）</h2><p>🟠概念</p>
+<ul>
+<li>符号链接指向源文件的路径。</li>
+<li><strong>符号链接文件</strong>不占用空间，并且可以有与源文件不同的绝对路径。（区别于快捷方式）</li>
+<li>当系统识别到符号链接时，它会跳转到符号链接所指向的目标中去，而不改变此时的文件路径。</li>
+</ul>
+<p>💥特性：</p>
+<ul>
+<li>可以对目录或文件进行符号链接，修改其名称本质上是修改了 <code>.symlinked</code> 文件的名称，最后还是会指向原来的路径，因此没有影响。</li>
+<li>对链接文件的更改本质上就是对目标的修改。</li>
+<li>对链接目录下的内容（文件、目录）进行修改（包括重命名），本质上就是对源目录下的内容进行修改。</li>
+</ul>
+<h2 id="Link-Shell-Extension"><a href="#Link-Shell-Extension" class="headerlink" title="Link Shell Extension"></a>Link Shell Extension</h2><p><a target="_blank" rel="noopener" href="https://schinagl.priv.at/nt/hardlinkshellext/linkshellextension.html">Link Shell Extension (schinagl.priv.at)</a></p>
+<p>分析其功能。</p>
+<h3 id="Smart-Copy"><a href="#Smart-Copy" class="headerlink" title="Smart Copy"></a>Smart Copy</h3><p>用来处理含有硬链接、符号链接的复制。</p>
+<ol>
+<li>复制目录下的文件结构<ul>
+<li>普通文件直接复制</li>
+<li>源文件与硬链接、符号链接的关系只存在于目录下的，直接复制文件与链接文件。</li>
+<li>如果链接关系指向复制目录的外部内容，硬链接则舍弃外部的链接关系，符号链接会复制外部的目录结构（直到所有链接关系只限于内部）。</li>
+</ul>
+</li>
+<li>重新建立硬链接关系。</li>
+</ol>
+<p><strong>不会覆盖已有的复制目录</strong></p>
+<h3 id="Smart-Mirror"><a href="#Smart-Mirror" class="headerlink" title="Smart Mirror"></a>Smart Mirror</h3><p>第一次使用就是直接复制，文件的ID改变。</p>
+<p>接下来使用就是更新：</p>
+<ul>
+<li>只改变已存在文件的数据，ID不改变。</li>
+<li>复制新的文件，删除没有的文件。</li>
+</ul>
+<h3 id="DeLorean-Copy"><a href="#DeLorean-Copy" class="headerlink" title="DeLorean Copy"></a>DeLorean Copy</h3><p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources@main/images/2022/zeiteisen.png" alt="zeiteisen"></p>
+<p>最初始是Smart Copy。</p>
+<p>接下来的backup在InitialBackup的硬链接的基础上，对Source进行镜像操作，复制新增的，删除没有的。</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>使用Link Shell Extension的<strong>多版本智能副本</strong>进行增量备份，内核是占用相同空间的<strong>硬链接</strong>，只更改变动内容的空间。</p>
+<p>使用符号链接进行双向修改，拥有不同的绝对路径，对软件是【无法分辨的】（换一种说法？），可以跨本地磁盘、网络磁盘。</p>
+<p>只使用<strong>硬链接</strong>，防止文件误删。</p>
+<p>🟠在目录层面，删除源目录，链接目录失效；删除链接目录，源目录不受影响。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/tips/" rel="tag"><i class="fa fa-tag"></i> tips</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/07/11/redis-learn/" rel="prev" title="redis-learn">
+                  <i class="fa fa-chevron-left"></i> redis-learn
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/07/11/use-powershell/" rel="next" title="试试PowerShell">
+                  试试PowerShell <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nova-mist</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+    <div class="pjax">
+
+
+    </div>
+</body>
+</html>

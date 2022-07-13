@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"nova-mist.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+<meta name="description" content="Getting StartedMaterial for MkDocs - Material for MkDocs (squidfunk.github.io) 安装   使用 pip 安装：  pip install mkdocs-material     使用 git 安装并使用 pip 安装所需环境：  git clone https:&#x2F;&#x2F;github.com&#x2F;squidfunk&#x2F;mkdocs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mkdocs-learn">
+<meta property="og:url" content="https://nova-mist.github.io/2022/04/01/mkdocs-learn/index.html">
+<meta property="og:site_name" content="novamist blog">
+<meta property="og:description" content="Getting StartedMaterial for MkDocs - Material for MkDocs (squidfunk.github.io) 安装   使用 pip 安装：  pip install mkdocs-material     使用 git 安装并使用 pip 安装所需环境：  git clone https:&#x2F;&#x2F;github.com&#x2F;squidfunk&#x2F;mkdocs">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources@main/images/2022/blog-image-20220401-1648777231.jpg">
+<meta property="article:published_time" content="2022-04-01T01:34:58.000Z">
+<meta property="article:modified_time" content="2022-04-01T01:40:48.662Z">
+<meta property="article:author" content="Nova-mist">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="读文档">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources@main/images/2022/blog-image-20220401-1648777231.jpg">
+
+
+<link rel="canonical" href="https://nova-mist.github.io/2022/04/01/mkdocs-learn/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>mkdocs-learn | novamist blog</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">novamist blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">75</span></a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">28</span></a></li>
+        <li class="menu-item menu-item-stars"><a href="/stars/" rel="section"><i class="fa fa-heart fa-fw"></i>收集</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Getting-Started"><span class="nav-number">1.</span> <span class="nav-text">Getting Started</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%BA%E7%AB%99"><span class="nav-number">3.</span> <span class="nav-text">建站</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE"><span class="nav-number">3.1.</span> <span class="nav-text">基础配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AB%98%E7%BA%A7%E9%85%8D%E7%BD%AE"><span class="nav-number">3.2.</span> <span class="nav-text">高级配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%91%E5%B8%83%E7%BD%91%E7%AB%99"><span class="nav-number">4.</span> <span class="nav-text">发布网站</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GitHub-Pages"><span class="nav-number">4.1.</span> <span class="nav-text">GitHub Pages</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-GitHub-Actions"><span class="nav-number">4.1.1.</span> <span class="nav-text">使用 GitHub Actions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E9%83%A8%E7%BD%B2"><span class="nav-number">4.1.2.</span> <span class="nav-text">手动部署</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E5%88%B6%E5%8C%96"><span class="nav-number">5.</span> <span class="nav-text">定制化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E8%B5%84%E6%BA%90"><span class="nav-number">5.1.</span> <span class="nav-text">添加资源</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0-CSS-%E5%92%8C-JavaScript"><span class="nav-number">5.1.1.</span> <span class="nav-text">添加 CSS 和 JavaScript</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E4%B8%BB%E9%A2%98"><span class="nav-number">5.2.</span> <span class="nav-text">扩展主题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E4%B8%BB%E9%A2%98%E7%BB%93%E6%9E%84"><span class="nav-number">5.2.1.</span> <span class="nav-text">设置主题结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A6%86%E7%9B%96%E6%A8%A1%E6%9D%BF%E5%9D%97"><span class="nav-number">5.2.2.</span> <span class="nav-text">覆盖模板块</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E9%A2%98%E5%BC%80%E5%8F%91"><span class="nav-number">5.3.</span> <span class="nav-text">主题开发</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Setup"><span class="nav-number">6.</span> <span class="nav-text">Setup</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E9%A2%9C%E8%89%B2"><span class="nav-number">7.</span> <span class="nav-text">修改颜色</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E8%89%B2%E6%96%B9%E6%A1%88"><span class="nav-number">7.1.</span> <span class="nav-text">配色方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E9%A2%9C%E8%89%B2"><span class="nav-number">7.2.</span> <span class="nav-text">基础颜色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%BA%E8%B0%83%E9%A2%9C%E8%89%B2"><span class="nav-number">7.3.</span> <span class="nav-text">强调颜色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%9C%E8%89%B2%E5%88%87%E6%8D%A2"><span class="nav-number">7.4.</span> <span class="nav-text">颜色切换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%9F%E9%9A%8F%E7%B3%BB%E7%BB%9F%E9%85%8D%E8%89%B2"><span class="nav-number">7.5.</span> <span class="nav-text">跟随系统配色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E9%85%8D%E8%89%B2%E4%B8%BB%E9%A2%98"><span class="nav-number">7.6.</span> <span class="nav-text">自定义配色主题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%AD%97%E4%BD%93"><span class="nav-number">8.</span> <span class="nav-text">修改字体</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-number">8.1.</span> <span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Regular-font"><span class="nav-number">8.1.1.</span> <span class="nav-text">Regular font</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Monospaced-font"><span class="nav-number">8.1.2.</span> <span class="nav-text">Monospaced font</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E5%8A%A0%E8%BD%BD"><span class="nav-number">8.1.3.</span> <span class="nav-text">自动加载</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AD%97%E4%BD%93"><span class="nav-number">8.2.</span> <span class="nav-text">自定义字体</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9-logo-%E5%92%8C%E5%9B%BE%E6%A0%87"><span class="nav-number">9.</span> <span class="nav-text">修改 logo 和图标</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE-1"><span class="nav-number">9.1.</span> <span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Logo"><span class="nav-number">9.1.1.</span> <span class="nav-text">Logo</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Favicon"><span class="nav-number">9.1.2.</span> <span class="nav-text">Favicon</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E5%88%B6%E5%8C%96-1"><span class="nav-number">9.2.</span> <span class="nav-text">定制化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E5%AF%BC%E8%88%AA%E6%A0%8F"><span class="nav-number">10.</span> <span class="nav-text">设置导航栏</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE-2"><span class="nav-number">10.1.</span> <span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%B3%E6%97%B6%E8%A3%85%E8%BD%BD"><span class="nav-number">10.1.1.</span> <span class="nav-text">即时装载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%94%9A%E7%82%B9%E8%B7%9F%E8%B8%AA"><span class="nav-number">10.1.2.</span> <span class="nav-text">锚点跟踪</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%80%E5%90%AF%E5%AF%BC%E8%88%AA%E6%A0%8F"><span class="nav-number">10.1.3.</span> <span class="nav-text">开启导航栏</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%BB%E7%BB%93%E5%AF%BC%E8%88%AA%E6%A0%8F"><span class="nav-number">10.1.4.</span> <span class="nav-text">冻结导航栏</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B1%82%E7%BA%A7%E5%AF%BC%E8%88%AA%E6%A0%8F"><span class="nav-number">10.1.5.</span> <span class="nav-text">层级导航栏</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%BB%98%E8%AE%A4%E5%B1%95%E5%BC%80%E5%AF%BC%E8%88%AA%E6%A0%8F"><span class="nav-number">10.1.6.</span> <span class="nav-text">默认展开导航栏</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AB%A0%E8%8A%82%E5%88%9D%E5%A7%8B%E9%A1%B5"><span class="nav-number">10.1.7.</span> <span class="nav-text">章节初始页</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%A4%E4%BE%A7%E5%AF%BC%E8%88%AA%E5%86%85%E5%AE%B9%E6%A0%8F%E8%9E%8D%E5%90%88"><span class="nav-number">10.1.8.</span> <span class="nav-text">两侧导航内容栏融合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%9E%E5%88%B0%E6%9C%80%E9%A1%B6%E6%8C%89%E9%92%AE"><span class="nav-number">10.1.9.</span> <span class="nav-text">回到最顶按钮</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%80%E5%B7%A7"><span class="nav-number">10.2.</span> <span class="nav-text">技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9A%90%E8%97%8F%E4%BE%A7%E8%BE%B9%E6%A0%8F"><span class="nav-number">10.2.1.</span> <span class="nav-text">隐藏侧边栏</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89"><span class="nav-number">10.3.</span> <span class="nav-text">自定义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E7%AB%99%E5%86%85%E6%90%9C%E7%B4%A2"><span class="nav-number">11.</span> <span class="nav-text">设置站内搜索</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%A0%87%E7%AD%BE"><span class="nav-number">12.</span> <span class="nav-text">使用标签</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">12.1.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E6%A0%87%E7%AD%BE"><span class="nav-number">12.1.1.</span> <span class="nav-text">添加标签</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%87%E7%AD%BE%E5%88%9D%E5%A7%8B%E9%A1%B5"><span class="nav-number">12.1.2.</span> <span class="nav-text">标签初始页</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9A%90%E8%97%8F%E6%A0%87%E7%AD%BE"><span class="nav-number">12.1.3.</span> <span class="nav-text">隐藏标签</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E9%A1%B5%E7%9C%89"><span class="nav-number">13.</span> <span class="nav-text">设置页眉</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E9%9A%90%E8%97%8F%E9%A1%B5%E7%9C%89"><span class="nav-number">13.0.1.</span> <span class="nav-text">自动隐藏页眉</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%E6%A0%8F"><span class="nav-number">13.0.2.</span> <span class="nav-text">声明栏</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E9%A1%B5%E8%84%9A"><span class="nav-number">14.</span> <span class="nav-text">设置页脚</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE-3"><span class="nav-number">14.1.</span> <span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BE%E4%BA%A4%E9%93%BE%E6%8E%A5"><span class="nav-number">14.1.1.</span> <span class="nav-text">社交链接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%88%E6%9D%83%E4%BF%A1%E6%81%AF"><span class="nav-number">14.1.2.</span> <span class="nav-text">版权信息</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E4%BB%B6"><span class="nav-number">15.</span> <span class="nav-text">插件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Python-Markdon"><span class="nav-number">15.1.</span> <span class="nav-text">Python Markdon</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nova-mist"
+      src="/uploads/avatar.png">
+  <p class="site-author-name" itemprop="name">Nova-mist</p>
+  <div class="site-description" itemprop="description">My blog about daily life and learning. :b</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Nova-mist" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Nova-mist" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fas fa-cat fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.bilibili.com/" title="https:&#x2F;&#x2F;www.bilibili.com&#x2F;" rel="noopener" target="_blank">Bilibili</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2022/04/01/mkdocs-learn/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="Nova-mist">
+      <meta itemprop="description" content="My blog about daily life and learning. :b">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="novamist blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          mkdocs-learn
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-04-01 09:34:58 / 修改时间：09:40:48" itemprop="dateCreated datePublished" datetime="2022-04-01T09:34:58+08:00">2022-04-01</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources@main/images/2022/blog-image-20220401-1648777231.jpg" alt="blog-image-20220401-1648777231"></p>
+<h2 id="Getting-Started"><a href="#Getting-Started" class="headerlink" title="Getting Started"></a>Getting Started</h2><p><a target="_blank" rel="noopener" href="https://squidfunk.github.io/mkdocs-material/">Material for MkDocs - Material for MkDocs (squidfunk.github.io)</a></p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><ol>
+<li>  使用 pip 安装：</li>
+</ol>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pip <span class="token function">install</span> mkdocs-material<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ol start="2">
+<li>  使用 git 安装并使用 pip 安装所需环境：</li>
+</ol>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> clone https://github.com/squidfunk/mkdocs-material.git
+pip <span class="token function">install</span> -e mkdocs-material<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="建站"><a href="#建站" class="headerlink" title="建站"></a>建站</h2><p>初始化项目：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mkdocs new <span class="token builtin class-name">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>会产生如下目录结构：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">.</span>
+├─ docs/
+│  └─ index.md
+└─ mkdocs.yml<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="基础配置"><a href="#基础配置" class="headerlink" title="基础配置"></a>基础配置</h3><p>配置目录下的 <code>mkdoc.yml</code></p>
+<ol>
+<li>  使用 pip 安装的配置：</li>
+</ol>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">theme</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> material<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<ol start="2">
+<li>  使用 git 安装的配置：</li>
+</ol>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">theme</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> <span class="token null important">null</span>
+  <span class="token key atrule">custom_dir</span><span class="token punctuation">:</span> mkdocs<span class="token punctuation">-</span>material/material
+
+  <span class="token comment"># 404 page</span>
+  <span class="token key atrule">static_templates</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> 404.html
+
+  <span class="token comment"># Necessary for search to work properly</span>
+  <span class="token key atrule">include_search_page</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+  <span class="token key atrule">search_index_only</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+
+  <span class="token comment"># Default values, taken from mkdocs_theme.yml</span>
+  <span class="token key atrule">language</span><span class="token punctuation">:</span> en
+  <span class="token key atrule">font</span><span class="token punctuation">:</span>
+    <span class="token key atrule">text</span><span class="token punctuation">:</span> Roboto
+    <span class="token key atrule">code</span><span class="token punctuation">:</span> Roboto Mono
+  <span class="token key atrule">favicon</span><span class="token punctuation">:</span> assets/favicon.png
+  <span class="token key atrule">icon</span><span class="token punctuation">:</span>
+    <span class="token key atrule">logo</span><span class="token punctuation">:</span> logo<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<span id="more"></span>
+
+
+
+<h3 id="高级配置"><a href="#高级配置" class="headerlink" title="高级配置"></a>高级配置</h3><ul>
+<li>  [ ] 更改颜色</li>
+<li>  [ ] 更改字体</li>
+<li>  [ ] 更改语言</li>
+<li>  [ ] 更改 logo 和图标</li>
+<li>  [ ] 配置数据隐私</li>
+<li>  [ ] 设置导航</li>
+<li>  [ ] 设置站内搜索</li>
+<li>  [ ] 设置站内分析</li>
+<li>  [ ] 设置社交卡片</li>
+<li>  [ ] 设置标签</li>
+<li>  [ ] 设置版本控制</li>
+<li>  [ ] 设置页眉</li>
+<li>  [ ] 设置页脚</li>
+<li>  [ ] 添加 git 仓库</li>
+<li>  [ ] 添加评论系统</li>
+<li>  [ ] 创建离线使用</li>
+</ul>
+<h2 id="发布网站"><a href="#发布网站" class="headerlink" title="发布网站"></a>发布网站</h2><p>⭐MkDocs 支持对修改的内容的自动部署。</p>
+<h3 id="GitHub-Pages"><a href="#GitHub-Pages" class="headerlink" title="GitHub Pages"></a>GitHub Pages</h3><p>如果将项目托管在 GitHub 上，使用 GitHub Pages 是很方便的，可以使用 GitHub Actions 自动部署文档，或者通过命令行手动部署文档。</p>
+<h4 id="使用-GitHub-Actions"><a href="#使用-GitHub-Actions" class="headerlink" title="使用 GitHub Actions"></a>使用 GitHub Actions</h4><ul>
+<li>  [ ] 学习</li>
+</ul>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">name</span><span class="token punctuation">:</span> ci 
+<span class="token key atrule">on</span><span class="token punctuation">:</span>
+  <span class="token key atrule">push</span><span class="token punctuation">:</span>
+    <span class="token key atrule">branches</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> master 
+      <span class="token punctuation">-</span> main
+<span class="token key atrule">jobs</span><span class="token punctuation">:</span>
+  <span class="token key atrule">deploy</span><span class="token punctuation">:</span>
+    <span class="token key atrule">runs-on</span><span class="token punctuation">:</span> ubuntu<span class="token punctuation">-</span>latest
+    <span class="token key atrule">steps</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">uses</span><span class="token punctuation">:</span> actions/checkout@v2
+      <span class="token punctuation">-</span> <span class="token key atrule">uses</span><span class="token punctuation">:</span> actions/setup<span class="token punctuation">-</span>python@v2
+        <span class="token key atrule">with</span><span class="token punctuation">:</span>
+          <span class="token key atrule">python-version</span><span class="token punctuation">:</span> 3.x
+      <span class="token punctuation">-</span> <span class="token key atrule">run</span><span class="token punctuation">:</span> pip install mkdocs<span class="token punctuation">-</span>material 
+      <span class="token punctuation">-</span> <span class="token key atrule">run</span><span class="token punctuation">:</span> mkdocs gh<span class="token punctuation">-</span>deploy <span class="token punctuation">-</span><span class="token punctuation">-</span>force<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="手动部署"><a href="#手动部署" class="headerlink" title="手动部署"></a>手动部署</h4><p>在包含 <code>mkdocs.yml</code> 文件的根目录使用以下命令行：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mkdocs gh-deploy --force<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h2 id="定制化"><a href="#定制化" class="headerlink" title="定制化"></a>定制化</h2><h3 id="添加资源"><a href="#添加资源" class="headerlink" title="添加资源"></a>添加资源</h3><p>MkDocs 提供了一些自定义主题的方法，例如添加 CSS 和 JavaScript 到 <code>docs</code> 目录。</p>
+<h4 id="添加-CSS-和-JavaScript"><a href="#添加-CSS-和-JavaScript" class="headerlink" title="添加 CSS 和 JavaScript"></a>添加 CSS 和 JavaScript</h4><p>通过添加 CSS 来修改颜色或改变某些元素的间距。</p>
+<p>通过添加 JavaScript 来使用其他的高亮语法或添加一些逻辑操作。</p>
+<ol>
+<li><p>在 <code>docs</code> 目录下新建 <code>stylesheets</code> 目录并放入所需的 CSS 文件，新建 <code>javascripts</code> 目录并放入所需 JavaScript 文件。</p>
+<p>  <strong>得到以下目录结构</strong>：</p>
+</li>
+</ol>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">.</span>
+├─ docs/
+│  └─ stylesheets/
+│     └─ extra.css
+│  └─ javascripts/
+│     └─ extra.js
+└─ mkdocs.yml<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ol start="2">
+<li>  在配置文件 <code>mkdocs.yml</code> 中添加如下配置：</li>
+</ol>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">extra_css</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> stylesheets/extra.css
+<span class="token key atrule">extra_javascript</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> javascripts/extra.js<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="扩展主题"><a href="#扩展主题" class="headerlink" title="扩展主题"></a>扩展主题</h3><blockquote>
+<p>  🟠 Material for MkDocs 是 MkDocs 的一个主题。</p>
+</blockquote>
+<p>如果要修改主题中 HTML 源码，就需要扩展主题。MkDocs 支持 <a target="_blank" rel="noopener" href="https://www.mkdocs.org/user-guide/styling-your-docs/#using-the-theme-custom_dir">主题插件</a>，使用这种方法可以覆盖 Material for MkDocs 的一些组件而不需要从 git 拉取，这样在升级新版的时候就不会发生冲突问题。</p>
+<h4 id="设置主题结构"><a href="#设置主题结构" class="headerlink" title="设置主题结构"></a>设置主题结构</h4><ul>
+<li>  在 <code>mkdocs.yml</code> 中开启 Material for MkDocs 主题。</li>
+<li>  创建一个 <code>overrides</code> 目录用来存放覆盖主题的文件，这个目录使用配置文件中的 <code>custom_dir</code> 配置。</li>
+</ul>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">theme</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> material
+  <span class="token key atrule">custom_dir</span><span class="token punctuation">:</span> overrides<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>覆盖目录</strong>的结构必须和原主题的结构保持一致，其目录下的任何文件都会替换原主题的同名文件。以后新增的资源也要放入此<strong>覆盖目录</strong>。</p>
+<p><strong>原主题结构：</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">.</span>
+├─ .icons/                             <span class="token comment"># Bundled icon sets</span>
+├─ assets/
+│  ├─ images/                          <span class="token comment"># Images and icons</span>
+│  ├─ javascripts/                     <span class="token comment"># JavaScript files</span>
+│  └─ stylesheets/                     <span class="token comment"># Style sheets</span>
+├─ partials/
+│  ├─ integrations/                    <span class="token comment"># Third-party integrations</span>
+│  │  ├─ analytics/                    <span class="token comment"># Analytics integrations</span>
+│  │  └─ analytics.html                <span class="token comment"># Analytics setup</span>
+│  ├─ languages/                       <span class="token comment"># Translation languages</span>
+│  ├─ content.html                     <span class="token comment"># Page content</span>
+│  ├─ copyright.html                   <span class="token comment"># Copyright and theme information</span>
+│  ├─ footer.html                      <span class="token comment"># Footer bar</span>
+│  ├─ header.html                      <span class="token comment"># Header bar</span>
+│  ├─ language.html                    <span class="token comment"># Translation setup</span>
+│  ├─ logo.html                        <span class="token comment"># Logo in header and sidebar</span>
+│  ├─ nav.html                         <span class="token comment"># Main navigation</span>
+│  ├─ nav-item.html                    <span class="token comment"># Main navigation item</span>
+│  ├─ palette.html                     <span class="token comment"># Color palette</span>
+│  ├─ search.html                      <span class="token comment"># Search interface</span>
+│  ├─ social.html                      <span class="token comment"># Social links</span>
+│  ├─ source.html                      <span class="token comment"># Repository information</span>
+│  ├─ source-file.html                 <span class="token comment"># Source file information</span>
+│  ├─ tabs.html                        <span class="token comment"># Tabs navigation</span>
+│  ├─ tabs-item.html                   <span class="token comment"># Tabs navigation item</span>
+│  ├─ toc.html                         <span class="token comment"># Table of contents</span>
+│  └─ toc-item.html                    <span class="token comment"># Table of contents item</span>
+├─ <span class="token number">404</span>.html                            <span class="token comment"># 404 error page</span>
+├─ base.html                           <span class="token comment"># Base template</span>
+└─ main.html                           <span class="token comment"># Default page</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>覆盖部分组件</strong></p>
+<p>只需要在 <code>overrides</code> 目录下新建要替换的同名文件。目录结构如下：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">.</span>
+├─ overrides/
+│  └─ partials/
+│     └─ footer.html
+└─ mkdocs.yml<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>MkDocs 就会在渲染主题的时候使用新的组件。</p>
+<h4 id="覆盖模板块"><a href="#覆盖模板块" class="headerlink" title="覆盖模板块"></a>覆盖模板块</h4><p>除了覆盖部分组件，还可以覆盖或扩展组件模板来实现新的功能。（前者是整体替换，后者是部分修改）</p>
+<ul>
+<li>  创建一个 <code>main.html</code> 文件在 <code>overrides</code> 目录：</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">.</span>
+├─ overrides/
+│  └─ main.html
+└─ mkdocs.yml<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>  修改 <code>main.html</code> 来实现新的功能。</li>
+</ul>
+<p>详见 <a target="_blank" rel="noopener" href="https://squidfunk.github.io/mkdocs-material/customization/#overriding-blocks">Customization - Material for MkDocs (squidfunk.github.io)</a></p>
+<h3 id="主题开发"><a href="#主题开发" class="headerlink" title="主题开发"></a>主题开发</h3><p>Material for MkDocs 的构建基于 TypeScript、RxJS、SASS，因此如需更底层的更改就要修改主题的源码并且重新编译。</p>
+<p>详见 <a target="_blank" rel="noopener" href="https://squidfunk.github.io/mkdocs-material/customization/#theme-development">Customization - Material for MkDocs (squidfunk.github.io)</a></p>
+<h2 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h2><h2 id="修改颜色"><a href="#修改颜色" class="headerlink" title="修改颜色"></a>修改颜色</h2><blockquote>
+<p>  Material for MkDocs supports Google’s original <a target="_blank" rel="noopener" href="http://www.materialui.co/colors">color palette</a>, which can be easily configured through <code>mkdocs.yml</code>.</p>
+</blockquote>
+<p>可以在配置文件 <code>mkdocs.yml</code> 中设置一些基础颜色，也可以通过 CSS 来自定义颜色。 </p>
+<h3 id="配色方案"><a href="#配色方案" class="headerlink" title="配色方案"></a>配色方案</h3><p>Material for MkDocs 支持两种主题：</p>
+<ul>
+<li>  明亮主题 <code>default</code></li>
+<li>  黑暗主题 <code>slate</code></li>
+</ul>
+<p>在 <code>mkdocs.yml</code> 中进行如下设置：</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">theme</span><span class="token punctuation">:</span>
+  <span class="token key atrule">palette</span><span class="token punctuation">:</span>
+    <span class="token key atrule">scheme</span><span class="token punctuation">:</span> default<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="基础颜色"><a href="#基础颜色" class="headerlink" title="基础颜色"></a>基础颜色</h3><blockquote>
+<p>  The primary color is used for the header, the sidebar, text links and several other components.</p>
+</blockquote>
+<p>基础颜色应用于页眉、侧边栏等多种组件。</p>
+<p>需要在 <code>mkdocs.yml</code> 中设置：</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">theme</span><span class="token punctuation">:</span>
+  <span class="token key atrule">palette</span><span class="token punctuation">:</span>
+    <span class="token key atrule">primary</span><span class="token punctuation">:</span> white<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>颜色切换效果见 <a target="_blank" rel="noopener" href="https://squidfunk.github.io/mkdocs-material/setup/changing-the-colors/#primary-color">Changing the colors - Material for MkDocs (squidfunk.github.io)</a></p>
+<h3 id="强调颜色"><a href="#强调颜色" class="headerlink" title="强调颜色"></a>强调颜色</h3><blockquote>
+<p>  The accent color is used to denote elements that can be interacted with, e.g. hovered links, buttons and scrollbars. </p>
+</blockquote>
+<p>强调颜色用来表示可交互的组件，例如链接、按钮、滚动栏等。</p>
+<p>在 <code>mkdocs.ymml</code> 中设置：</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">theme</span><span class="token punctuation">:</span>
+  <span class="token key atrule">palette</span><span class="token punctuation">:</span>
+    <span class="token key atrule">accent</span><span class="token punctuation">:</span> red<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="颜色切换"><a href="#颜色切换" class="headerlink" title="颜色切换"></a>颜色切换</h3><p>可以提供多种配色方案，用户可以自行切换。</p>
+<p>进行如下配置：</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">theme</span><span class="token punctuation">:</span>
+  <span class="token key atrule">palette</span><span class="token punctuation">:</span> 
+    <span class="token punctuation">-</span> <span class="token key atrule">scheme</span><span class="token punctuation">:</span> default
+      <span class="token key atrule">toggle</span><span class="token punctuation">:</span>
+        <span class="token key atrule">icon</span><span class="token punctuation">:</span> material/toggle<span class="token punctuation">-</span>switch<span class="token punctuation">-</span>off<span class="token punctuation">-</span>outline 
+        <span class="token key atrule">name</span><span class="token punctuation">:</span> Switch to dark mode
+    <span class="token punctuation">-</span> <span class="token key atrule">scheme</span><span class="token punctuation">:</span> slate 
+      <span class="token key atrule">toggle</span><span class="token punctuation">:</span>
+        <span class="token key atrule">icon</span><span class="token punctuation">:</span> material/toggle<span class="token punctuation">-</span>switch
+        <span class="token key atrule">name</span><span class="token punctuation">:</span> Switch to light mode<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>图标的选择见 <a target="_blank" rel="noopener" href="https://squidfunk.github.io/mkdocs-material/setup/changing-the-colors/#accent-color">Changing the colors - Material for MkDocs (squidfunk.github.io)</a></p>
+<h3 id="跟随系统配色"><a href="#跟随系统配色" class="headerlink" title="跟随系统配色"></a>跟随系统配色</h3><p>跟随用户系统默认的外观选择配置方案，需要进行如下配置：</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">theme</span><span class="token punctuation">:</span>
+  <span class="token key atrule">palette</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">media</span><span class="token punctuation">:</span> <span class="token string">"(prefers-color-scheme: light)"</span> 
+      <span class="token key atrule">scheme</span><span class="token punctuation">:</span> default
+      <span class="token key atrule">toggle</span><span class="token punctuation">:</span>
+        <span class="token key atrule">icon</span><span class="token punctuation">:</span> material/toggle<span class="token punctuation">-</span>switch<span class="token punctuation">-</span>off<span class="token punctuation">-</span>outline
+        <span class="token key atrule">name</span><span class="token punctuation">:</span> Switch to dark mode
+    <span class="token punctuation">-</span> <span class="token key atrule">media</span><span class="token punctuation">:</span> <span class="token string">"(prefers-color-scheme: dark)"</span> 
+      <span class="token key atrule">scheme</span><span class="token punctuation">:</span> slate
+      <span class="token key atrule">toggle</span><span class="token punctuation">:</span>
+        <span class="token key atrule">icon</span><span class="token punctuation">:</span> material/toggle<span class="token punctuation">-</span>switch
+        <span class="token key atrule">name</span><span class="token punctuation">:</span> Switch to light mode<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="自定义配色主题"><a href="#自定义配色主题" class="headerlink" title="自定义配色主题"></a>自定义配色主题</h3><ul>
+<li><input disabled="" type="checkbox"> 自定义颜色和主题</li>
+</ul>
+<h2 id="修改字体"><a href="#修改字体" class="headerlink" title="修改字体"></a>修改字体</h2><h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>Material for MkDocs 使用了 <a target="_blank" rel="noopener" href="https://fonts.google.com/">Google Fonts</a> 更改字体很容易。另外也可以加载定制字体。</p>
+<h4 id="Regular-font"><a href="#Regular-font" class="headerlink" title="Regular font"></a>Regular font</h4><p>在 <code>mkdocs.yml</code> 中常用字体可以很方便的设置成任意的  <a target="_blank" rel="noopener" href="https://fonts.google.com/">Google Font</a> 字体集。</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">theme</span><span class="token punctuation">:</span>
+  <span class="token key atrule">font</span><span class="token punctuation">:</span>
+    <span class="token key atrule">text</span><span class="token punctuation">:</span> Roboto<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="Monospaced-font"><a href="#Monospaced-font" class="headerlink" title="Monospaced font"></a>Monospaced font</h4><p>等宽字体用于代码块，可以单独设置样式，同样支持  <a target="_blank" rel="noopener" href="https://fonts.google.com/">Google Fonts</a>。</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">theme</span><span class="token punctuation">:</span>
+  <span class="token key atrule">font</span><span class="token punctuation">:</span>
+    <span class="token key atrule">code</span><span class="token punctuation">:</span> Roboto Mono<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="自动加载"><a href="#自动加载" class="headerlink" title="自动加载"></a>自动加载</h4><p>如果不想自动加载 <a target="_blank" rel="noopener" href="https://fonts.google.com/">Google Fonts</a> 而是使用系统默认字体，只需要在 <code>mkdocs.yml</code> 中配置：</p>
+<pre class="line-numbers language-yml" data-language="yml"><code class="language-yml"><span class="token key atrule">theme</span><span class="token punctuation">:</span>
+  <span class="token key atrule">font</span><span class="token punctuation">:</span> <span class="token boolean important">false</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h3 id="自定义字体"><a href="#自定义字体" class="headerlink" title="自定义字体"></a>自定义字体</h3><ul>
+<li>  [ ] 从另外的路径加载字体，需要使用额外的 CSS 来与 <code>@font-face</code> 交互。</li>
+</ul>
+<h2 id="修改-logo-和图标"><a href="#修改-logo-和图标" class="headerlink" title="修改 logo 和图标"></a>修改 logo 和图标</h2><h3 id="配置-1"><a href="#配置-1" class="headerlink" title="配置"></a>配置</h3><h4 id="Logo"><a href="#Logo" class="headerlink" title="Logo"></a>Logo</h4><p>logo 可以更改为用户提供的 <code>docs</code> 目录下的图片或者与主题捆绑的图标。</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">theme</span><span class="token punctuation">:</span>
+  <span class="token key atrule">logo</span><span class="token punctuation">:</span> assets/logo.png<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">theme</span><span class="token punctuation">:</span>
+  <span class="token key atrule">icon</span><span class="token punctuation">:</span>
+    <span class="token key atrule">logo</span><span class="token punctuation">:</span> material/library <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>通常来说，页眉和侧边的图标会链接到文档的首页即配置中的 <code>site_url</code>。但也可以自定义跳转的网址，通过以下配置：</p>
+<pre class="line-numbers language-yml" data-language="yml"><code class="language-yml"><span class="token key atrule">extra</span><span class="token punctuation">:</span>
+  <span class="token key atrule">homepage</span><span class="token punctuation">:</span> https<span class="token punctuation">:</span>//example.com<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h4 id="Favicon"><a href="#Favicon" class="headerlink" title="Favicon"></a>Favicon</h4><p>更改图标的配置：</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">theme</span><span class="token punctuation">:</span>
+  <span class="token key atrule">favicon</span><span class="token punctuation">:</span> images/favicon.png<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h3 id="定制化-1"><a href="#定制化-1" class="headerlink" title="定制化"></a>定制化</h3><p>自定义主题的图标：</p>
+<ol>
+<li>新建一个 <code>.icons</code> 目录并放入所需的图标集，例如 Bootstrap。<br>  文件目录结构如下：</li>
+</ol>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">.</span>
+├─ overrides/
+│  └─ .icons/
+│     └─ bootstrap/
+│        └─ *.svg
+└─ mkdocs.yml<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ol start="2">
+<li>  在 <code>mkdocs.yml</code> 添加如下配置：</li>
+</ol>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">markdown_extensions</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">pymdownx.emoji</span><span class="token punctuation">:</span>
+      <span class="token key atrule">emoji_index</span><span class="token punctuation">:</span> <span class="token tag">!!python/name:materialx.emoji.twemoji</span>
+      <span class="token key atrule">emoji_generator</span><span class="token punctuation">:</span> <span class="token tag">!!python/name:materialx.emoji.to_svg</span>
+      <span class="token key atrule">options</span><span class="token punctuation">:</span>
+        <span class="token key atrule">custom_icons</span><span class="token punctuation">:</span>
+          <span class="token punctuation">-</span> overrides/.icons<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="设置导航栏"><a href="#设置导航栏" class="headerlink" title="设置导航栏"></a>设置导航栏</h2><h3 id="配置-2"><a href="#配置-2" class="headerlink" title="配置"></a>配置</h3><h4 id="即时装载"><a href="#即时装载" class="headerlink" title="即时装载"></a>即时装载</h4><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">theme</span><span class="token punctuation">:</span>
+  <span class="token key atrule">features</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> navigation.instant<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><a target="_blank" rel="noopener" href="https://github.com/squidfunk/mkdocs-material/discussions/2099">How does the navigation work when using instant loading? · Discussion #2099 · squidfunk/mkdocs-material (github.com)</a></p>
+<p>本质是 XHR 技术，可以实现局部更新网页而不需要从新加载整个页面，能够提升加载效率。</p>
+<h4 id="锚点跟踪"><a href="#锚点跟踪" class="headerlink" title="锚点跟踪"></a>锚点跟踪</h4><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">theme</span><span class="token punctuation">:</span>
+  <span class="token key atrule">features</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> navigation.tracking<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>开启后，地址栏中末尾的锚点链接（#）会跟随着页面进入不同的小节而改变。</p>
+<h4 id="开启导航栏"><a href="#开启导航栏" class="headerlink" title="开启导航栏"></a>开启导航栏</h4><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">theme</span><span class="token punctuation">:</span>
+  <span class="token key atrule">features</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> navigation.tabs<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="冻结导航栏"><a href="#冻结导航栏" class="headerlink" title="冻结导航栏"></a>冻结导航栏</h4><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">theme</span><span class="token punctuation">:</span>
+  <span class="token key atrule">features</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> navigation.tabs
+    <span class="token punctuation">-</span> navigation.tabs.sticky<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="层级导航栏"><a href="#层级导航栏" class="headerlink" title="层级导航栏"></a><strong>层级导航栏</strong></h4><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">theme</span><span class="token punctuation">:</span>
+  <span class="token key atrule">features</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> navigation.sections<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>开启后左侧导航栏不再能够折叠。</p>
+<h4 id="默认展开导航栏"><a href="#默认展开导航栏" class="headerlink" title="默认展开导航栏"></a>默认展开导航栏</h4><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">theme</span><span class="token punctuation">:</span>
+  <span class="token key atrule">features</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> navigation.expand<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="章节初始页"><a href="#章节初始页" class="headerlink" title="章节初始页"></a>章节初始页</h4><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">theme</span><span class="token punctuation">:</span>
+  <span class="token key atrule">features</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> navigation.indexes<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>开启后会给每个章节添加一个新的初始页面，可以用来写一些前概大纲。</p>
+<p>需要在各自的目录新建 <code>index.md</code> 文件并添加到导航部分的最开头。</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">nav</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">Section</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> section/index.md
+    <span class="token punctuation">-</span> <span class="token key atrule">Page 1</span><span class="token punctuation">:</span> section/page<span class="token punctuation">-</span>1.md
+    <span class="token punctuation">...</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">Page n</span><span class="token punctuation">:</span> section/page<span class="token punctuation">-</span>n.md<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="两侧导航内容栏融合"><a href="#两侧导航内容栏融合" class="headerlink" title="两侧导航内容栏融合"></a>两侧导航内容栏融合</h4><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">theme</span><span class="token punctuation">:</span>
+  <span class="token key atrule">features</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> toc.integrate<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>不好看，不建议使用。</p>
+<h4 id="回到最顶按钮"><a href="#回到最顶按钮" class="headerlink" title="回到最顶按钮"></a>回到最顶按钮</h4><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">theme</span><span class="token punctuation">:</span>
+  <span class="token key atrule">features</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> navigation.top<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="技巧"><a href="#技巧" class="headerlink" title="技巧"></a>技巧</h3><h4 id="隐藏侧边栏"><a href="#隐藏侧边栏" class="headerlink" title="隐藏侧边栏"></a>隐藏侧边栏</h4><p>在每篇文章的开头加上 yaml 配置。</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token punctuation">---</span>
+<span class="token key atrule">hide</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> navigation
+  <span class="token punctuation">-</span> toc
+<span class="token punctuation">---</span>
+
+<span class="token comment"># Document title</span>
+<span class="token punctuation">...</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="自定义"><a href="#自定义" class="headerlink" title="自定义"></a>自定义</h3><p>可以通过自定义的 JavaScript 响应按键。</p>
+<h2 id="设置站内搜索"><a href="#设置站内搜索" class="headerlink" title="设置站内搜索"></a>设置站内搜索</h2><p>默认开启了内置的搜索插件，但如果要使用多个插件就需要在配置文件中显示开启。</p>
+<p>多语言支持。<strong>默认不支持中文</strong></p>
+<ul>
+<li>  [ ] 解决方法 <a target="_blank" rel="noopener" href="https://github.com/bxiaopeng/mkdocs">bxiaopeng/mkdocs: MkDocs 支持中文搜索 (github.com)</a></li>
+</ul>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">plugins</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">search</span><span class="token punctuation">:</span>
+      <span class="token key atrule">lang</span><span class="token punctuation">:</span> 
+        <span class="token punctuation">-</span> en
+        <span class="token punctuation">-</span> ja<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="使用标签"><a href="#使用标签" class="headerlink" title="使用标签"></a>使用标签</h2><p>在 <code>mkdocs.yml</code> 开启标签设置。</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">plugins</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> tags<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><h4 id="添加标签"><a href="#添加标签" class="headerlink" title="添加标签"></a>添加标签</h4><blockquote>
+<p>  When both, the <a target="_blank" rel="noopener" href="https://squidfunk.github.io/mkdocs-material/setup/setting-up-tags/#built-in-tags-plugin">built-in tags plugin</a> and <a target="_blank" rel="noopener" href="https://squidfunk.github.io/mkdocs-material/setup/extensions/python-markdown/#metadata">Metadata</a> extension are enabled, tags can be added for a document with custom front matter. </p>
+</blockquote>
+<p><strong>需要使用内置标签插件和 Metadata 插件。</strong></p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token punctuation">---</span>
+<span class="token key atrule">tags</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> insiders
+  <span class="token punctuation">-</span> brand new
+<span class="token punctuation">---</span>
+
+<span class="token punctuation">...</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>支持通过标签搜索文章。</p>
+<h4 id="标签初始页"><a href="#标签初始页" class="headerlink" title="标签初始页"></a>标签初始页</h4><p>内置的标签插件允许用户可以创建一个标签初始页面 <code>tags.md</code></p>
+<pre class="line-numbers language-none"><code class="language-none"># Tags
+
+Following is a list of relevant tags:
+
+[TAGS]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>[TAGS] 标签会替换为标签的导览内容。</p>
+<h4 id="隐藏标签"><a href="#隐藏标签" class="headerlink" title="隐藏标签"></a>隐藏标签</h4><p>需要使用 <a target="_blank" rel="noopener" href="https://squidfunk.github.io/mkdocs-material/setup/extensions/python-markdown/#metadata">Metadata</a> 插件</p>
+<pre class="line-numbers language-none"><code class="language-none">---
+hide:
+  - tags
+---
+
+# Document title
+...<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="设置页眉"><a href="#设置页眉" class="headerlink" title="设置页眉"></a>设置页眉</h2><h4 id="自动隐藏页眉"><a href="#自动隐藏页眉" class="headerlink" title="自动隐藏页眉"></a>自动隐藏页眉</h4><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">theme</span><span class="token punctuation">:</span>
+  <span class="token key atrule">features</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> header.autohide<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="声明栏"><a href="#声明栏" class="headerlink" title="声明栏"></a>声明栏</h4><p>声明栏位于页面的最上方，用来展示项目新闻或重要消息。</p>
+<p>需要设置 <code>overrides</code> 目录，新建 <code>main.html</code> 页面，继承主题，并覆盖 <code>announce</code> 块。</p>
+<pre class="line-numbers language-none"><code class="language-none">&#123;% extends &quot;base.html&quot; %&#125;
+
+&#123;% block announce %&#125;
+  &lt;!-- Add announcement here, including arbitrary HTML --&gt;
+&#123;% endblock %&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+
+<h2 id="设置页脚"><a href="#设置页脚" class="headerlink" title="设置页脚"></a>设置页脚</h2><p>在页脚添加网站或平台的链接。</p>
+<h3 id="配置-3"><a href="#配置-3" class="headerlink" title="配置"></a>配置</h3><h4 id="社交链接"><a href="#社交链接" class="headerlink" title="社交链接"></a>社交链接</h4><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">extra</span><span class="token punctuation">:</span>
+  <span class="token key atrule">social</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">icon</span><span class="token punctuation">:</span> fontawesome/brands/twitter
+      <span class="token key atrule">link</span><span class="token punctuation">:</span> https<span class="token punctuation">:</span>//twitter.com/squidfunk
+      <span class="token key atrule">name</span><span class="token punctuation">:</span> squidfunk on Twitter<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="版权信息"><a href="#版权信息" class="headerlink" title="版权信息"></a>版权信息</h4><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">copyright</span><span class="token punctuation">:</span> Copyright <span class="token important">&amp;copy;</span> 2016 <span class="token punctuation">-</span> 2020 Martin Donath<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h2 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h2><h3 id="Python-Markdon"><a href="#Python-Markdon" class="headerlink" title="Python Markdon"></a>Python Markdon</h3><p><strong>Metadata</strong></p>
+<p>支持在 Markdown 文件开头写上 yaml 语法的键值对。</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">markdown_extensions</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> meta<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><strong>Markdown in HTML</strong></p>
+<p>通过使用这个插件，可以在 Markdown 中使用 HTML 的语法实现一些效果，如插入图片、卡片网格。</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">markdown_extensions</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> md_in_html<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><strong>Table of Contents</strong></p>
+<p>设置右侧内容栏的标题和锚点的图标。</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">markdown_extensions</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">toc</span><span class="token punctuation">:</span>
+      <span class="token key atrule">permalink</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+      <span class="token key atrule">title</span><span class="token punctuation">:</span> On this page<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p>更多 Markdown 的扩展语法见 <a target="_blank" rel="noopener" href="https://squidfunk.github.io/mkdocs-material/setup/extensions/python-markdown-extensions/">Python Markdown Extensions - Material for MkDocs (squidfunk.github.io)</a></p>
+<p><strong>SuperFences</strong></p>
+<p>代码高亮</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">markdown_extensions</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> pymdownx.superfences<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><strong>多标签内容切换 Tabbed</strong></p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">markdown_extensions</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">pymdownx.tabbed</span><span class="token punctuation">:</span>
+      <span class="token key atrule">alternate_style</span><span class="token punctuation">:</span> <span class="token boolean important">true</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>详见 <a target="_blank" rel="noopener" href="https://squidfunk.github.io/mkdocs-material/setup/extensions/python-markdown-extensions/#tabbed">Python Markdown Extensions - Material for MkDocs (squidfunk.github.io)</a></p>
+<p>可以将关联的内容写在一起：</p>
+<pre class="line-numbers language-none"><code class="language-none">&#x3D;&#x3D;&#x3D; &quot;A&quot;
+
+	sth..
+	sth..
+	
+&#x3D;&#x3D;&#x3D; &quot;B&quot;
+
+	sth ..
+	sth ..<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>Keys</strong></p>
+<p>支持渲染按键组合的图标。</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">markdown_extensions</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> pymdownx.keys<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><strong>Highlight</strong></p>
+<p>设置代码块高亮。此插件基于 SuperFences 来显示语法高亮，需要一起配置。</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">markdown_extensions</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">pymdownx.highlight</span><span class="token punctuation">:</span>
+      <span class="token key atrule">anchor_linenums</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+      <span class="token key atrule">use_pygments</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+      <span class="token key atrule">auto_title</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+      <span class="token key atrule">linenums</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+      <span class="token key atrule">linenums_style</span><span class="token punctuation">:</span> pymdownx<span class="token punctuation">-</span>inline
+  <span class="token punctuation">-</span> pymdownx.superfences <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><code>use_pygments</code> 是否使用 Pygments 来进行语法高亮，如果关闭则需要额外配置 <code>docs/javascripts/highlight.js</code> 和 <code>mkdocs.yml</code>：</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">document$<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  hljs<span class="token punctuation">.</span><span class="token function">highlightAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">extra_javascript</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> https<span class="token punctuation">:</span>//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js
+  <span class="token punctuation">-</span> javascripts/highlight.js
+<span class="token key atrule">extra_css</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> https<span class="token punctuation">:</span>//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>❗其他的字段设置要设置使用 Pygments 来进行语法高亮。</p>
+<p><code>auto_title</code> 自动显示代码的语言</p>
+<p><code>linenums</code> 显示行号</p>
+<p><code>linenums_style</code> 显示行号的风格 推荐使用 <code>table</code> or <code>pymdownx-inline</code></p>
+<p><code>anchor_linenums</code> 可以通过链接跳转行号 <a target="_blank" rel="noopener" href="http://127.0.0.1:8000/mybatis/#__codelineno-7-1">http://127.0.0.1:8000/mybatis/#__codelineno-7-1</a></p>
+<p><strong>InlineHilite</strong></p>
+<p>基于 Highlight，需要一起配置，可以为 inline code blocks 加上语法前缀高亮行内代码。</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">markdown_extensions</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> pymdownx.highlight
+  <span class="token punctuation">-</span> pymdownx.inlinehilite
+  <span class="token punctuation">-</span> pymdownx.superfences <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>  The `#!python range()` function is used to generate a sequence of numbers.</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"><i class="fa fa-tag"></i> 技术</a>
+              <a href="/tags/%E8%AF%BB%E6%96%87%E6%A1%A3/" rel="tag"><i class="fa fa-tag"></i> 读文档</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/03/25/java-collection-review/" rel="prev" title="复习Java集合">
+                  <i class="fa fa-chevron-left"></i> 复习Java集合
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/04/01/git-config-lf-crlf/" rel="next" title="解决报错LF will be replaced by CRLF">
+                  解决报错LF will be replaced by CRLF <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nova-mist</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+    <div class="pjax">
+
+
+    </div>
+</body>
+</html>

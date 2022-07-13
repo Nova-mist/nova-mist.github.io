@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"nova-mist.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+<meta name="description" content="看了少数派上的讲符号链接与硬链接的相关文章符号链接、硬链接及其在 Windows 上的应用举例 - 少数派 (sspai.com)，与之前学到的 mklink 命令一起整理作为笔记。  最好的应用方式：备份文件与C盘减负。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows上的文件链接">
+<meta property="og:url" content="https://nova-mist.github.io/2021/07/27/file-links/index.html">
+<meta property="og:site_name" content="novamist blog">
+<meta property="og:description" content="看了少数派上的讲符号链接与硬链接的相关文章符号链接、硬链接及其在 Windows 上的应用举例 - 少数派 (sspai.com)，与之前学到的 mklink 命令一起整理作为笔记。  最好的应用方式：备份文件与C盘减负。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/July007asALTgy1gk4xd5hdquj30mj0fz407.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/Julyimage-20210727190542541.png">
+<meta property="article:published_time" content="2021-07-27T08:31:30.000Z">
+<meta property="article:modified_time" content="2021-08-11T06:20:52.848Z">
+<meta property="article:author" content="Nova-mist">
+<meta property="article:tag" content="tips">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/July007asALTgy1gk4xd5hdquj30mj0fz407.jpg">
+
+
+<link rel="canonical" href="https://nova-mist.github.io/2021/07/27/file-links/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>Windows上的文件链接 | novamist blog</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">novamist blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">75</span></a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">28</span></a></li>
+        <li class="menu-item menu-item-stars"><a href="/stars/" rel="section"><i class="fa fa-heart fa-fw"></i>收集</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5%E5%BA%94%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">链接应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E9%93%BE%E6%8E%A5"><span class="nav-number">2.</span> <span class="nav-text">创建链接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%AE%9E%E4%BE%8B"><span class="nav-number">3.</span> <span class="nav-text">应用实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%87%E4%BB%BD%E8%BD%AF%E4%BB%B6%E6%95%B0%E6%8D%AE"><span class="nav-number">3.1.</span> <span class="nav-text">备份软件数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TODO%EF%BC%9A%E5%90%8C%E6%AD%A5%E5%8D%9A%E5%AE%A2%E4%B8%8E%E7%AC%94%E8%AE%B0-Markdown-%E6%96%87%E4%BB%B6"><span class="nav-number">3.2.</span> <span class="nav-text">TODO：同步博客与笔记 Markdown 文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A2%9E%E9%87%8F%E5%A4%87%E4%BB%BD"><span class="nav-number">3.3.</span> <span class="nav-text">增量备份</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E6%96%87%E7%AB%A0"><span class="nav-number">4.</span> <span class="nav-text">相关文章</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mklink-%E5%91%BD%E4%BB%A4"><span class="nav-number">5.</span> <span class="nav-text">Mklink 命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#C%E7%9B%98%E5%87%8F%E8%B4%9F"><span class="nav-number">5.1.</span> <span class="nav-text">C盘减负</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nova-mist"
+      src="/uploads/avatar.png">
+  <p class="site-author-name" itemprop="name">Nova-mist</p>
+  <div class="site-description" itemprop="description">My blog about daily life and learning. :b</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Nova-mist" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Nova-mist" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fas fa-cat fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.bilibili.com/" title="https:&#x2F;&#x2F;www.bilibili.com&#x2F;" rel="noopener" target="_blank">Bilibili</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2021/07/27/file-links/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="Nova-mist">
+      <meta itemprop="description" content="My blog about daily life and learning. :b">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="novamist blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Windows上的文件链接
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-07-27 16:31:30" itemprop="dateCreated datePublished" datetime="2021-07-27T16:31:30+08:00">2021-07-27</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-08-11 14:20:52" itemprop="dateModified" datetime="2021-08-11T14:20:52+08:00">2021-08-11</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <img src="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/July007asALTgy1gk4xd5hdquj30mj0fz407.jpg" alt="007asALTgy1gk4xd5hdquj30mj0fz407" style="zoom:67%;" />
+
+<p>看了少数派上的讲<strong>符号链接与硬链接</strong>的相关文章<a target="_blank" rel="noopener" href="https://sspai.com/post/66834">符号链接、硬链接及其在 Windows 上的应用举例 - 少数派 (sspai.com)</a>，与之前学到的 mklink 命令一起整理作为笔记。 </p>
+<p><strong>最好的应用方式：备份文件与C盘减负。</strong></p>
+<span id="more"></span>
+
+<h2 id="链接应用"><a href="#链接应用" class="headerlink" title="链接应用"></a>链接应用</h2><p>使用 Windows 系统下的符号链接（Symbolic Link）和硬链接（Hard Link）：</p>
+<ul>
+<li>  云盘保存不方便改变位置的文件</li>
+<li>  在不同的路径编辑同一个文件</li>
+<li>  更省空间的增量备份</li>
+</ul>
+<blockquote>
+<p>  在一台 Windows 电脑中，硬盘被分割为卷用以保存数据，在每一个卷上，数据对象被 NTFS 文件系统赋予了独一无二的<strong>文件 ID</strong> 以及<strong>与之对应的文件路径</strong>，文件路径和文件 ID 对应，文件 ID 和数据对象绑定，最终才呈现为可供用户打开、编辑的文件。</p>
+<p>  <strong>因此可以说，我们所看到的文件并非数据本身，而是由文件路径指向数据对象的链接。</strong></p>
+</blockquote>
+<p><strong>符号链接，访问一个文件夹，系统会自动跳转到目标文件夹。</strong></p>
+<ul>
+<li>  创建符号链接只需要一个路径</li>
+<li>  使用符号链接就是在使用目标文件</li>
+<li>  目标文件单方面影响符号链接，移动位置，会使符号链接变为死链</li>
+</ul>
+<p><strong>硬链接：文件管理器上的几乎所有文件都可以被看作是硬链接。</strong></p>
+<ul>
+<li>  简单的复制副本是创建了一个新的文件（ID不同）。</li>
+<li>  <strong>硬链接指向源文件，地位与原链接同级（指向的文件ID相同），所以数据是相通的，一边更改会影响另一边。</strong></li>
+<li>  不会占用新的存储空间，但只能在同一个盘符，<strong>相当于创建文件的别名</strong>。</li>
+<li>  目标与硬链接任意删除一个不影响文件的使用（具有完整的文件结构），全删除则文件真正删除。</li>
+</ul>
+<blockquote>
+<p>  只有在同一个卷内，文件 ID 才是独一无二的，且没人能在这个卷内编辑另一个卷的数据。</p>
+</blockquote>
+<h2 id="创建链接"><a href="#创建链接" class="headerlink" title="创建链接"></a>创建链接</h2><pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell"><span class="token function">New-Item</span> <span class="token namespace">[linkName]</span> <span class="token operator">-</span>Itemtype SymbolicLink<span class="token operator">/</span>HardLink <span class="token operator">-</span>Target <span class="token namespace">[targetAbsolutePath]</span>
+<span class="token operator">/</span><span class="token operator">/</span> 需要管理员权限 目标路径要为绝对路径<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><strong>更方便的工具 Link Shell Extension</strong></p>
+<pre class="line-numbers language-cmd" data-language="cmd"><code class="language-cmd">choco install linkshellextension -y<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><a target="_blank" rel="noopener" href="https://schinagl.priv.at/nt/hardlinkshellext/hardlinkshellext.html">官网下载</a></p>
+<h2 id="应用实例"><a href="#应用实例" class="headerlink" title="应用实例"></a>应用实例</h2><h3 id="备份软件数据"><a href="#备份软件数据" class="headerlink" title="备份软件数据"></a>备份软件数据</h3><ol>
+<li> 在备份路径创建符号链接。</li>
+<li> 将数据移动到备份路径，在原路径创建符号链接。</li>
+</ol>
+<p><strong>注意：删除文件时（卸载软件），第一种方法的符号链接会失效变为死链。</strong></p>
+<p><strong>第二种方法，对链接文件进行「增删改」相当于对源文件操作，所以卸载时要先删除符号链接，否则还是会影响源文件。</strong></p>
+<blockquote>
+<p>  备份微信文件：将目标文件或目录放在 OneDrive 中，在需要的程序文件夹中创建符号链接。在上面的例子中，即在 OneDrive 中放一个 File 文件夹，把微信中的 File 数据移动到此文件夹中，然后在微信的 FileStorage 中创建以 OneDrive 的 File 为目标的符号链接。</p>
+</blockquote>
+<h3 id="TODO：同步博客与笔记-Markdown-文件"><a href="#TODO：同步博客与笔记-Markdown-文件" class="headerlink" title="TODO：同步博客与笔记 Markdown 文件"></a>TODO：同步博客与笔记 Markdown 文件</h3><h3 id="增量备份"><a href="#增量备份" class="headerlink" title="增量备份"></a>增量备份</h3><p>使用 Link Shell Extension 自带的 DeLorean Copy 功能。<strong>（多版本智能副本）</strong></p>
+<blockquote>
+<p>  创建硬链接相当于创建文件的别名，它可以实现在不增加体积的情况下创建文件的副本，这个特性让它非常适合用来备份文件。</p>
+</blockquote>
+<p><strong>增量备份和版本回溯，在首次备份后：</strong></p>
+<ol>
+<li> 相同的文件创建硬链接。</li>
+<li> 新的文件被复制。</li>
+<li> 删除的文件被丢弃。</li>
+<li> <strong>形成一个新的备份，老的备份任然存在并且不增加文件体积。</strong></li>
+<li> <strong>最好指定一个父级文件夹，需要手动多次创建链接。</strong></li>
+</ol>
+<h2 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h2><ul>
+<li>  <a target="_blank" rel="noopener" href="https://sspai.com/post/66834">符号链接、硬链接及其在 Windows 上的应用举例 - 少数派 (sspai.com)</a></li>
+<li>  <a target="_blank" rel="noopener" href="https://sspai.com/post/67829">一日一技 | 集中管理与备份 Windows 分散各处的应用配置文件 - 少数派 (sspai.com)</a></li>
+<li>  [<a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv7193393/">转] 使用 mklink 指令释放 C 盘空间 - 哔哩哔哩 (bilibili.com)</a></li>
+</ul>
+<h2 id="Mklink-命令"><a href="#Mklink-命令" class="headerlink" title="Mklink 命令"></a>Mklink 命令</h2><p><strong>MKLINK 命令也可以用来创建符号链接。</strong></p>
+<pre class="line-numbers language-none"><code class="language-none">MKLINK [&#x2F;D] | [&#x2F;H] | [&#x2F;J]] Link Target
+
+        &#x2F;D      创建目录符号链接。默认为文件符号链接。
+        &#x2F;H      创建硬链接而非符号链接。
+        &#x2F;J      创建目录联接。
+        Link    指定新的符号链接名称。
+        Target  指定新链接引用的路径(相对或绝对)。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p><img src="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/Julyimage-20210727190542541.png" alt="image-20210727190542541"></p>
+<h3 id="C盘减负"><a href="#C盘减负" class="headerlink" title="C盘减负"></a>C盘减负</h3><ul>
+<li>从C盘剪切到E盘（有时需要管理员cmd）</li>
+<li>建立软连接</li>
+</ul>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">mklink <span class="token operator">/</span>d <span class="token punctuation">[</span><span class="token operator">/</span>j<span class="token punctuation">]</span> <span class="token string">"C:\Program Files\example"</span> <span class="token string">"E:\example"</span>
+<span class="token operator">/</span><span class="token operator">/</span> 在C盘创建符号链接 &lt;Link> &lt;Target><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+
+
+<blockquote>
+<p>  使用 mklink 命令也可以创建符号链接。</p>
+<p>  一个经典的例子就是为C盘软件搬家：把一些必须要在C盘存在路径的文件夹剪切到D盘，然后在C盘的原路径创建符号链接，这样一些软件（Visual Studio）就不会报错，并且文件也不会占用C盘空间。</p>
+<p>  mklink /d “C:\example” “D:\example”</p>
+<p>  在C盘创建一个D盘文件夹的符号链接。</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/tips/" rel="tag"><i class="fa fa-tag"></i> tips</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/07/27/windows-configuration-file/" rel="prev" title="关于windows上的软件配置文件">
+                  <i class="fa fa-chevron-left"></i> 关于windows上的软件配置文件
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/08/11/AndroidLearn/" rel="next" title="读《第一行代码Android》">
+                  读《第一行代码Android》 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nova-mist</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+    <div class="pjax">
+
+
+    </div>
+</body>
+</html>

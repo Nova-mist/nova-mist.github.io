@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"nova-mist.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+<meta name="description" content="前提前不久换用了Clash用来代理，告别了 v2rayN 和 trojan-qt5 的直连模式搭配浏览器的插件 Proxy SwitchyOmega 的使用方式，Clash自动切换节点的功能很好用，但是今天在命令行使用 choco install [...] 命令时发现并没有走代理，于是搜索了一下解决方法。   方法&gt;setx &quot;http_proxy&quot; &quot;htt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为命令行设置代理 &amp;&amp; 设置环境变量 &amp;&amp; Setx Set命令">
+<meta property="og:url" content="https://nova-mist.github.io/2021/10/02/set-cmd-proxy/index.html">
+<meta property="og:site_name" content="novamist blog">
+<meta property="og:description" content="前提前不久换用了Clash用来代理，告别了 v2rayN 和 trojan-qt5 的直连模式搭配浏览器的插件 Proxy SwitchyOmega 的使用方式，Clash自动切换节点的功能很好用，但是今天在命令行使用 choco install [...] 命令时发现并没有走代理，于是搜索了一下解决方法。   方法&gt;setx &quot;http_proxy&quot; &quot;htt">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/october/blog-image-20211002-1633163230.png">
+<meta property="article:published_time" content="2021-10-02T08:02:29.000Z">
+<meta property="article:modified_time" content="2022-02-21T04:02:49.664Z">
+<meta property="article:author" content="Nova-mist">
+<meta property="article:tag" content="tips">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/october/blog-image-20211002-1633163230.png">
+
+
+<link rel="canonical" href="https://nova-mist.github.io/2021/10/02/set-cmd-proxy/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>为命令行设置代理 && 设置环境变量 && Setx Set命令 | novamist blog</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">novamist blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">75</span></a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">28</span></a></li>
+        <li class="menu-item menu-item-stars"><a href="/stars/" rel="section"><i class="fa fa-heart fa-fw"></i>收集</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E6%8F%90"><span class="nav-number">1.</span> <span class="nav-text">前提</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%8E%AF%E5%A2%83"><span class="nav-number">3.</span> <span class="nav-text">设置命令行环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#set-%E4%B8%B4%E6%97%B6%E8%AE%BE%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">3.1.</span> <span class="nav-text">set 临时设置环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#setx-%E6%B0%B8%E4%B9%85%E8%AE%BE%E7%BD%AE"><span class="nav-number">3.2.</span> <span class="nav-text">setx 永久设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E5%A5%BD%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%9AHexo-blog"><span class="nav-number">3.3.</span> <span class="nav-text">更好的应用：Hexo blog</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nova-mist"
+      src="/uploads/avatar.png">
+  <p class="site-author-name" itemprop="name">Nova-mist</p>
+  <div class="site-description" itemprop="description">My blog about daily life and learning. :b</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Nova-mist" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Nova-mist" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fas fa-cat fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.bilibili.com/" title="https:&#x2F;&#x2F;www.bilibili.com&#x2F;" rel="noopener" target="_blank">Bilibili</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2021/10/02/set-cmd-proxy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="Nova-mist">
+      <meta itemprop="description" content="My blog about daily life and learning. :b">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="novamist blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          为命令行设置代理 && 设置环境变量 && Setx Set命令
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-10-02 16:02:29" itemprop="dateCreated datePublished" datetime="2021-10-02T16:02:29+08:00">2021-10-02</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-02-21 12:02:49" itemprop="dateModified" datetime="2022-02-21T12:02:49+08:00">2022-02-21</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h2><p>前不久换用了<a target="_blank" rel="noopener" href="https://github.com/Fndroid/clash_for_windows_pkg/releases">Clash</a>用来代理，告别了 <code>v2rayN</code> 和 <code>trojan-qt5</code> 的直连模式搭配浏览器的插件 <a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif">Proxy SwitchyOmega</a> 的使用方式，<strong>Clash自动切换节点的功能很好用</strong>，但是今天在命令行使用 <code>choco install [...]</code> 命令时发现并没有走代理，于是搜索了一下解决方法。</p>
+<img src="https://raw.githubusercontent.com/Nova-mist/HexoBlogResources/main/images/2021/october/blog-image-20211002-1633163230.png" alt="blog-image-20211002-1633163230" style="zoom:67%;" />
+
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><pre class="line-numbers language-cmd" data-language="cmd"><code class="language-cmd">&gt;setx &quot;http_proxy&quot; &quot;http:&#x2F;&#x2F;127.0.0.01:[port]&quot;
+&gt;curl -vv google.com # 测试<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<span id="more"></span>
+
+<hr>
+<h2 id="设置命令行环境"><a href="#设置命令行环境" class="headerlink" title="设置命令行环境"></a>设置命令行环境</h2><h3 id="set-临时设置环境变量"><a href="#set-临时设置环境变量" class="headerlink" title="set 临时设置环境变量"></a>set 临时设置环境变量</h3><pre class="line-numbers language-cmd" data-language="cmd"><code class="language-cmd"># 查看环境变量
+&gt;set
+&gt;set PATH
+# 设置&#x2F;删除
+&gt;set http_proxy&#x3D;http:&#x2F;&#x2F;127.0.0.1:[port]
+&gt;set http_proxy&#x3D;
+# 在PATH后添加新的值
+&gt;set PATH&#x3D;%PATH%;D:\example<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>set只对当前命令行窗口起作用</strong></p>
+<h3 id="setx-永久设置"><a href="#setx-永久设置" class="headerlink" title="setx 永久设置"></a>setx 永久设置</h3><p>==<strong>非常不推荐使用 setx 命令来修改环境变量 Path，最终结果会产生很多混乱的结果。</strong>==</p>
+<p>==使用快捷键也十分简单==</p>
+<ol>
+<li>  <code>Win</code> + <code>I</code> –&gt; 【系统】–&gt; 最下方的【关于】–&gt; 【高级系统设置】</li>
+<li>  <code>Win</code> + <code>Pause</code> –&gt; 【关于】–&gt; 【高级系统设置】</li>
+</ol>
+<p><strong>除了 Path 这个环境变量意外，其他的变量都可以尝试使用 setx 命令来进行修改。</strong></p>
+<pre class="line-numbers language-cmd" data-language="cmd"><code class="language-cmd"># 设置用户环境变量
+&gt;setx &quot;http_proxy&quot; &quot;http:&#x2F;&#x2F;127.0.0.01:[port]&quot;
+# 追加
+#&gt;setx &quot;PATH&quot; &quot;%PATH%;D:\example&quot;
+# 在后面加上 &#x2F;m 参数设置系统的环境变量 需要管理员权限
+#&gt;setx &quot;Path&quot; &quot;%cd%;%path%&quot; &#x2F;m<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>注意：</strong></p>
+<ol>
+<li> setx设置之后，在当前终端不生效，在新开终端生效。</li>
+<li> 设置时候要一次性设置变量，否则会覆盖前面的命令。</li>
+<li> <del><strong>命令行转义符 ^</strong> <code>echo ^%PATH^%</code>  不会展开路径</del> <strong>只适用于 echo 命令，setx 命令不使用并且建议都加上双引号</strong></li>
+</ol>
+<pre class="line-numbers language-cmd" data-language="cmd"><code class="language-cmd"># √
+#&gt;set path_&#x3D;%Path%
+#&gt;setx “Path” “%path_%;newpath1;newpath2” &#x2F;m
+# 会覆盖newpath1
+#&gt;set path_&#x3D;%Path%
+#&gt;setx “Path” “%path_%;newpath1” &#x2F;m
+#&gt;setx “Path” “%path_%;newpath2” &#x2F;m<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ol start="4">
+<li>  <del><strong>在CMD下，setx会存在截取1024长度问题导致追加修改Path时出错，建议使用PowerShell。</strong>但1024截断问题会复原用户Path的列表状态使用真实的值。</del></li>
+<li>  在我的笔记本键盘上按下 <code>Win</code> + <code>Fn</code> + <code>Shift</code> （右 Shift 键使用 Fn 键可以转换为 Pause 键）<strong>会调出路径设置的相关界面</strong>。</li>
+</ol>
+<p>==<strong>值得解决的迷惑点</strong>==</p>
+<blockquote>
+<p>  当使用 setx 命令修改 Path 后，再次手动点开界面查看信息可能会发现 Path 变得和以前不一样了</p>
+<p>  这是因为之前使用了setx命令，“%path%” 两侧有字符串包裹不会自动展开，原来用户Path的值被替换为了 %Path% 导致指向了系统Path，<strong>而加上 \m 参数修改系统环境则会彻底删除之前所有的Path内容，十分危险。所以如果想要用户Path 独立于 系统Path，就不应该使用setx命令！</strong></p>
+</blockquote>
+<h3 id="更好的应用：Hexo-blog"><a href="#更好的应用：Hexo-blog" class="headerlink" title="更好的应用：Hexo blog"></a>更好的应用：Hexo blog</h3><pre class="line-numbers language-cmd" data-language="cmd"><code class="language-cmd"># 切换到 Hexo 博客路径并生成、启动本地服务
+# cd &#x2F;d 切换D盘的盘符
+&gt;setx &quot;blog&quot; &quot;cd &#x2F;d [blog_address] &amp;&amp; hexo g &amp;&amp; hexo s&quot;
+&gt;%blog%
+# 生成文章
+&gt;setx &quot;newblog&quot; &quot;cd &#x2F;d [blog_address] &amp;&amp; hexo new&quot;
+&gt;%newblog% [post_name]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>突发的灵感</strong> 😁</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li>  <a target="_blank" rel="noopener" href="https://www.jb51.net/article/193241.htm">cmd环境变量命令set 设置永久环境变量命令setx_DOS/BAT_脚本之家 (jb51.net)</a></li>
+<li>  <a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/windows-server/administration/windows-commands/setx">setx | Microsoft Docs</a></li>
+<li>  <a target="_blank" rel="noopener" href="https://blog.csdn.net/yanhanhui1/article/details/108871132">Windows setx命令的使用（命令行实现永久设置环境变量）_yanhanhui1的博客-CSDN博客</a></li>
+<li>  <a target="_blank" rel="noopener" href="https://g2ex.top/2017/10/22/windows-linux-git-proxy-cmd/">Win/Linux 命令行、终端和 Git 代理设置 | G2EX</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/tips/" rel="tag"><i class="fa fa-tag"></i> tips</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/01/ReadmeImage/" rel="prev" title="python为图片规范命名">
+                  <i class="fa fa-chevron-left"></i> python为图片规范命名
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/03/python-note/" rel="next" title="python备注">
+                  python备注 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nova-mist</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+    <div class="pjax">
+
+
+    </div>
+</body>
+</html>
