@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"nova-mist.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+<meta name="description" content="Nginx 学习笔记基础概念web server后端项目部署：  ssm war -&gt; tomcat springboot jar -&gt; cmd run  web服务器：  Apache 静态 Tomcat   a servlet container used to serve Java servlets 处理静态资源效率不如 Nginx   Nginx    static &#x2F; dyn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nginx 学习笔记">
+<meta property="og:url" content="https://nova-mist.github.io/2022/08/11/nginx-note/index.html">
+<meta property="og:site_name" content="novamist blog">
+<meta property="og:description" content="Nginx 学习笔记基础概念web server后端项目部署：  ssm war -&gt; tomcat springboot jar -&gt; cmd run  web服务器：  Apache 静态 Tomcat   a servlet container used to serve Java servlets 处理静态资源效率不如 Nginx   Nginx    static &#x2F; dyn">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111049399.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111049167.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111049732.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111049793.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111049689.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111049653.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111049829.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111048612.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111048551.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111048807.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111048455.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111048375.png">
+<meta property="article:published_time" content="2022-08-11T02:56:37.000Z">
+<meta property="article:modified_time" content="2022-08-11T03:01:10.083Z">
+<meta property="article:author" content="Nova-mist">
+<meta property="article:tag" content="server">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111049399.png">
+
+
+<link rel="canonical" href="https://nova-mist.github.io/2022/08/11/nginx-note/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>Nginx 学习笔记 | novamist blog</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">novamist blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">74</span></a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">31</span></a></li>
+        <li class="menu-item menu-item-stars"><a href="/stars/" rel="section"><i class="fa fa-heart fa-fw"></i>收集</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Nginx-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0"><span class="nav-number">1.</span> <span class="nav-text">Nginx 学习笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="nav-number">1.1.</span> <span class="nav-text">基础概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#web-server"><span class="nav-number">1.1.1.</span> <span class="nav-text">web server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nginx"><span class="nav-number">1.1.2.</span> <span class="nav-text">nginx</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TODO%EF%BC%9Avmware-%E9%85%8D%E7%BD%AE%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="nav-number">1.2.1.</span> <span class="nav-text">TODO：vmware 配置虚拟机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker-%E9%85%8D%E7%BD%AE%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="nav-number">1.2.2.</span> <span class="nav-text">Docker 配置虚拟机</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8D%A2%E6%BA%90"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">换源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-ssh"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">安装 ssh</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-nginx"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">安装 nginx</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%BC%80%E5%90%AF-ssh-%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95"><span class="nav-number">1.2.3.</span> <span class="nav-text">为服务器开启 ssh 免密登录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.</span> <span class="nav-text">主要配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98"><span class="nav-number">1.4.</span> <span class="nav-text">解决跨域问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#nginx-web-server"><span class="nav-number">1.4.1.</span> <span class="nav-text">nginx web server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-jdk"><span class="nav-number">1.4.2.</span> <span class="nav-text">安装 jdk</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#other-web-server"><span class="nav-number">1.4.3.</span> <span class="nav-text">other web server</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98%EF%BC%88%E5%BE%88%E4%B9%B1%F0%9F%A4%AF"><span class="nav-number">1.5.</span> <span class="nav-text">浏览器跨域问题（很乱🤯</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8C%E6%BA%90%E7%AD%96%E7%95%A5"><span class="nav-number">1.5.1.</span> <span class="nav-text">同源策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F"><span class="nav-number">1.5.2.</span> <span class="nav-text">解决跨域</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CORS"><span class="nav-number">1.5.2.1.</span> <span class="nav-text">CORS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86"><span class="nav-number">1.5.2.2.</span> <span class="nav-text">正向代理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86"><span class="nav-number">1.5.2.3.</span> <span class="nav-text">反向代理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E8%87%AA%E6%B5%8B"><span class="nav-number">1.6.</span> <span class="nav-text">项目自测</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8E%E7%AB%AF"><span class="nav-number">1.6.1.</span> <span class="nav-text">后端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF"><span class="nav-number">1.6.2.</span> <span class="nav-text">前端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F-1"><span class="nav-number">1.6.3.</span> <span class="nav-text">解决跨域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A3%E5%BC%8F%E5%BC%80%E5%8F%91%E4%B8%AD%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F"><span class="nav-number">1.6.4.</span> <span class="nav-text">正式开发中解决跨域</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E9%85%8D%E7%BD%AE"><span class="nav-number">1.7.</span> <span class="nav-text">其他配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#nginx-%E7%9B%91%E6%8E%A7"><span class="nav-number">1.7.1.</span> <span class="nav-text">nginx 监控</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6"><span class="nav-number">1.7.2.</span> <span class="nav-text">访问控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">1.7.3.</span> <span class="nav-text">文件服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1"><span class="nav-number">1.7.4.</span> <span class="nav-text">负载均衡</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A5%E5%85%85"><span class="nav-number">1.8.</span> <span class="nav-text">补充</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nova-mist"
+      src="/uploads/avatar.png">
+  <p class="site-author-name" itemprop="name">Nova-mist</p>
+  <div class="site-description" itemprop="description">My blog about daily life and learning. :b</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">74</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Nova-mist" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Nova-mist" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fas fa-cat fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.bilibili.com/" title="https:&#x2F;&#x2F;www.bilibili.com&#x2F;" rel="noopener" target="_blank">Bilibili</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2022/08/11/nginx-note/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="Nova-mist">
+      <meta itemprop="description" content="My blog about daily life and learning. :b">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="novamist blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Nginx 学习笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-08-11 10:56:37 / 修改时间：11:01:10" itemprop="dateCreated datePublished" datetime="2022-08-11T10:56:37+08:00">2022-08-11</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="Nginx-学习笔记"><a href="#Nginx-学习笔记" class="headerlink" title="Nginx 学习笔记"></a>Nginx 学习笔记</h1><h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><h3 id="web-server"><a href="#web-server" class="headerlink" title="web server"></a>web server</h3><p>后端项目部署：</p>
+<ul>
+<li>ssm war -&gt; tomcat</li>
+<li>springboot jar -&gt; cmd run</li>
+</ul>
+<p>web服务器：</p>
+<ul>
+<li>Apache 静态</li>
+<li>Tomcat</li>
+</ul>
+<blockquote>
+<p>a servlet container used to serve Java servlets</p>
+<p>处理静态资源效率不如 Nginx</p>
+</blockquote>
+<ul>
+<li>Nginx </li>
+</ul>
+<blockquote>
+<p>static / dynamic / reverse proxy</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.educba.com/nginx-vs-tomcat">Nginx vs Tomcat | Learn the Key Differences between Nginx vs Tomcat (educba.com)</a></p>
+<p>结合使用</p>
+<h3 id="nginx"><a href="#nginx" class="headerlink" title="nginx"></a>nginx</h3><p><a target="_blank" rel="noopener" href="https://www.ydlclass.com/doc21xnv/nginx/">nginx教程 | 文档合集 (ydlclass.com)</a></p>
+<p><a target="_blank" rel="noopener" href="http://nginx.org/en/docs/">nginx documentation</a></p>
+<blockquote>
+<p>Nginx (“engine x”) 是一款开源的，支持高性能、高并发的 Web 服务和代理服务软件。</p>
+</blockquote>
+<p>🟢nginx 功能：</p>
+<ol>
+<li>web 服务器（可以存放静态资源）</li>
+<li>反向代理（用于负载均衡）</li>
+<li>web cache 缓存</li>
+</ol>
+<p>响应快、高扩展、高并发、低内存、热部署。</p>
+<span id="more"></span>
+
+
+
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="TODO：vmware-配置虚拟机"><a href="#TODO：vmware-配置虚拟机" class="headerlink" title="TODO：vmware 配置虚拟机"></a>TODO：vmware 配置虚拟机</h3><ul>
+<li>安装镜像</li>
+<li>配置网络（NAT）</li>
+</ul>
+<blockquote>
+<p>看的视频中是 CentOS7 的网卡配置</p>
+</blockquote>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> /etc/sysconfig/network-scripts/
+
+<span class="token comment"># 分配ip 子网掩码 网关 dns</span>
+<span class="token function">vi</span> ifcfg-ens33
+
+restart network
+<span class="token function">ip</span> addr
+<span class="token function">ping</span>
+
+<span class="token function">netstat</span> -nplt<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<hr>
+<h3 id="Docker-配置虚拟机"><a href="#Docker-配置虚拟机" class="headerlink" title="Docker 配置虚拟机"></a>Docker 配置虚拟机</h3><p>直接使用 docker 的 Ubuntu 进行一遍手动安装。</p>
+<p>🟠<strong>必须在 wsl 中操作</strong></p>
+<h4 id="换源"><a href="#换源" class="headerlink" title="换源"></a>换源</h4><ol>
+<li>开启容器，更新阿里源。</li>
+</ol>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 启动并进入停止的Ubuntu容器</span>
+docker start -ia <span class="token punctuation">[</span>id<span class="token punctuation">]</span>
+
+docker inspect <span class="token punctuation">[</span>id<span class="token punctuation">]</span>
+
+docker run -it -v /home/ysama/nginx-ubuntu:/home/volume01 --name<span class="token operator">=</span>nginx-setup ubuntu /bin/bash
+
+<span class="token comment"># 查看源信息</span>
+<span class="token comment"># container</span>
+<span class="token function">cat</span> /etc/apt/sources.list
+
+<span class="token comment"># lsb_release -a | grep Codename | awk '&#123;print $2&#125;'</span>
+<span class="token comment"># 查看版本名为jammy</span>
+<span class="token comment">#container</span>
+
+<span class="token comment"># 在wsl /home/ysama/nginx-ubuntu 目录创建sources.list</span>
+<span class="token comment"># wsl</span>
+<span class="token function">sudo</span> <span class="token function">touch</span> sources.list
+<span class="token function">sudo</span> <span class="token function">vi</span> sources.list
+<span class="token comment"># wsl</span>
+
+<span class="token comment"># 在容器中进行拷贝</span>
+<span class="token comment"># container</span>
+<span class="token builtin class-name">cd</span> /etc/apt
+<span class="token function">mv</span> sources.list sources.list.bak
+<span class="token function">cp</span> /home/volume01/sources.list ./sources.list
+<span class="token function">cat</span> sources.list
+<span class="token comment">#container</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/a_small_cherry/article/details/123037157">Ubuntu 快速更换阿里源_a_small_cherry的博客-CSDN博客_ubuntu更换阿里云源</a></p>
+<p><strong>替换版本名字</strong></p>
+<pre class="line-numbers language-txt" data-language="txt"><code class="language-txt">deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; $Codename main multiverse restricted universe
+deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; $Codename-backports main multiverse restricted universe
+deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; $Codename-proposed main multiverse restricted universe
+deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; $Codename-security main multiverse restricted universe
+deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; $Codename-updates main multiverse restricted universe
+deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; $Codename main multiverse restricted universe
+deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; $Codename-backports main multiverse restricted universe
+deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; $Codename-proposed main multiverse restricted universe
+deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; $Codename-security main multiverse restricted universe
+deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; $Codename-updates main multiverse restricted universe<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="安装-ssh"><a href="#安装-ssh" class="headerlink" title="安装 ssh"></a>安装 ssh</h4><ol start="2">
+<li>【可选】安装网络工具和 ssh<br>不使用 xshell 连接容器就不用安装 ssh<br>可以直接使用 docker exec 进入容器</li>
+</ol>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># container</span>
+<span class="token function">apt-get</span> update
+
+<span class="token function">apt-get</span> <span class="token function">install</span> -y <span class="token function">vim</span>
+<span class="token function">apt-get</span> <span class="token function">install</span> -y net-tools
+<span class="token function">apt</span> <span class="token function">install</span> -y iputils-ping
+
+<span class="token function">apt</span> <span class="token function">install</span> openssh-server -y
+
+<span class="token comment"># 启动ssh服务</span>
+<span class="token function">service</span> <span class="token function">ssh</span> start
+
+<span class="token function">service</span> <span class="token function">ssh</span> <span class="token builtin class-name">enable</span>
+
+<span class="token function">service</span> <span class="token function">ssh</span> status
+
+<span class="token comment"># 查看服务器监听端口</span>
+<span class="token function">netstat</span> -nlt
+
+<span class="token comment"># 查看用户名</span>
+<span class="token function">whoami</span>
+
+<span class="token comment"># 查看服务运行</span>
+<span class="token function">ps</span> ax <span class="token operator">|</span> <span class="token function">grep</span> <span class="token function">ssh</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ol start="3">
+<li>【可选】重新启动容器并配置ssh免密登录<br><strong>不映射22端口无法ssh登录</strong></li>
+</ol>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 将原来的容器保存为镜像</span>
+docker commit <span class="token punctuation">[</span>id<span class="token punctuation">]</span> nginx-setup-ssh
+
+<span class="token comment"># 运行新的镜像</span>
+<span class="token comment"># 挂载要在wsl中操作 主机路径:容器路径</span>
+docker run -it -p <span class="token number">2022</span>:22 --name<span class="token operator">=</span>nginx -v /home/ysama/volume01:/home/volume01 nginx-setup-ssh /bin/bash <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>保存一个新的镜像供后续 xshell 连接使用</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 在主机先保存一个镜像 此镜像已经设置了免密登录</span>
+docker commit nginx nginx-setup-ssh-key
+
+docker images
+
+<span class="token comment"># 运行新的容器</span>
+docker run -it -p <span class="token number">2023</span>:22  --name<span class="token operator">=</span>nginx02 nginx-setup-ssh-key /bin/bash
+
+<span class="token comment"># 容器中开启服务</span>
+<span class="token comment"># container</span>
+<span class="token function">service</span> <span class="token function">ssh</span> start
+<span class="token function">netstat</span>  -nlt
+<span class="token comment"># Ctrl + P + Q 退出容器</span>
+<span class="token comment"># container</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p>==TODO：直接使用一个带有ssh的镜像==</p>
+<h4 id="安装-nginx"><a href="#安装-nginx" class="headerlink" title="安装 nginx"></a>安装 nginx</h4><ol start="4">
+<li>安装 nginx</li>
+</ol>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 一些依赖包</span>
+<span class="token function">apt-get</span> <span class="token function">install</span> -y gcc zlib1g-dev libpcre3 libpcre3-dev openssl libssl-dev <span class="token function">make</span>
+
+<span class="token comment"># wget http://nginx.org/download/nginx-1.22.0.tar.gz</span>
+<span class="token function">wget</span> https://fossies.org/linux/www/nginx-1.23.1.tar.gz
+
+<span class="token comment"># 解压</span>
+<span class="token function">tar</span> -zvxf nginx-1.23.1.tar.gz
+<span class="token builtin class-name">cd</span> nginx-1.23.1
+<span class="token function">mkdir</span> /data/nginx -p
+
+<span class="token comment"># 编译安装</span>
+./configure --prefix<span class="token operator">=</span>/data/nginx --user<span class="token operator">=</span>nginx --group<span class="token operator">=</span>nginx  --with-http_ssl_module  --with-http_stub_status_module
+
+<span class="token comment"># -M ： 不创建主目录  -s ： 不允许登录 /sbin/nologin是一个有一个特殊的shell，不需要登陆</span>
+<span class="token function">useradd</span> nginx -M -s /sbin/nologin
+<span class="token function">make</span> <span class="token operator">&amp;&amp;</span> <span class="token function">make</span> <span class="token function">install</span> 
+
+<span class="token comment"># 默认配置</span>
+<span class="token comment"># ./configure</span>
+<span class="token comment"># make</span>
+<span class="token comment"># make install</span>
+
+<span class="token comment"># 配置文件是否正常</span>
+/data/nginx/sbin/nginx -t 
+
+<span class="token comment"># 启动服务</span>
+/data/nginx/sbin/nginx
+
+<span class="token comment"># 查看进程</span>
+<span class="token function">netstat</span> -lntup <span class="token operator">|</span><span class="token function">grep</span> nginx
+
+<span class="token comment"># 检查端口</span>
+<span class="token function">netstat</span> -nplt
+
+<span class="token function">curl</span> http://localhost <span class="token comment"># localhost:80</span>
+
+<span class="token comment"># nginx其他命令</span>
+nginx -s <span class="token punctuation">[</span>signal<span class="token punctuation">]</span>
+
+-h <span class="token comment"># help</span>
+
+<span class="token comment"># /data/nginx/sbin/nginx -t </span>
+<span class="token comment"># 重新加载配置</span>
+/data/nginx/sbin/nginx -s reload<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/somanlee/article/details/69808788">ubuntu下安装nginx时PCRE库、zlib库、OpenSSL库的安装</a></p>
+<p>🟠添加环境变量</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> /etc/profile
+
+<span class="token comment"># profile</span>
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">NGINX_HOME</span><span class="token operator">=</span>/data/nginx/sbin/
+<span class="token builtin class-name">export</span> <span class="token assign-left variable"><span class="token environment constant">PATH</span></span><span class="token operator">=</span><span class="token environment constant">$PATH</span><span class="token builtin class-name">:</span><span class="token variable">$NGINX_HOME</span>
+
+<span class="token builtin class-name">source</span> /etc/profile<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="为服务器开启-ssh-免密登录"><a href="#为服务器开启-ssh-免密登录" class="headerlink" title="为服务器开启 ssh 免密登录"></a>为服务器开启 ssh 免密登录</h3><ol>
+<li><p>在 xshell <strong>输入 localhost 地址</strong>，登录 root 用户。</p>
+</li>
+<li><p>用户身份验证的时候点击【浏览】来成成一个用户公钥（不需要密码）并保存成文件。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 在主机命令行生成也可以</span>
+<span class="token builtin class-name">cd</span> ~/.ssh
+ssh-keygen -t rsa<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111049399.png" alt="image-20220807103956835"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111049167.png" alt="image-20220807104040876"></p>
+<ol start="3">
+<li><p>将公钥复制到主机的 <code>/home/volume01</code> 目录，并添加到 ssh 授权密钥中。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 在wsl把密钥复制到 wsl和容器的挂载目录</span>
+<span class="token builtin class-name">cd</span> /mnt/d/desktop
+<span class="token function">cp</span> id_rsa_2048.pub /home/ysama/volume01
+
+<span class="token comment"># container</span>
+<span class="token builtin class-name">cd</span> /home/volume01
+
+<span class="token function">mkdir</span> ~/.ssh
+<span class="token function">cat</span> id_rsa_2048.pub <span class="token operator">>></span> ~/.ssh/authorized_keys
+
+<span class="token comment"># 重启ssh服务</span>
+<span class="token function">service</span> <span class="token function">ssh</span> restart
+<span class="token comment"># container</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li><p>在 xshell 连接时选择公钥验证就可以面密码登录了。</p>
+</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zzz_strive/article/details/123153493">ssh免密登录_zzz_strive的博客-CSDN博客_ssh免密登陆</a></p>
+<p><a target="_blank" rel="noopener" href="https://unix.stackexchange.com/questions/471837/add-a-public-ssh-key-to-the-authorized-keys-of-a-user">Add a public ssh key to the authorized_keys of a user - Unix &amp; Linux Stack Exchange</a></p>
+<p><a target="_blank" rel="noopener" href="https://goteleport.com/blog/shell-access-docker-container-with-ssh-and-docker-exec/">2 Ways to Get a Docker Shell: SSH into Docker Container or Use Docker Exec | Teleport (goteleport.com)</a></p>
+<h2 id="主要配置"><a href="#主要配置" class="headerlink" title="主要配置"></a>主要配置</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 不要使用 关闭防火墙</span>
+<span class="token comment"># systemctl stop firewalld</span>
+<span class="token comment"># systemctl status firewalld</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>虚拟机的情况，关闭防火墙，访问虚拟机 ip 的默认 80 端口。</p>
+<hr>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 保存手动安装nginx的镜像</span>
+docker commit <span class="token punctuation">[</span>id<span class="token punctuation">]</span> nginx-setup-ok
+
+<span class="token comment"># TODO:直接使用nginx官方镜像</span>
+
+<span class="token comment"># 查看配置文件</span>
+<span class="token builtin class-name">cd</span> /conf
+<span class="token function">cat</span> nginx.conf
+
+<span class="token function">ps</span> -ef <span class="token operator">|</span> <span class="token function">grep</span> nginx<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p>nginx配置文件主要分为四个部分：</p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx">main<span class="token punctuation">&#123;</span> <span class="token comment">#（全局设置）</span>
+    <span class="token keyword">http</span><span class="token punctuation">&#123;</span> <span class="token comment">#服务器配置</span>
+        <span class="token keyword">upstream</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span> <span class="token comment">#（负载均衡服务器设置）</span>
+        <span class="token keyword">server</span><span class="token punctuation">&#123;</span> <span class="token comment">#（主机设置：主要用于指定主机和端口）</span>
+            <span class="token keyword">location</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span> <span class="token comment">#（URL匹配的设置）</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>server继承自main，location继承自server，upstream不会继承其他设置也不会被继承。</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111049732.png" alt="image-20220807175527920"></p>
+<p><a target="_blank" rel="noopener" href="https://www.ydlclass.com/doc21xnv/nginx/#%E4%B8%83%E3%80%81%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%A7%A3%E8%AF%BB">nginx教程 | 文档合集 (ydlclass.com)</a></p>
+<h2 id="解决跨域问题"><a href="#解决跨域问题" class="headerlink" title="解决跨域问题"></a>解决跨域问题</h2><h3 id="nginx-web-server"><a href="#nginx-web-server" class="headerlink" title="nginx web server"></a>nginx web server</h3><blockquote>
+<p>前端访问的接口：<a target="_blank" rel="noopener" href="http://192.168.111.200/api/host">http://192.168.111.200:80/api/host</a></p>
+<p>后端的接口：<a target="_blank" rel="noopener" href="http://192.168.111.200:8080/host">http://192.168.111.200:8080/host</a></p>
+</blockquote>
+<p>端口不同，跨域</p>
+<h3 id="安装-jdk"><a href="#安装-jdk" class="headerlink" title="安装 jdk"></a>安装 jdk</h3><ul>
+<li><strong>手动安装</strong></li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">tar</span> -zvxf jdk.tar.gz
+
+<span class="token builtin class-name">cd</span> jdk
+
+<span class="token comment"># 配置环境变量</span>
+<span class="token function">vim</span> /etc/profile
+
+
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">JAVA_HOME</span><span class="token operator">=</span>
+<span class="token builtin class-name">export</span> <span class="token assign-left variable"><span class="token environment constant">PATH</span></span><span class="token operator">=</span><span class="token environment constant">$PATH</span><span class="token builtin class-name">:</span><span class="token variable">$JAVA_HOME</span>/bin
+
+<span class="token builtin class-name">source</span> /etc/profile
+
+<span class="token comment"># 运行springboot jar包</span>
+java -jar app.jar<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><strong>自动安装</strong></li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">apt-get</span> <span class="token function">install</span> openjdk-8-jdk
+
+java -version<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><a target="_blank" rel="noopener" href="https://docs.datastax.com/en/jdk-install/doc/jdk-install/installOpenJdkDeb.html">Installing Open JDK 8 on Debian or Ubuntu Systems | Installing the JDK (datastax.com)</a></p>
+<hr>
+<p>使用 nginx 拦截请求，反向代理。</p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token keyword">location</span> <span class="token operator">^</span><span class="token operator">~</span><span class="token operator">/</span>api <span class="token punctuation">&#123;</span>
+    <span class="token comment"># 重写uri 去掉前缀</span>
+    <span class="token keyword">rewrite</span> <span class="token operator">^</span><span class="token operator">/</span><span class="token function">api</span><span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token operator">*</span><span class="token punctuation">)</span>$ $<span class="token number">1</span> <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token keyword">proxy_pass</span> <span class="token keyword">http</span><span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span><span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token punctuation">:</span><span class="token number">8080</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment"># need reload</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="other-web-server"><a href="#other-web-server" class="headerlink" title="other web server"></a>other web server</h3><p>如果是一个 tomcat 服务器，请求被 nginx 反向代理也没有用，<strong>请求 nginx 本身就是跨域的</strong>。</p>
+<ul>
+<li>nginx 设置标头</li>
+<li>换 node 服务器，用中间件进行正向代理（浏览器请求中间件）</li>
+</ul>
+<h2 id="浏览器跨域问题（很乱🤯"><a href="#浏览器跨域问题（很乱🤯" class="headerlink" title="浏览器跨域问题（很乱🤯"></a>浏览器跨域问题（很乱🤯</h2><h3 id="同源策略"><a href="#同源策略" class="headerlink" title="同源策略"></a>同源策略</h3><p>同源：<strong>协议、域名、端口</strong>都要一致。</p>
+<blockquote>
+<p>❌ 协议不同</p>
+<p><a target="_blank" rel="noopener" href="http://www.example.com/">http://www.example.com</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.example.com/">https://www.example.com</a></p>
+<p>❌ 端口不同</p>
+<p><a target="_blank" rel="noopener" href="http://www.example.com/">http://www.example.com:80</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.example.com:8080/">http://www.example.com:8080</a></p>
+<p>❌ 子域名不同</p>
+<p><a target="_blank" rel="noopener" href="http://www.store.example.com/">http://www.store.example.com</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.doc.example.com/">http://www.doc.example.com</a></p>
+</blockquote>
+<p>🟠浏览器会限制不是同源策略的请求——跨域请求。</p>
+<p><strong>浏览器访问页面中只能有同源的请求</strong></p>
+<p>不用浏览器（使用程序）就不存在跨域问题</p>
+<h3 id="解决跨域"><a href="#解决跨域" class="headerlink" title="解决跨域"></a>解决跨域</h3><h4 id="CORS"><a href="#CORS" class="headerlink" title="CORS"></a>CORS</h4><p>使用 CORS（跨域资源共享）机制，在<strong>服务器端</strong>设置允许跨域请求的响应标头。</p>
+<ul>
+<li>简单请求不会触发 cors 预检请求</li>
+<li>浏览器在发送复杂请求之前会发送预检请求，验证服务器是否允许跨域请求资源</li>
+</ul>
+<blockquote>
+<p>浏览器访问的就是真实的后端地址</p>
+</blockquote>
+<h4 id="正向代理"><a href="#正向代理" class="headerlink" title="正向代理"></a>正向代理</h4><p>webserver 请求不会跨域，让接口和当前站点同域，在webserver进行转发。</p>
+<p>webpack</p>
+<blockquote>
+<p>前端写配置的时候就知道后端地址</p>
+</blockquote>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json">devServer<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    port<span class="token operator">:</span> <span class="token number">8000</span><span class="token punctuation">,</span>
+    proxy<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token property">"/api"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+            target<span class="token operator">:</span> <span class="token string">"http://localhost:8080"</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>前端直接访问 localhost:8000/api，</p>
+<h4 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h4><p>前端通过nginx代理到后端接口</p>
+<blockquote>
+<p>前端不知道后端接口</p>
+</blockquote>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token keyword">server</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">listen</span> <span class="token number">80</span><span class="token punctuation">;</span>
+    <span class="token keyword">server_name</span> local<span class="token punctuation">.</span>test<span class="token punctuation">;</span>
+    <span class="token keyword">location</span> <span class="token operator">/</span>api <span class="token punctuation">&#123;</span>
+        <span class="token keyword">proxy_pass</span> <span class="token keyword">http</span><span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span>localhost<span class="token punctuation">:</span><span class="token number">8080</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">location</span> <span class="token operator">/</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">proxy_pass</span> <span class="token keyword">http</span><span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span>localhost<span class="token punctuation">:</span><span class="token number">8000</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<blockquote>
+<p>正向代理隐藏的是用户，反向代理隐藏的是服务器</p>
+<p>axios是通过Promise实现对ajax技术的一种封装，就像jquery、fetch、request 对ajax的封装一样</p>
+<p>ajax是一项技术</p>
+<p>正向代理是浏览器端进行配置的，反向代理是服务器端配置的</p>
+</blockquote>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> systemctl restart nginx<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong>🟠两种代理的区别</strong></p>
+<ul>
+<li><p>node 正向代理，浏览器访问的就是 node server，当访问 server 的接口的时候会被转发到后端接口。<br><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111049793.png" alt="image-20220808184842135"></p>
+</li>
+<li><p>nginx 反向代理，浏览器访问的是 nginx server，分别将请求转发到 webserver 和后端。</p>
+</li>
+<li><p>nginx 也能做 webserver，但一般只用反向代理。。。</p>
+</li>
+<li><p>最终结果都是浏览器访问的都是同源的，不存在跨域</p>
+</li>
+<li><p>正向 node 代理其实需要部署到 node 服务器</p>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/132534931">10 种跨域解决方案（附终极方案） - 知乎 (zhihu.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000019725263">从前端角度用正向，反向代理解决开发时的跨域问题 - SegmentFault 思否</a></p>
+<h2 id="项目自测"><a href="#项目自测" class="headerlink" title="项目自测"></a>项目自测</h2><h3 id="后端"><a href="#后端" class="headerlink" title="后端"></a>后端</h3><p>关键：编写 NginxController，提供一个接口可以获取<strong>服务端的 address + port</strong>。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@RestController</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">NginxController</span> <span class="token keyword">implements</span> <span class="token class-name">ApplicationListener</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">WebServerInitializedEvent</span><span class="token punctuation">></span></span> <span class="token punctuation">&#123;</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">int</span> port<span class="token punctuation">;</span>
+
+    <span class="token comment">// web server 启动时获取端口</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">onApplicationEvent</span><span class="token punctuation">(</span><span class="token class-name">WebServerInitializedEvent</span> webServerInitializedEvent<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>port <span class="token operator">=</span> webServerInitializedEvent<span class="token punctuation">.</span><span class="token function">getWebServer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getPort</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token annotation punctuation">@GetMapping</span><span class="token punctuation">(</span><span class="token string">"/host"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getHost</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">InetAddress</span> address<span class="token punctuation">;</span>
+
+        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+            address <span class="token operator">=</span> <span class="token class-name">InetAddress</span><span class="token punctuation">.</span><span class="token function">getLocalHost</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            <span class="token comment">// 返回 地址+端口</span>
+            <span class="token keyword">return</span> address<span class="token punctuation">.</span><span class="token function">getHostAddress</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">":"</span> <span class="token operator">+</span> port<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">UnknownHostException</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+
+        <span class="token keyword">return</span> <span class="token string">"Error: host info is not available."</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>构建一个 jar 包 <code>nginx-test-0.0.1-SNAPSHOT.jar</code>  ——》 <code>app.jar</code></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">java -jar app.jar
+<span class="token comment"># java -jar app.jar --server.port=8082</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="前端"><a href="#前端" class="headerlink" title="前端"></a>前端</h3><ul>
+<li>使用 vue ui 搭建脚手架</li>
+<li>安装 vue-router（插件）、axios（依赖）</li>
+</ul>
+<img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111049689.png" alt="image-20220809004432483" style="zoom:80%;" />
+
+<blockquote>
+<p>使用 npm run serve 运行的时候使用了 webpack-dev-server 作为 http 服务器。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_31772441/article/details/119941900">浅析npm run serve命令_markix的博客-CSDN博客_npm run serve</a></p>
+</blockquote>
+<h3 id="解决跨域-1"><a href="#解决跨域-1" class="headerlink" title="解决跨域"></a>解决跨域</h3><p>windows机上的前端 web server 请求后端接口，一定存在跨域问题。</p>
+<p>将构建好的前端文件放到虚拟机的 nginx server上，并在虚拟机上运行后端服务。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># wsl</span>
+<span class="token builtin class-name">cd</span> /mnt/d/yjava/code/SpringBoot/nginx-test/target
+
+<span class="token function">ls</span> /home/ysama
+
+<span class="token comment"># 复制到容器的挂载卷</span>
+<span class="token function">sudo</span> <span class="token function">cp</span> app.jar /home/ysama/volume01/
+
+<span class="token comment"># 前端文件</span>
+<span class="token builtin class-name">cd</span> /mnt/d/Desktop/nginx-test
+<span class="token function">sudo</span> <span class="token function">cp</span> -r ./dist /home/ysama/volume01<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>🟠在windows机访问容器内的服务需要提交镜像开启端口映射。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 提交镜像</span>
+docker commit <span class="token punctuation">[</span>id<span class="token punctuation">]</span> nginx-test
+
+<span class="token comment"># 运行时设置端口和数据挂载卷</span>
+docker run -it -p <span class="token number">2022</span>:22 -p <span class="token number">8090</span>:80 -p <span class="token number">8080</span>:8080 -v /home/ysama/volume01:/home/volume01 --name<span class="token operator">=</span>nginx-test nginx-test /bin/bash<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># container</span>
+
+<span class="token comment"># 将前端文件复制到nginx目录</span>
+<span class="token function">cp</span> -r dist/* /data/nginx/html/
+<span class="token function">ls</span> /data/nginx/html/
+
+<span class="token builtin class-name">cd</span> /home/volume01
+
+<span class="token comment"># 运行后端springboot</span>
+java -jar app.jar
+
+<span class="token comment"># 另起一个终端进入容器</span>
+docker <span class="token builtin class-name">exec</span> -it <span class="token punctuation">[</span>id<span class="token punctuation">]</span> /bin/bash
+
+<span class="token comment"># 运行nginx</span>
+<span class="token builtin class-name">source</span> /etc/profile <span class="token comment"># 更新环境变量 之前设置了</span>
+nginx
+
+<span class="token comment"># 查看端口运行情况</span>
+<span class="token function">netstat</span> -nlt<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在windows机可以访问 <a target="_blank" rel="noopener" href="http://localhost:8090/">http://localhost:8090/</a> 就是容器内的 nginx web server，也可以访问 docker 网卡地址（<strong>ip addr 获取</strong>） <a target="_blank" rel="noopener" href="http://172.25.155.216/">http://172.25.155.216/</a></p>
+<p><strong>外部不可以直接访问容器ip，只能访问 docker 网卡ip</strong></p>
+<p>但是 vue 中的这段代码获取的是浏览器地址栏的 ip，请求在虚拟机是跨域的，<strong>端口映射到外部进行测试也是跨域的</strong>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111049653.png" alt="image-20220809111749718"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111049829.png" alt="image-20220809112121488"></p>
+<blockquote>
+<p>但直接访问后端 <a target="_blank" rel="noopener" href="http://localhost:8080/host">http://localhost:8080/host</a> nginx 是无法管理的</p>
+<p>这种情况只能在 springboot 服务端设置标头来处理</p>
+<p>如果修改前端请求的端口到nginx，就可以用nginx配置反向代理。</p>
+</blockquote>
+<p><strong>在 nginx 配置文件中设置反向代理</strong></p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"> <span class="token keyword">server</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">listen</span>       <span class="token number">80</span><span class="token punctuation">;</span>
+        <span class="token keyword">server_name</span>  localhost<span class="token punctuation">;</span>
+        <span class="token keyword">location</span> <span class="token operator">^</span><span class="token operator">~</span> <span class="token operator">/</span>api<span class="token operator">/</span> <span class="token punctuation">&#123;</span>
+                <span class="token keyword">rewrite</span> <span class="token operator">^</span><span class="token operator">/</span><span class="token function">api</span><span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token operator">*</span><span class="token punctuation">)</span>$ $<span class="token number">1</span> <span class="token keyword">break</span><span class="token punctuation">;</span>
+                <span class="token keyword">proxy_pass</span> <span class="token keyword">http</span><span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span>localhost<span class="token punctuation">:</span><span class="token number">8080</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111048612.png" alt="image-20220809114549172"></p>
+<blockquote>
+<p>发向8090 nginx web serve 的 api 请求被反向代理到了后端。</p>
+</blockquote>
+<p>🟢前面说明了 localhost 和docker 网卡地址都能访问到后端 api，那么通过两个地址访问 nginx web server 也可以被转发。</p>
+<p>因为前端代码中访问后端接口的地址是取自浏览器的，固定了访问 web server 和转发的 api 是同源的。</p>
+<p>❌如果在前端代码中固定访问 docker 网卡地址，如果访问 localhost:8090，对后端的请求仍然是网卡地址，虽然设置了nginx反向代理，<strong>两种不同地址访问nginx的方式本身就是跨域的</strong>。这种情况要增加标头。</p>
+<p>🟠反向代理的核心是都访问同一个目标，由nginx在后台转发请求。</p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token keyword">add_header</span> <span class="token string">'Access-Control-Allow-Origin'</span> <span class="token string">'*'</span><span class="token punctuation">;</span>
+<span class="token keyword">add_header</span> <span class="token string">'Access-Control-Allow_Credentials'</span> <span class="token string">'true'</span><span class="token punctuation">;</span>
+<span class="token keyword">add_header</span> <span class="token string">'Access-Control-Allow-Headers'</span> <span class="token string">'Authorization,Accept,Origin,DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range'</span><span class="token punctuation">;</span>
+<span class="token keyword">add_header</span> <span class="token string">'Access-Control-Allow-Methods'</span> <span class="token string">'GET,POST,OPTIONS,PUT,DELETE,PATCH'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="正式开发中解决跨域"><a href="#正式开发中解决跨域" class="headerlink" title="正式开发中解决跨域"></a>正式开发中解决跨域</h3><p>正式开发中，浏览器、nginx、后端的地址都是完全跨域的（地址不同、端口不同）。</p>
+<blockquote>
+<p>浏览器跨域：浏览器当前访问的地址就是 web server 的地址，如果请求了和 web server 不同源的地址就是跨域。</p>
+</blockquote>
+<p><strong>解决跨域的几种情况</strong>：</p>
+<ol>
+<li>【反向代理】浏览器访问的都是nginx，nginx将请求反向代理到后端接口和前端 web server。</li>
+<li>【反向代理】nginx 就是 web server，同样反向代理后端接口。</li>
+<li>【反向代理 + 设置标头】其他的 web server 访问 nginx 反向代理的后端接口，web server 和 nginx 本身是跨域的。</li>
+<li>【设置标头】web server 直接请求后端接口（不安全、耦合），在后端设置标头</li>
+</ol>
+<blockquote>
+<p>反向代理只是隐藏后端接口</p>
+<p>是否跨域看的是浏览器中访问的 web server 和浏览器中访问的后端接口是否同源</p>
+<p><strong>不同源要么设置标头，要么通过反省代理让两者同源</strong></p>
+</blockquote>
+<h2 id="其他配置"><a href="#其他配置" class="headerlink" title="其他配置"></a>其他配置</h2><h3 id="nginx-监控"><a href="#nginx-监控" class="headerlink" title="nginx 监控"></a>nginx 监控</h3><p>开启监控服务，修改配置文件。</p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token keyword">location</span> <span class="token operator">=</span> <span class="token operator">/</span>status <span class="token punctuation">&#123;</span>
+    <span class="token keyword">stub_status</span> on<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 重新加载配置</span>
+nginx -s reload
+
+<span class="token function">curl</span> http://localhost/status<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>表示的意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Active connections</td>
+<td>当前所有处于打开状态的连接数</td>
+</tr>
+<tr>
+<td>accepts</td>
+<td>总共处理了多少个连接</td>
+</tr>
+<tr>
+<td>handled</td>
+<td>成功创建多少握手</td>
+</tr>
+<tr>
+<td>requests</td>
+<td>总共处理了多少个请求</td>
+</tr>
+<tr>
+<td>Reading</td>
+<td>表示正处于接收请求状态的连接数</td>
+</tr>
+<tr>
+<td>Writing</td>
+<td>表示请求已经接收完成，且正处于处理请求或发送响应的过程中的连接数</td>
+</tr>
+<tr>
+<td>Waiting</td>
+<td>开启keep-alive的情况下，这个值等于active - (reading + writing)，意思就是Nginx已处理完正在等候下一次请求指令的驻留连接</td>
+</tr>
+</tbody></table>
+<h3 id="访问控制"><a href="#访问控制" class="headerlink" title="访问控制"></a>访问控制</h3><p>允许、禁止某个 ip 和 ip段。</p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token keyword">location</span> <span class="token operator">/</span>status <span class="token punctuation">&#123;</span>
+  <span class="token keyword">stub_status</span> on<span class="token punctuation">;</span>
+  <span class="token keyword">access_log</span> off<span class="token punctuation">;</span>
+  <span class="token keyword">allow</span> <span class="token number">192.168</span><span class="token number">.10</span><span class="token number">.100</span><span class="token punctuation">;</span>
+  <span class="token keyword">allow</span> <span class="token number">172.29</span><span class="token number">.73</span><span class="token number">.0</span><span class="token operator">/</span><span class="token number">24</span><span class="token punctuation">;</span>
+  <span class="token keyword">deny</span> all<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="文件服务器"><a href="#文件服务器" class="headerlink" title="文件服务器"></a>文件服务器</h3><p>Nginx默认是不允许列出整个目录的。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111048551.png" alt="image-20220809141454734"></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/kevingrace/p/6187482.html">Nginx虚拟目录alias和root目录 - 散尽浮华 - 博客园 (cnblogs.com)</a></p>
+<blockquote>
+<p>现在使用的 docker 容器内的 nginx 服务，通过外部 8090 端口映射到内部 nginx 80 端口。</p>
+<p>如果地址末尾没有斜杠，nginx 会先去找文件，没有文件就当成目录处理，重定向到末尾加上斜杠。/file –&gt; /file/</p>
+<p>然而 nginx 的重定向默认是使用自己内部的端口的，所以会产生错误。</p>
+<p>如果在外部访问的是 <a target="_blank" rel="noopener" href="http://localhost:8090/file">http://localhost:8090/file</a> 会自动重定向到 <a target="_blank" rel="noopener" href="http://localhost/file/">http://localhost:80/file/</a></p>
+</blockquote>
+<p><strong>重定向导致端口丢失，这种情况多见于 NAT、容器中，因为使用了端口映射</strong></p>
+<p>🟢解决方法：</p>
+<ol>
+<li>最好的方法是让内外端口映射相同 8090:8090</li>
+<li>如下图所示，重写请求使用外部的端口。</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111048807.png" alt="image-20220809221345254"></p>
+<p>上面这么写可以不改变重定向的8090端口，访问 <a target="_blank" rel="noopener" href="http://localhost:8090/file">http://localhost:8090/file</a>  postman是可以正常重定向的，浏览器和 curl 就不行。</p>
+<hr>
+<p>。。。。。。。</p>
+<p>🟠竟然，使用 docker 网卡地址浏览器就能跳转 <a target="_blank" rel="noopener" href="http://172.25.155.216:8090/file">http://172.25.155.216:8090/file</a> o(╥﹏╥)o</p>
+<p>一些没用上的资料：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.faqcode4u.com/faq/408269/nginx-preserve-port-during-redirect">Nginx Preserve Port During Redirect (faqcode4u.com)</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/libaineu2004/article/details/85916905">(90条消息) HTTP返回码中301与302的区别_libaineu2004的博客-CSDN博客_301返回码</a></li>
+<li><a target="_blank" rel="noopener" href="https://serverfault.com/questions/227742/prevent-port-change-on-redirect-in-nginx">varnish - Prevent port change on redirect in nginx - Server Fault</a></li>
+<li><a target="_blank" rel="noopener" href="https://serverfault.com/questions/1025806/nginx-redirects-subdirectory-requests-without-trailing-slash-to-a-url-with-speci">docker - nginx redirects subdirectory requests without trailing slash to a URL with specified port - Server Fault</a></li>
+<li><a target="_blank" rel="noopener" href="https://serverfault.com/questions/759762/how-to-stop-nginx-301-auto-redirect-when-trailing-slash-is-not-in-uri">apache 2.4 - How to stop nginx 301 auto redirect when trailing slash is not in URI? - Server Fault</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/bitnami/bitnami-docker-wordpress/issues/263">Missing slash on url causes 8080 redirect · Issue #263 · bitnami/bitnami-docker-wordpress (github.com)</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_39681644/article/details/110887323">(90条消息) nginx location 斜杠_深度硬核文:Nginx的301重定向处理过程分析_weixin_39681644的博客-CSDN博客</a></li>
+</ul>
+<p><strong>最后一个说的最全，很多种分支</strong></p>
+<h3 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 多开几个后端</span>
+java -jar app.jar --server.port<span class="token operator">=</span><span class="token number">8081</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><a target="_blank" rel="noopener" href="https://www.ydlclass.com/doc21xnv/nginx/#%E5%85%AD%E3%80%81%E4%B8%BA%E5%90%8E%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%81%9A%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1">nginx教程 | 文档合集 (ydlclass.com)</a></p>
+<p>ngixn负载均衡的五种算法：</p>
+<ol>
+<li>（默认）轮询</li>
+<li>轮询权重</li>
+<li>ip_hash，同一个 ip 固定访问一台后端 server</li>
+<li>url_hash，根据 URI 的哈希结果来分配</li>
+<li>fair 算法，智能负载均衡，要安装 upstream_fair 模块</li>
+</ol>
+<p>nginx 的负载均衡功能依赖于 ngx_http_upstream_module模块。upstream 模块应该放于http{}标签内。</p>
+<p>模块写法如下：</p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token keyword">upstream</span> backend <span class="token punctuation">&#123;</span>
+    <span class="token keyword">ip_hash</span><span class="token punctuation">;</span> 
+    <span class="token keyword">server</span> backend1<span class="token punctuation">.</span>example<span class="token punctuation">.</span>com<span class="token punctuation">;</span>
+    <span class="token keyword">server</span> backend2<span class="token punctuation">.</span>example<span class="token punctuation">.</span>com<span class="token punctuation">:</span><span class="token number">8080</span><span class="token punctuation">;</span>
+    <span class="token keyword">server</span> <span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token punctuation">:</span><span class="token number">8080</span><span class="token punctuation">;</span>
+    <span class="token keyword">server</span> backup2<span class="token punctuation">.</span>example<span class="token punctuation">.</span>com<span class="token punctuation">:</span><span class="token number">8080</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后在location处使用如下写法：</p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token keyword">location</span> <span class="token operator">/</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">proxy_pass</span> <span class="token keyword">http</span><span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span>backend<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>以上写法的意思就是，将来同一个url访问我们的服务时，服务可以由backend中的服务器按照某种特定规则轮流提供。</p>
+<h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><p><a target="_blank" rel="noopener" href="https://nginx.org/en/docs/beginners_guide.html">Beginner’s Guide (nginx.org)</a></p>
+<blockquote>
+<p>nginx has one master process and several worker processes. The main purpose of the master process is to read and evaluate configuration, and maintain worker processes. Worker processes do actual processing of requests. </p>
+<p>主线程读取配置、管理 worker 线程。</p>
+<p>worker 线程处理实际的请求。</p>
+</blockquote>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">nginx -s <span class="token punctuation">[</span>signal<span class="token punctuation">]</span>
+
+<span class="token comment"># stop</span>
+<span class="token comment"># quit 结束所有请求再退出</span>
+<span class="token comment"># reload</span>
+<span class="token comment"># reopen 重新打开llog文件</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>重新加载配置会先检查配置，如果配置正确，旧的 worker 线程会停止接收新请求，当前请求都处理完了就退出。</p>
+<p>在 <code>/usr/local/nginx/logs/nginx.pid</code> 可以看到进程</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">ps</span> -ax <span class="token operator">|</span> <span class="token function">grep</span> nginx
+
+<span class="token function">kill</span> -s QUIT <span class="token punctuation">[</span>pid<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111048455.png" alt="image-20220606171640915"></p>
+<p><strong>配置文件结构</strong></p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token keyword">http</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">server</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">listen</span> <span class="token number">80</span><span class="token punctuation">;</span>
+        
+        <span class="token keyword">location</span> <span class="token operator">/</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">root</span> <span class="token operator">/</span>data<span class="token operator">/</span>www<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        
+        <span class="token comment"># 匹配开头是/images/的请求 /也匹配但选最长的</span>
+        <span class="token keyword">location</span> <span class="token operator">/</span>images<span class="token operator">/</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">root</span> <span class="token operator">/</span>data<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>nginx 前缀匹配会优先匹配最长的路径，在配置文件中没有前后顺序。<strong>正则表达式在配置中有先后顺序</strong></p>
+<blockquote>
+<p><code>http://localhost/images/example.png</code> request nginx will send the <code>/data/images/example.png</code> file.</p>
+<p>Requests with URIs not starting with <code>/images/</code> will be mapped onto the <code>/data/www</code> directory. For example, in response to the <code>http://localhost/some/example.html</code> request nginx will send the <code>/data/www/some/example.html</code> file.</p>
+</blockquote>
+<p>可以在 log 文件中查看出错信息，<code>access.log</code> and <code>error.log</code> files in the directory <code>/usr/local/nginx/logs</code> or <code>/var/log/nginx</code>.</p>
+<p>🟢如果请求能匹配到正则表达式就进入正则的 location 块，否则再从最长的路径开始尝试匹配。</p>
+<p><strong>一个转发的案例</strong></p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token comment"># web server</span>
+<span class="token keyword">server</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">listen</span> <span class="token number">8080</span><span class="token punctuation">;</span>
+    <span class="token keyword">root</span> <span class="token operator">/</span>data<span class="token operator">/</span>up1<span class="token punctuation">;</span>
+
+    <span class="token keyword">location</span> <span class="token operator">/</span> <span class="token punctuation">&#123;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token comment"># proxy server</span>
+<span class="token keyword">server</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">location</span> <span class="token operator">/</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">proxy_pass</span> <span class="token keyword">http</span><span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span>localhost<span class="token punctuation">:</span><span class="token number">8080</span><span class="token operator">/</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">location</span> <span class="token operator">~</span> \<span class="token punctuation">.</span><span class="token punctuation">(</span>gif<span class="token operator">|</span>jpg<span class="token operator">|</span>png<span class="token punctuation">)</span>$ <span class="token punctuation">&#123;</span>
+        <span class="token keyword">root</span> <span class="token operator">/</span>data<span class="token operator">/</span>images<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p><strong>location</strong></p>
+<p><a target="_blank" rel="noopener" href="https://nginx.org/en/docs/http/ngx_http_core_module.html#location">Module ngx_http_core_module (nginx.org)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.ydlclass.com/doc21xnv/nginx/#%E5%9B%9B%E3%80%81%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3">nginx教程 | 文档合集 (ydlclass.com)</a></p>
+<p><strong>正则末尾是</strong> <code>$</code></p>
+<ul>
+<li><code>~*</code> 前缀表示大小写不敏感正则 case-insensitive macOS系统</li>
+<li><code>~</code> 前缀表示大小写敏感正则 </li>
+<li><code>^~</code> 如果有这个前缀，请求会跳过正则匹配直接来到这个最长的路径</li>
+<li><code>=</code>  完全匹配，不再是符合开头前缀就行</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111048375.png" alt="image-20220810142211611"></p>
+<p>默认末尾没有斜杠的会补上斜杠并 301重定向，但是可以指定具体的路径。</p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token keyword">location</span> <span class="token operator">/</span><span class="token keyword">user</span><span class="token operator">/</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">proxy_pass</span> <span class="token keyword">http</span><span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span><span class="token keyword">user</span><span class="token punctuation">.</span>example<span class="token punctuation">.</span>com<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">location</span> <span class="token operator">=</span> <span class="token operator">/</span><span class="token keyword">user</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">proxy_pass</span> <span class="token keyword">http</span><span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span>login<span class="token punctuation">.</span>example<span class="token punctuation">.</span>com<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>🟠匹配顺序</strong></p>
+<blockquote>
+<p>location 的匹配并不完全按照其在配置文件中出现的顺序来匹配，请求URI 会按如下规则进行匹配：</p>
+<ol>
+<li>先精准匹配 <strong><code>=</code></strong> ，精准匹配成功则会立即停止其他类型匹配；</li>
+<li>没有精准匹配成功时，进行前缀匹配。先查找带有 <strong><code>^~</code></strong> 的前缀匹配，带有 <strong><code>^~</code></strong> 的前缀匹配成功则立即停止其他类型匹配，普通前缀匹配（不带参数 <strong><code>^~</code></strong> ）成功则会暂存，继续查找正则匹配；</li>
+<li><strong><code>=</code></strong> 和 <strong><code>^~</code></strong> 均未匹配成功前提下，查找正则匹配 <strong><code>~</code></strong> 和 <strong><code>~\*</code></strong> 。当同时有多个正则匹配时，按其在配置文件中出现的先后顺序优先匹配，命中则立即停止其他类型匹配；</li>
+<li>所有正则匹配均未成功时，返回步骤 2 中暂存的普通前缀匹配（不带参数 <strong><code>^~</code></strong> ）结果</li>
+</ol>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000022315733">一文理清 nginx 中的 location 配置（系列一） - SegmentFault 思否</a></p>
+<p><a target="_blank" rel="noopener" href="https://linuxhint.com/nginx-location-regex-examples/">Nginx location regex examples (linuxhint.com)</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/server/" rel="tag"><i class="fa fa-tag"></i> server</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/08/11/docker-note-2022/" rel="prev" title="Docker 学习笔记">
+                  <i class="fa fa-chevron-left"></i> Docker 学习笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/09/27/ssm-jsp/" rel="next" title="ssm-jsp 配置环境">
+                  ssm-jsp 配置环境 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nova-mist</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+    <div class="pjax">
+
+
+    </div>
+</body>
+</html>

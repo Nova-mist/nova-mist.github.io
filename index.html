@@ -123,8 +123,8 @@
 <nav class="site-nav">
   <ul class="main-menu menu">
         <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
-        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">75</span></a></li>
-        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">28</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">74</span></a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">31</span></a></li>
         <li class="menu-item menu-item-stars"><a href="/stars/" rel="section"><i class="fa fa-heart fa-fw"></i>收集</a></li>
   </ul>
 </nav>
@@ -171,14 +171,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-count">74</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-count">31</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -231,7 +231,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2022/07/13/dynamic-programming-algorithm/">
+    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2022/09/29/fblog-note/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.png">
@@ -244,7 +244,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/07/13/dynamic-programming-algorithm/" class="post-title-link" itemprop="url">动态规划</a>
+          <a href="/2022/09/29/fblog-note/" class="post-title-link" itemprop="url">博客项目总结</a>
         </h2>
 
         <div class="post-meta-container">
@@ -256,7 +256,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2022-07-13 23:15:13 / 修改时间：23:47:19" itemprop="dateCreated datePublished" datetime="2022-07-13T23:15:13+08:00">2022-07-13</time>
+      <time title="创建时间：2022-09-29 20:57:31 / 修改时间：21:05:10" itemprop="dateCreated datePublished" datetime="2022-09-29T20:57:31+08:00">2022-09-29</time>
     </span>
 
   
@@ -269,12 +269,33 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h1><p>背包问题、打家劫舍、股票问题、子序列问题。</p>
-<p>看代码随想录的笔记。</p>
-<p>☕</p>
+          <p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202209292104433.jpg" alt="blog-image-20220929-1664456668"></p>
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><h3 id="项目概述"><a href="#项目概述" class="headerlink" title="项目概述"></a>项目概述</h3><ul>
+<li>前台参考：<a target="_blank" rel="noopener" href="https://gitee.com/fengziy/Fblog">Fblog: 基于vue+element-ui简洁的博客模板 (gitee.com)</a>（此模板也是基于 vue-admin-template 模板）<strong>基于 vue3 选项式 API</strong></li>
+<li>后台参考：<a target="_blank" rel="noopener" href="https://github.com/PanJiaChen/vue-admin-template">PanJiaChen/vue-admin-template: a vue2.0 minimal admin template (github.com)</a> <strong>基于 vue2</strong></li>
+</ul>
+<p>重构项目历程：</p>
+<ol>
+<li>运行旧项目、查看项目结构</li>
+<li>研究相关技术栈并切换为目前 vue3 主流技术栈</li>
+<li>深入各个组件，使用 <strong>vue3 组合式 API</strong> 重构</li>
+<li>对接后端 API 接口</li>
+</ol>
+<p>🟢重构项目技术栈：</p>
+<ul>
+<li>vue3 + vite 创建项目</li>
+<li>element-plus 组件库</li>
+<li>vue-router 路由</li>
+<li>pinia 全局状态管理</li>
+<li>tailwindcss 命名类样式</li>
+<li>axios 请求后端(封装成 request.js)</li>
+<li>marked 解析 Markdown</li>
+<li>mockjs 测试数据</li>
+<li>sass 兼容用样式</li>
+</ul>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/07/13/dynamic-programming-algorithm/#more" rel="contents">
+              <a class="btn" href="/2022/09/29/fblog-note/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -305,7 +326,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2022/07/13/greedy-algorithm/">
+    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2022/09/28/Spring%E6%A6%82%E5%BF%B5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.png">
@@ -318,7 +339,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/07/13/greedy-algorithm/" class="post-title-link" itemprop="url">贪心算法</a>
+          <a href="/2022/09/28/Spring%E6%A6%82%E5%BF%B5/" class="post-title-link" itemprop="url">Spring 概念研究</a>
         </h2>
 
         <div class="post-meta-container">
@@ -330,7 +351,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2022-07-13 23:14:49 / 修改时间：23:45:28" itemprop="dateCreated datePublished" datetime="2022-07-13T23:14:49+08:00">2022-07-13</time>
+      <time title="创建时间：2022-09-28 17:00:00 / 修改时间：16:47:28" itemprop="dateCreated datePublished" datetime="2022-09-28T17:00:00+08:00">2022-09-28</time>
     </span>
 
   
@@ -343,11 +364,35 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="贪心算法"><a href="#贪心算法" class="headerlink" title="贪心算法"></a>贪心算法</h1><p>看代码随想录的笔记。</p>
-<p>😴</p>
+          <p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202209281646816.jpg" alt="blog-image-20220928-1664354739"></p>
+<h2 id="Bean-versus-Component"><a href="#Bean-versus-Component" class="headerlink" title="@Bean versus @Component"></a>@Bean versus @Component</h2><h3 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h3><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/6827752/whats-the-difference-between-component-repository-service-annotations-in">@Component, @Repository &amp; @Service 注解的区别 Stack Overflow</a></p>
+<table>
+<thead>
+<tr>
+<th align="left">Annotation</th>
+<th align="left">Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>@Component</code></td>
+<td align="left">通用模板</td>
+</tr>
+<tr>
+<td align="left"><code>@Repository</code></td>
+<td align="left">持久层模板</td>
+</tr>
+<tr>
+<td align="left"><code>@Service</code></td>
+<td align="left">服务层模板</td>
+</tr>
+<tr>
+<td align="left"><code>@Controller</code></td>
+<td align="left">表现层模板 (spring-mvc)</td>
+</tr>
+</tbody></table>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/07/13/greedy-algorithm/#more" rel="contents">
+              <a class="btn" href="/2022/09/28/Spring%E6%A6%82%E5%BF%B5/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -378,7 +423,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2022/07/13/backtracking-algorithm/">
+    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2022/09/28/SpringCore/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.png">
@@ -391,7 +436,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/07/13/backtracking-algorithm/" class="post-title-link" itemprop="url">回溯算法</a>
+          <a href="/2022/09/28/SpringCore/" class="post-title-link" itemprop="url">Spring 核心基础</a>
         </h2>
 
         <div class="post-meta-container">
@@ -403,7 +448,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2022-07-13 23:14:35 / 修改时间：23:47:21" itemprop="dateCreated datePublished" datetime="2022-07-13T23:14:35+08:00">2022-07-13</time>
+      <time title="创建时间：2022-09-28 16:30:57 / 修改时间：16:33:14" itemprop="dateCreated datePublished" datetime="2022-09-28T16:30:57+08:00">2022-09-28</time>
     </span>
 
   
@@ -416,11 +461,641 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="回溯算法"><a href="#回溯算法" class="headerlink" title="回溯算法"></a>回溯算法</h1><p>看代码随想录的笔记。</p>
-<p>😊</p>
+          <p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202209281632911.jpg" alt="blog-image-20220928-1664353894"></p>
+<h3 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h3><p>参考官方文档 -&gt; <a target="_blank" rel="noopener" href="https://spring.io/projects/spring-framework#overview">Spring Framework</a></p>
+<blockquote>
+<p>实际上我们在说 Spring、SpringMVC 的时候，其实是在说 Spring Framework，它由多个 Features 组成，例如：</p>
+<ul>
+<li>核心功能：AOP 面向切面编程，IOC 控制反转 / DI 依赖注入……</li>
+<li>测试模块</li>
+<li>Data Access：JDBC 支持</li>
+<li>Spring MVC 和 Spring WebFlux 网络框架</li>
+</ul>
+</blockquote>
+<h3 id="搭建项目"><a href="#搭建项目" class="headerlink" title="搭建项目"></a>搭建项目</h3><ol>
+<li>只需要导入下面的依赖就可以使用核心功能：<ul>
+<li>spring-webmvc</li>
+<li>spring-jdbc</li>
+</ul>
+</li>
+<li>Resources目录下的 <code>springContext.xml</code> 配置文件。<br>将 java bean 注入到 Spring 容器中。</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans-factory-metadata">Core Technologies (spring.io)</a></p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>beans</span> <span class="token attr-name">xmlns</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://www.springframework.org/schema/beans<span class="token punctuation">"</span></span>
+    <span class="token attr-name"><span class="token namespace">xmlns:</span>xsi</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://www.w3.org/2001/XMLSchema-instance<span class="token punctuation">"</span></span>
+    <span class="token attr-name"><span class="token namespace">xsi:</span>schemaLocation</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token comment">&lt;!--bean就是java对象，由Spring创建和管理--></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>hello<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>完整的包路径<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span><span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>beans</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>要实现不同的操作 , 只需要在 xml 配置文件中进行设置，<strong>即对象由Spring 来创建 , 管理 , 装配</strong></p>
+</blockquote>
+<h3 id="依赖注入"><a href="#依赖注入" class="headerlink" title="依赖注入"></a>依赖注入</h3><p>基于 @Component + @Autowired 注解在类内使用</p>
+<ul>
+<li>属性注入</li>
+<li>set 方法注入</li>
+<li>构造方法注入</li>
+</ul>
+<p>基于配置文件</p>
+<ul>
+<li>构造注入</li>
+<li>set 方法注入</li>
+</ul>
+<p>基于 @Bean + @Autowired </p>
+<ul>
+<li>在 @Bean 作用的方法中手动创建（构造、setter）</li>
+</ul>
+<p>详见 【Spring 概念】</p>
+<p>==面试中的三种依赖注入的方式是使用@Autowired的情况：==</p>
+<ol>
+<li>属性注入</li>
+<li>setter方法注入</li>
+<li>构造器注入</li>
+</ol>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/07/13/backtracking-algorithm/#more" rel="contents">
+              <a class="btn" href="/2022/09/28/SpringCore/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2022/09/27/springboot-note/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="Nova-mist">
+      <meta itemprop="description" content="My blog about daily life and learning. :b">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="novamist blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/09/27/springboot-note/" class="post-title-link" itemprop="url">SpringBoot 再次笔记</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-09-27 21:54:00 / 修改时间：22:00:02" itemprop="dateCreated datePublished" datetime="2022-09-27T21:54:00+08:00">2022-09-27</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202209272156975.jpg" alt="blog-image-20220927-1664286990"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/09/27/springboot-note/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2022/09/27/backend-note/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="Nova-mist">
+      <meta itemprop="description" content="My blog about daily life and learning. :b">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="novamist blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/09/27/backend-note/" class="post-title-link" itemprop="url">Java 后端笔记</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-09-27 21:52:00 / 修改时间：22:00:26" itemprop="dateCreated datePublished" datetime="2022-09-27T21:52:00+08:00">2022-09-27</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202209272151039.jpg" alt="blog-image-20220927-1664286679"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/09/27/backend-note/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2022/09/27/ssm-jsp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="Nova-mist">
+      <meta itemprop="description" content="My blog about daily life and learning. :b">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="novamist blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/09/27/ssm-jsp/" class="post-title-link" itemprop="url">ssm-jsp 配置环境</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-09-27 21:10:33 / 修改时间：21:26:57" itemprop="dateCreated datePublished" datetime="2022-09-27T21:10:33+08:00">2022-09-27</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202209272113400.jpg" alt="blog-image-20220927-1664284048"></p>
+<p>SpringMVC + JSP 使用视图解析器将 <code>/hello</code> 请求映射到 <code>/WEB-INF/jsp/hello.jsp</code></p>
+<ol>
+<li><p>创建项目，【<em>Add FrameWork Support</em>】添加 WebApp 依赖。</p>
+</li>
+<li><p>在 <code>pom.xml</code> 引入 spring-webmvc 依赖。（目前不需要 servlet jsp 相关依赖）</p>
+</li>
+<li><p>在 <code>web</code> 目录添加相应文件，配置 <code>web.xml</code> 文件</p>
+<ul>
+<li>设置 <code>&lt;servlet&gt;</code> 和 <code>&lt;servlet-mapping&gt;</code></li>
+<li>关联 SpringMVC 配置文件</li>
+</ul>
+</li>
+<li><p>配置 <code>spring-mvc.xml</code></p>
+<ul>
+<li>开启注解支持(默认开启)</li>
+<li>设置自动扫描包</li>
+<li>设置不处理静态资源</li>
+<li>开启支持 mvc 注解驱动</li>
+<li>设置视图解析器拼接前缀、后缀</li>
+</ul>
+<blockquote>
+<p>添加<strong>处理器映射器</strong>。</p>
+<p>添加<strong>处理器适配器</strong>。</p>
+<p>添加<strong>视图解析器</strong>。Spring 默认的，也可指定 ThymeLeaf / Freemarker 等</p>
+<p>使用springMVC必须配置的三大件：</p>
+<p><strong>处理器映射器、处理器适配器、视图解析器</strong></p>
+<p>通常，我们只需要<strong>手动配置视图解析器</strong>，而<strong>处理器映射器</strong>和<strong>处理器适配器</strong>只需要开启<strong>注解驱动</strong>即可，而省去了大段的xml配置</p>
+</blockquote>
+</li>
+<li><p>编写一个 Controller。 </p>
+<ul>
+<li>使用 @Controller 注入 bean</li>
+<li>@RequestMapping 映射请求路径</li>
+</ul>
+</li>
+<li><p>【Ctrl + Alt + Shift + S】打开 <em>Project Structure</em>， 选择设置 <em>Artifacts</em>，在 <code>/WEB-INF</code> 目录下新建 <code>lib</code> 目录并添加 SpringMVC 相关依赖。</p>
+</li>
+<li><p>配置 Tomcat 并启动，需要将 <em>Deployment</em> 菜单的 <em>Application Context</em> 设为 <code>/</code></p>
+</li>
+</ol>
+<p>注意：如果运行出现问题，要检查 <code>out</code> 目录下的 war 包结构，<code>WEB-INF</code> 目录下的 <code>classes</code> 和 <code>lib</code> 是平级的。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/09/27/ssm-jsp/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2022/08/11/nginx-note/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="Nova-mist">
+      <meta itemprop="description" content="My blog about daily life and learning. :b">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="novamist blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/08/11/nginx-note/" class="post-title-link" itemprop="url">Nginx 学习笔记</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-08-11 10:56:37 / 修改时间：11:01:10" itemprop="dateCreated datePublished" datetime="2022-08-11T10:56:37+08:00">2022-08-11</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Nginx-学习笔记"><a href="#Nginx-学习笔记" class="headerlink" title="Nginx 学习笔记"></a>Nginx 学习笔记</h1><h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><h3 id="web-server"><a href="#web-server" class="headerlink" title="web server"></a>web server</h3><p>后端项目部署：</p>
+<ul>
+<li>ssm war -&gt; tomcat</li>
+<li>springboot jar -&gt; cmd run</li>
+</ul>
+<p>web服务器：</p>
+<ul>
+<li>Apache 静态</li>
+<li>Tomcat</li>
+</ul>
+<blockquote>
+<p>a servlet container used to serve Java servlets</p>
+<p>处理静态资源效率不如 Nginx</p>
+</blockquote>
+<ul>
+<li>Nginx </li>
+</ul>
+<blockquote>
+<p>static / dynamic / reverse proxy</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.educba.com/nginx-vs-tomcat">Nginx vs Tomcat | Learn the Key Differences between Nginx vs Tomcat (educba.com)</a></p>
+<p>结合使用</p>
+<h3 id="nginx"><a href="#nginx" class="headerlink" title="nginx"></a>nginx</h3><p><a target="_blank" rel="noopener" href="https://www.ydlclass.com/doc21xnv/nginx/">nginx教程 | 文档合集 (ydlclass.com)</a></p>
+<p><a target="_blank" rel="noopener" href="http://nginx.org/en/docs/">nginx documentation</a></p>
+<blockquote>
+<p>Nginx (“engine x”) 是一款开源的，支持高性能、高并发的 Web 服务和代理服务软件。</p>
+</blockquote>
+<p>🟢nginx 功能：</p>
+<ol>
+<li>web 服务器（可以存放静态资源）</li>
+<li>反向代理（用于负载均衡）</li>
+<li>web cache 缓存</li>
+</ol>
+<p>响应快、高扩展、高并发、低内存、热部署。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/08/11/nginx-note/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2022/08/11/docker-note-2022/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="Nova-mist">
+      <meta itemprop="description" content="My blog about daily life and learning. :b">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="novamist blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/08/11/docker-note-2022/" class="post-title-link" itemprop="url">Docker 学习笔记</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-08-11 10:18:36 / 修改时间：10:22:31" itemprop="dateCreated datePublished" datetime="2022-08-11T10:18:36+08:00">2022-08-11</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Docker-学习笔记"><a href="#Docker-学习笔记" class="headerlink" title="Docker 学习笔记"></a>Docker 学习笔记</h1><p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111014443.png" alt="image-20220804000325201"></p>
+<p>DevOps</p>
+<p>项目+环境配置</p>
+<p>DockerHub 镜像</p>
+<p>容器隔离</p>
+<blockquote>
+<p>Docker 容器技术也是一种<strong>虚拟化技术</strong></p>
+</blockquote>
+<p>基于 Go 开发</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a target="_blank" rel="noopener" href="https://www.docker.com/">Home - Docker</a></p>
+<p><a target="_blank" rel="noopener" href="https://hub.docker.com/">Docker Hub</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_46665411/article/details/125199737">什么是docker，它与虚拟机有什么区别？_itmkyuan的博客-CSDN博客_docker和虚拟机的区别</a></p>
+<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111014504.jpg" alt="hypervisor - Vmware vs Docker"></p>
+<p>Docker 解决依赖的兼容问题：</p>
+<ol>
+<li>将应用的函数库、依赖、配置与应用一起打包。</li>
+<li>将每个应用放到一个容器去运行，避免互相干扰。</li>
+</ol>
+<p>系统环境特点：</p>
+<ol>
+<li>Linux系统的内核都是相同的。</li>
+<li>操作系统提供的函数库是对内核指令的封装。</li>
+</ol>
+<p>Docker 与虚拟机的区别：</p>
+<ul>
+<li>虚拟机是在操作系统中模拟硬件设备，再运行另一个操作系统。</li>
+<li>Docker只封装了库函数，直接使用主机的操作系统内核。</li>
+</ul>
+<p><strong>DevOps 开发运维</strong></p>
+<p>直接对镜像进行操作。</p>
+<p>容器化技术使开发和测试的环境高度一致。</p>
+<p>Docker 是<strong>内核级别</strong>的虚拟化，有着更高效的计算资源利用。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111014215.png" alt="image-20220804112103719"></p>
+<p>Docker 的基本组成：</p>
+<ul>
+<li>镜像 Image</li>
+<li>容器 Container</li>
+<li>仓库 Repository </li>
+</ul>
+<p> <strong>底层原理</strong></p>
+<p>Docker 是一个 Client - Server 结构的系统。Docker 的守护进程运行在主机，客户端通过 socket 进行访问。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/08/11/docker-note-2022/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2022/08/10/%E5%B0%8F%E5%AD%A6%E6%9C%9F%E6%B0%B4%E8%AF%BE%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="Nova-mist">
+      <meta itemprop="description" content="My blog about daily life and learning. :b">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="novamist blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/08/10/%E5%B0%8F%E5%AD%A6%E6%9C%9F%E6%B0%B4%E8%AF%BE%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">小学期水课笔记</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-08-10 19:38:56 / 修改时间：19:45:54" itemprop="dateCreated datePublished" datetime="2022-08-10T19:38:56+08:00">2022-08-10</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="小学期水课笔记"><a href="#小学期水课笔记" class="headerlink" title="小学期水课笔记"></a>小学期水课笔记</h1><p>基于云平台的计算机视觉实践、百度飞桨</p>
+<h2 id="鸢尾花SVM分类"><a href="#鸢尾花SVM分类" class="headerlink" title="鸢尾花SVM分类"></a>鸢尾花SVM分类</h2><h3 id="数据处理"><a href="#数据处理" class="headerlink" title="数据处理"></a>数据处理</h3><p>使用 <code>np.loadtext()</code> 加载数据，并用 <code>np.split()</code> 分割数据。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">data <span class="token operator">=</span> np<span class="token punctuation">.</span>loadtxt<span class="token punctuation">(</span><span class="token string">'iris.data'</span><span class="token punctuation">,</span>
+                dtype <span class="token operator">=</span> <span class="token builtin">float</span><span class="token punctuation">,</span> <span class="token comment"># 数据类型</span>
+                delimiter <span class="token operator">=</span> <span class="token string">','</span><span class="token punctuation">,</span> <span class="token comment"># 数据分割符</span>
+                converters <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token number">4</span> <span class="token punctuation">:</span> iris_type<span class="token punctuation">&#125;</span><span class="token punctuation">)</span> <span class="token comment"># 第五列使用函数iris_type进行转换</span>
+
+x<span class="token punctuation">,</span> y <span class="token operator">=</span> np<span class="token punctuation">.</span>split<span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token punctuation">)</span><span class="token punctuation">,</span> axis <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token comment"># 数据分组 第五列开始往后为y 纵向按列分割</span>
+<span class="token comment"># indices_or_sections 如果整数则平均切分，如果是数组则是沿轴切分的位置</span>
+x <span class="token operator">=</span> x<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token number">2</span><span class="token punctuation">]</span>
+x_train<span class="token punctuation">,</span> x_test<span class="token punctuation">,</span> y_train<span class="token punctuation">,</span> y_test <span class="token operator">=</span> model_selection<span class="token punctuation">.</span>train_test_split<span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> random_state <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> test_size <span class="token operator">=</span> <span class="token number">0.2</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="定义模型"><a href="#定义模型" class="headerlink" title="定义模型"></a>定义模型</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">classifier</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    clf <span class="token operator">=</span> svm<span class="token punctuation">.</span>SVC<span class="token punctuation">(</span>c <span class="token operator">=</span> <span class="token number">0.8</span><span class="token punctuation">,</span> <span class="token comment"># 误差项惩罚系数</span>
+                kernel <span class="token operator">=</span> <span class="token string">'linear'</span><span class="token punctuation">,</span> <span class="token comment"># 线性核 高斯核 rbf</span>
+                decision_function_shape <span class="token operator">=</span> <span class="token string">'over'</span> <span class="token comment"># 决策函数)</span>
+    <span class="token keyword">return</span> clf
+clf <span class="token operator">=</span> classifier<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="训练模型"><a href="#训练模型" class="headerlink" title="训练模型"></a>训练模型</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">train</span><span class="token punctuation">(</span>clf<span class="token punctuation">,</span> x_train<span class="token punctuation">,</span> y_train<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    clf<span class="token punctuation">.</span>fit<span class="token punctuation">(</span>x_train<span class="token punctuation">,</span> y_train<span class="token punctuation">.</span>ravel<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment"># 训练集特征向量和训练集目标值</span>
+train<span class="token punctuation">(</span>clf<span class="token punctuation">,</span> x_train<span class="token punctuation">,</span> y_train<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="模型验证"><a href="#模型验证" class="headerlink" title="模型验证"></a>模型验证</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">print_accuracy</span><span class="token punctuation">(</span>clf<span class="token punctuation">,</span> x_train<span class="token punctuation">,</span> y_train<span class="token punctuation">,</span> x_test<span class="token punctuation">,</span> y_test<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># 输出在模型上的准确率</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'training prediction:%.3f'</span> <span class="token operator">%</span> <span class="token punctuation">(</span>clf<span class="token punctuation">.</span>score<span class="token punctuation">(</span>x_train<span class="token punctuation">,</span> y_train<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'test data prediction:%.3f'</span> <span class="token operator">%</span> <span class="token punctuation">(</span>clf<span class="token punctuation">.</span>score<span class="token punctuation">(</span>x_test<span class="token punctuation">,</span> y_test<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token comment"># 原始结果与预测结果进行对比</span>
+    show_accuracy<span class="token punctuation">(</span>clf<span class="token punctuation">.</span>predict<span class="token punctuation">(</span>x_train<span class="token punctuation">)</span><span class="token punctuation">,</span> y_train<span class="token punctuation">,</span> <span class="token string">'traing data'</span><span class="token punctuation">)</span>
+    show_accuracy<span class="token punctuation">(</span>clf<span class="token punctuation">.</span>predict<span class="token punctuation">(</span>x_test<span class="token punctuation">)</span><span class="token punctuation">,</span> y_test<span class="token punctuation">,</span> <span class="token string">'testing data'</span><span class="token punctuation">)</span>
+print_accuracy<span class="token punctuation">(</span>clf<span class="token punctuation">,</span> x_train<span class="token punctuation">,</span> y_train<span class="token punctuation">,</span> x_test<span class="token punctuation">,</span> y_test<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/08/10/%E5%B0%8F%E5%AD%A6%E6%9C%9F%E6%B0%B4%E8%AF%BE%E7%AC%94%E8%AE%B0/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -529,482 +1204,6 @@ mkdir <span class="token punctuation">.</span>\output
 <li><a target="_blank" rel="noopener" href="https://sourceforge.net/projects/apng2gif/files/1.8/">APNG to GIF - Browse /1.8 at SourceForge.net</a></li>
 </ul>
 
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2022/07/11/array-linkedlist-string/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="Nova-mist">
-      <meta itemprop="description" content="My blog about daily life and learning. :b">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="novamist blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/07/11/array-linkedlist-string/" class="post-title-link" itemprop="url">数组-链表-字符串</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-07-11 10:34:41 / 修改时间：10:37:29" itemprop="dateCreated datePublished" datetime="2022-07-11T10:34:41+08:00">2022-07-11</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>看代码随想录数组、链表、字符串部分的笔记。</p>
-<p>[toc]</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/07/11/array-linkedlist-string/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2022/07/11/stack-queue/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="Nova-mist">
-      <meta itemprop="description" content="My blog about daily life and learning. :b">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="novamist blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/07/11/stack-queue/" class="post-title-link" itemprop="url">stack-queue</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-07-11 09:25:35 / 修改时间：09:30:55" itemprop="dateCreated datePublished" datetime="2022-07-11T09:25:35+08:00">2022-07-11</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="栈与队列"><a href="#栈与队列" class="headerlink" title="栈与队列"></a>栈与队列</h1><p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/blog-image-20220711-1657502994.png" alt="blog-image-20220711-1657502994">学习代码随想录的笔记。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/07/11/stack-queue/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2022/07/11/use-powershell/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="Nova-mist">
-      <meta itemprop="description" content="My blog about daily life and learning. :b">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="novamist blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/07/11/use-powershell/" class="post-title-link" itemprop="url">试试PowerShell</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-07-11 09:22:34 / 修改时间：09:24:35" itemprop="dateCreated datePublished" datetime="2022-07-11T09:22:34+08:00">2022-07-11</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="试试PowerShell"><a href="#试试PowerShell" class="headerlink" title="试试PowerShell"></a>试试PowerShell</h1><ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/PowerShell/PowerShell">PowerShell/PowerShell: PowerShell for every system! (github.com)</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/powershell/scripting/overview?view=powershell-7.2">What is PowerShell? - PowerShell | Microsoft Docs</a></li>
-</ul>
-<ol>
-<li>PowerShell是支持全平台使用的。</li>
-<li>Windows上内置的是v5.1版本，最新的v7版本需要自行安装。</li>
-</ol>
-<h2 id="配置环境"><a href="#配置环境" class="headerlink" title="配置环境"></a>配置环境</h2><ul>
-<li>修改Windows Terminal配置，排列、主题。</li>
-<li>配置 oh-my-posh —— <strong>提示符个性化工具</strong>。</li>
-</ul>
-<h3 id="oh-my-posh"><a href="#oh-my-posh" class="headerlink" title="oh-my-posh"></a>oh-my-posh</h3><p>参考：</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://sspai.com/post/69911">Oh My Posh：全平台终端提示符个性化工具 - 少数派 (sspai.com)</a></li>
-<li><a target="_blank" rel="noopener" href="https://ohmyposh.dev/docs/">Introduction | Oh My Posh</a></li>
-</ul>
-<p>使用搭配：Windows Terminal + oh-my-posh + PowerShell Core<br>💥【终端】+【个性化配置工具】+【shell】</p>
-<p><strong>安装</strong></p>
-<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">winget install oh<span class="token operator">-</span>my<span class="token operator">-</span>posh
-winget upgrade oh<span class="token operator">-</span>my<span class="token operator">-</span>posh<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p><strong>配置主题</strong></p>
-<p>在 <a target="_blank" rel="noopener" href="https://ohmyposh.dev/docs/themes">主题页面</a> 查看内置的主题样式，对应的配置文件的路径为 <code>~\AppData\Local\Programs\oh-my-posh\themes\xxx.omp.json</code></p>
-<p>使用PowerShell查看配置文件的路径 <code>$Profile</code> ，<strong>创建并编辑</strong>该 <code>.ps1</code> 文件：</p>
-<pre class="line-numbers language-none"><code class="language-none">oh-my-posh init pwsh --config ~&#x2F;AppData&#x2F;Local&#x2F;Programs&#x2F;oh-my-posh&#x2F;themes&#x2F;cloud-native-azure.omp.json | Invoke-ExpressionR<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p><strong>修改字体</strong></p>
-<p>下载 <a target="_blank" rel="noopener" href="https://www.nerdfonts.com/">Nerd Fonts系列字体</a> 并安装，在Windows Terminal中选择。🟠（<strong>全选-右键-为所有用户安装</strong>）</p>
-<p><strong>重启Windows Terminal查看配置完成的效果。</strong></p>
-<p>💥<strong>修改vscode中的终端字体</strong></p>
-<p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources@main/images/2022/image-20220515194945445.png" alt="image-20220515194945445"></p>
-<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell"><span class="token variable">$PSversionTable</span> <span class="token comment"># 查看版本</span>
-<span class="token variable">$Profile</span> <span class="token comment"># 配置文件的路径</span>
-<span class="token comment"># 重命名</span>
-<span class="token function">Rename-Item</span> <span class="token operator">-</span>Path <span class="token string">'.\测不准的阿波连同学`[P7`]7 这是艺术了吧？.mp4'</span> <span class="token string">'p7_audio.mp4'</span>
-<span class="token comment"># 删除目录下的特定文件 正则表达式 Get-ChildItem选项 -Recurse 获取子目录</span>
-<span class="token function">Get-ChildItem</span> <span class="token variable">$Path</span> <span class="token punctuation">|</span> Where<span class="token punctuation">&#123;</span><span class="token variable">$_</span><span class="token punctuation">.</span>Name <span class="token operator">-Match</span> <span class="token string">"&lt;RegEx Pattern>"</span><span class="token punctuation">&#125;</span> <span class="token punctuation">|</span> <span class="token function">Remove-Item</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-
-
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/23767489/how-can-one-delete-files-in-a-folder-matching-a-regular-expression-using-powersh">regex - How can one delete files in a folder matching a regular expression using PowerShell? - Stack Overflow</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2022/07/11/mklink-2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="Nova-mist">
-      <meta itemprop="description" content="My blog about daily life and learning. :b">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="novamist blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/07/11/mklink-2/" class="post-title-link" itemprop="url">再谈mklink</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-07-11 09:21:09 / 修改时间：09:22:48" itemprop="dateCreated datePublished" datetime="2022-07-11T09:21:09+08:00">2022-07-11</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="再谈mklink"><a href="#再谈mklink" class="headerlink" title="再谈mklink"></a>再谈mklink</h1><blockquote>
-<p>在一台 Windows 电脑中，硬盘被分割为卷用以保存数据，在每一个卷上，数据对象被 NTFS 文件系统赋予了独一无二的<strong>文件 ID</strong> 以及<strong>与之对应的文件路径</strong>，文件路径和文件 ID 对应，文件 ID 和数据对象绑定，最终才呈现为可供用户打开、编辑的文件。</p>
-</blockquote>
-<p>一些供下次研究的笔记。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/07/11/mklink-2/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2022/07/11/redis-learn/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="Nova-mist">
-      <meta itemprop="description" content="My blog about daily life and learning. :b">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="novamist blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/07/11/redis-learn/" class="post-title-link" itemprop="url">redis-learn</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-07-11 09:11:33 / 修改时间：09:19:40" itemprop="dateCreated datePublished" datetime="2022-07-11T09:11:33+08:00">2022-07-11</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Redis-基础"><a href="#Redis-基础" class="headerlink" title="Redis 基础"></a>Redis 基础</h1><p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/blog-image-20220711-1657502318.gif" alt="blog-image-20220711-1657502318"></p>
-<p>学习 <a target="_blank" rel="noopener" href="https://www.ydlclass.com/doc21xnv/frame/redis/">文档</a> 的笔记。</p>
-<p>[toc]</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/07/11/redis-learn/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2022/07/11/digital-watermark-note/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="Nova-mist">
-      <meta itemprop="description" content="My blog about daily life and learning. :b">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="novamist blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/07/11/digital-watermark-note/" class="post-title-link" itemprop="url">数字水印耳濡目染</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-07-11 09:08:39 / 修改时间：09:11:08" itemprop="dateCreated datePublished" datetime="2022-07-11T09:08:39+08:00">2022-07-11</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="数字水印耳濡目染"><a href="#数字水印耳濡目染" class="headerlink" title="数字水印耳濡目染"></a>数字水印耳濡目染</h1><p>[toc]</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/07/11/digital-watermark-note/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
       
     </div>
 

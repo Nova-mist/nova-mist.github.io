@@ -34,10 +34,9 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources@main/images/2022/image-20220302155100763.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources@main/images/2022/image-20220302155221789.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources@main/images/2022/640">
-<meta property="og:image" content="c:/Users/ysama/AppData/Roaming/Typora/typora-user-images/image-20220302213515113.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources@main/images/2022/640%20(1).jpg">
 <meta property="article:published_time" content="2022-03-14T08:17:17.000Z">
-<meta property="article:modified_time" content="2022-03-14T08:19:55.449Z">
+<meta property="article:modified_time" content="2022-10-04T16:14:10.328Z">
 <meta property="article:author" content="Nova-mist">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="SpringBoot">
@@ -134,8 +133,8 @@
 <nav class="site-nav">
   <ul class="main-menu menu">
         <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
-        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">75</span></a></li>
-        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">28</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">74</span></a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">31</span></a></li>
         <li class="menu-item menu-item-stars"><a href="/stars/" rel="section"><i class="fa fa-heart fa-fw"></i>收集</a></li>
   </ul>
 </nav>
@@ -183,14 +182,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-count">74</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-count">31</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -267,10 +266,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2022-03-14 16:17:17 / 修改时间：16:19:55" itemprop="dateCreated datePublished" datetime="2022-03-14T16:17:17+08:00">2022-03-14</time>
+      <time title="创建时间：2022-03-14 16:17:17" itemprop="dateCreated datePublished" datetime="2022-03-14T16:17:17+08:00">2022-03-14</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-10-05 00:14:10" itemprop="dateModified" datetime="2022-10-05T00:14:10+08:00">2022-10-05</time>
+      </span>
 
   
 </div>
@@ -459,7 +464,6 @@
 
 <p><strong>properties文件乱码</strong></p>
 <p>解决方法：Ctrl+Alt+S打开配置，修改文件编码为utf-8。</p>
-<p><img src="C:\Users\ysama\AppData\Roaming\Typora\typora-user-images\image-20220302213515113.png" alt="image-20220302213515113"></p>
 <h3 id="配置文件中的变量"><a href="#配置文件中的变量" class="headerlink" title="配置文件中的变量"></a>配置文件中的变量</h3><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">person</span><span class="token punctuation">:</span>
     <span class="token key atrule">name</span><span class="token punctuation">:</span> qinjiang$<span class="token punctuation">&#123;</span>random.uuid<span class="token punctuation">&#125;</span> <span class="token comment"># 随机uuid</span>
     <span class="token key atrule">age</span><span class="token punctuation">:</span> $<span class="token punctuation">&#123;</span>random.int<span class="token punctuation">&#125;</span>  <span class="token comment"># 随机int</span>
@@ -590,10 +594,10 @@ Booelan检查
 <h2 id="多环境切换"><a href="#多环境切换" class="headerlink" title="多环境切换"></a>多环境切换</h2><h3 id="配置文件的加载位置"><a href="#配置文件的加载位置" class="headerlink" title="配置文件的加载位置"></a>配置文件的加载位置</h3><p><a target="_blank" rel="noopener" href="https://docs.spring.io/spring-boot/docs/1.0.1.RELEASE/reference/html/boot-features-external-config.html">21. Externalized Configuration (spring.io)</a></p>
 <p>配置文件 <code>application.properties</code> 加载优先级顺序：</p>
 <ol>
-<li>  <code>file:./config/</code> 项目路径</li>
-<li>  <code>file:./</code></li>
-<li>  <code>classpath:/</code> 资源路径 resources</li>
-<li>  <code>classpath:/</code></li>
+<li><code>file:./config/</code> 项目路径（与 src 目录平行）</li>
+<li><code>file:./</code></li>
+<li><code>classpath:/config</code> 资源路径 resources 中的 config目录</li>
+<li><code>classpath:/</code> 就是 resource 目录</li>
 </ol>
 <p><strong>高优先级的配置会覆盖低优先级的配置，低优先级独有的配置会保留。</strong></p>
 <p>例如，在最低级的配置文件中设置一个项目访问路径的配置来测试：</p>

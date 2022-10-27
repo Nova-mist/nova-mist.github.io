@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"nova-mist.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+<meta name="description" content="Docker 学习笔记 DevOps 项目+环境配置 DockerHub 镜像 容器隔离  Docker 容器技术也是一种虚拟化技术  基于 Go 开发 ReferenceHome - Docker Docker Hub 什么是docker，它与虚拟机有什么区别？_itmkyuan的博客-CSDN博客_docker和虚拟机的区别 概念 Docker 解决依赖的兼容问题：  将应用的函数库、依赖、配">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker 学习笔记">
+<meta property="og:url" content="https://nova-mist.github.io/2022/08/11/docker-note-2022/index.html">
+<meta property="og:site_name" content="novamist blog">
+<meta property="og:description" content="Docker 学习笔记 DevOps 项目+环境配置 DockerHub 镜像 容器隔离  Docker 容器技术也是一种虚拟化技术  基于 Go 开发 ReferenceHome - Docker Docker Hub 什么是docker，它与虚拟机有什么区别？_itmkyuan的博客-CSDN博客_docker和虚拟机的区别 概念 Docker 解决依赖的兼容问题：  将应用的函数库、依赖、配">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111014443.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111014504.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111014215.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111014521.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111014041.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111016355.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111015123.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111015023.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111015136.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111015121.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111015727.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111015163.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111015491.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111015914.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111015944.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111015754.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111016787.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111015367.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111015051.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111015907.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111016981.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111016517.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111016518.png">
+<meta property="article:published_time" content="2022-08-11T02:18:36.000Z">
+<meta property="article:modified_time" content="2022-08-11T02:22:31.349Z">
+<meta property="article:author" content="Nova-mist">
+<meta property="article:tag" content="server">
+<meta property="article:tag" content="docker">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111014443.png">
+
+
+<link rel="canonical" href="https://nova-mist.github.io/2022/08/11/docker-note-2022/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>Docker 学习笔记 | novamist blog</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">novamist blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">74</span></a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">31</span></a></li>
+        <li class="menu-item menu-item-stars"><a href="/stars/" rel="section"><i class="fa fa-heart fa-fw"></i>收集</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0"><span class="nav-number">1.</span> <span class="nav-text">Docker 学习笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">1.1.</span> <span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5"><span class="nav-number">1.2.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.3.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Windows"><span class="nav-number">1.4.</span> <span class="nav-text">Windows</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux"><span class="nav-number">1.4.1.</span> <span class="nav-text">Linux</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-%E4%BD%BF%E7%94%A8"><span class="nav-number">1.5.</span> <span class="nav-text">Docker  使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E5%91%BD%E4%BB%A4"><span class="nav-number">1.5.1.</span> <span class="nav-text">镜像命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">1.5.2.</span> <span class="nav-text">容器命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4"><span class="nav-number">1.5.3.</span> <span class="nav-text">其他命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2-nginx"><span class="nav-number">1.5.4.</span> <span class="nav-text">部署 nginx</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2-tomcat"><span class="nav-number">1.5.5.</span> <span class="nav-text">部署 tomcat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#elasticsearch"><span class="nav-number">1.5.6.</span> <span class="nav-text">elasticsearch</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="nav-number">1.6.</span> <span class="nav-text">可视化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dokcer-%E9%95%9C%E5%83%8F"><span class="nav-number">1.7.</span> <span class="nav-text">Dokcer 镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E5%8A%A0%E8%BD%BD%E5%8E%9F%E7%90%86"><span class="nav-number">1.7.1.</span> <span class="nav-text">镜像加载原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%B1%82%E7%90%86%E8%A7%A3"><span class="nav-number">1.7.2.</span> <span class="nav-text">分层理解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#commit-%E9%95%9C%E5%83%8F"><span class="nav-number">1.7.3.</span> <span class="nav-text">commit 镜像</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E6%95%B0%E6%8D%AE%E5%8D%B7"><span class="nav-number">1.8.</span> <span class="nav-text">容器数据卷</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%95%B0%E6%8D%AE%E5%8D%B7"><span class="nav-number">1.8.1.</span> <span class="nav-text">使用数据卷</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5-MySQL"><span class="nav-number">1.8.2.</span> <span class="nav-text">同步  MySQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B7%E5%90%8D%E6%8C%82%E8%BD%BD-amp-%E5%8C%BF%E5%90%8D%E6%8C%82%E8%BD%BD"><span class="nav-number">1.8.3.</span> <span class="nav-text">具名挂载&amp;匿名挂载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-dockerfile-%E8%87%AA%E5%8A%A8%E6%8C%82%E8%BD%BD"><span class="nav-number">1.8.4.</span> <span class="nav-text">使用 dockerfile 自动挂载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5"><span class="nav-number">1.8.5.</span> <span class="nav-text">容器数据同步</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DockerFile"><span class="nav-number">1.9.</span> <span class="nav-text">DockerFile</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dockerfile-%E5%91%BD%E4%BB%A4"><span class="nav-number">1.9.1.</span> <span class="nav-text">dockerfile 命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F-ubuntu"><span class="nav-number">1.9.2.</span> <span class="nav-text">构建镜像 ubuntu</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E5%90%AF%E5%8A%A8%E6%97%B6%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4"><span class="nav-number">1.9.3.</span> <span class="nav-text">容器启动时执行命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA-Tomcat-%E9%95%9C%E5%83%8F"><span class="nav-number">1.9.4.</span> <span class="nav-text">构建 Tomcat 镜像</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A8%E9%80%81%E9%95%9C%E5%83%8F"><span class="nav-number">1.10.</span> <span class="nav-text">推送镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-%E7%BD%91%E7%BB%9C"><span class="nav-number">1.11.</span> <span class="nav-text">Docker 网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5-1"><span class="nav-number">1.11.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%80%93link"><span class="nav-number">1.11.2.</span> <span class="nav-text">–link</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BD%91%E7%BB%9C"><span class="nav-number">1.11.3.</span> <span class="nav-text">自定义网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E8%BF%9E%E9%80%9A"><span class="nav-number">1.11.4.</span> <span class="nav-text">网络连通</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-%E9%9B%86%E7%BE%A4"><span class="nav-number">1.12.</span> <span class="nav-text">Redis 集群</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SpringBoot-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%89%93%E5%8C%85"><span class="nav-number">1.13.</span> <span class="nav-text">SpringBoot 微服务打包</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nova-mist"
+      src="/uploads/avatar.png">
+  <p class="site-author-name" itemprop="name">Nova-mist</p>
+  <div class="site-description" itemprop="description">My blog about daily life and learning. :b</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">74</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Nova-mist" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Nova-mist" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fas fa-cat fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.bilibili.com/" title="https:&#x2F;&#x2F;www.bilibili.com&#x2F;" rel="noopener" target="_blank">Bilibili</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2022/08/11/docker-note-2022/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="Nova-mist">
+      <meta itemprop="description" content="My blog about daily life and learning. :b">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="novamist blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Docker 学习笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-08-11 10:18:36 / 修改时间：10:22:31" itemprop="dateCreated datePublished" datetime="2022-08-11T10:18:36+08:00">2022-08-11</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="Docker-学习笔记"><a href="#Docker-学习笔记" class="headerlink" title="Docker 学习笔记"></a>Docker 学习笔记</h1><p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111014443.png" alt="image-20220804000325201"></p>
+<p>DevOps</p>
+<p>项目+环境配置</p>
+<p>DockerHub 镜像</p>
+<p>容器隔离</p>
+<blockquote>
+<p>Docker 容器技术也是一种<strong>虚拟化技术</strong></p>
+</blockquote>
+<p>基于 Go 开发</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a target="_blank" rel="noopener" href="https://www.docker.com/">Home - Docker</a></p>
+<p><a target="_blank" rel="noopener" href="https://hub.docker.com/">Docker Hub</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_46665411/article/details/125199737">什么是docker，它与虚拟机有什么区别？_itmkyuan的博客-CSDN博客_docker和虚拟机的区别</a></p>
+<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111014504.jpg" alt="hypervisor - Vmware vs Docker"></p>
+<p>Docker 解决依赖的兼容问题：</p>
+<ol>
+<li>将应用的函数库、依赖、配置与应用一起打包。</li>
+<li>将每个应用放到一个容器去运行，避免互相干扰。</li>
+</ol>
+<p>系统环境特点：</p>
+<ol>
+<li>Linux系统的内核都是相同的。</li>
+<li>操作系统提供的函数库是对内核指令的封装。</li>
+</ol>
+<p>Docker 与虚拟机的区别：</p>
+<ul>
+<li>虚拟机是在操作系统中模拟硬件设备，再运行另一个操作系统。</li>
+<li>Docker只封装了库函数，直接使用主机的操作系统内核。</li>
+</ul>
+<p><strong>DevOps 开发运维</strong></p>
+<p>直接对镜像进行操作。</p>
+<p>容器化技术使开发和测试的环境高度一致。</p>
+<p>Docker 是<strong>内核级别</strong>的虚拟化，有着更高效的计算资源利用。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111014215.png" alt="image-20220804112103719"></p>
+<p>Docker 的基本组成：</p>
+<ul>
+<li>镜像 Image</li>
+<li>容器 Container</li>
+<li>仓库 Repository </li>
+</ul>
+<p> <strong>底层原理</strong></p>
+<p>Docker 是一个 Client - Server 结构的系统。Docker 的守护进程运行在主机，客户端通过 socket 进行访问。</p>
+<span id="more"></span>
+
+
+
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><p>🟢安装 Docker Desktop，可以和 wsl2 交互使用。</p>
+<p><a target="_blank" rel="noopener" href="https://praveendavidmathew.medium.com/enabling-network-connectivity-in-wsl-2-windows-db2226bea92a">Enabling network connectivity in WSL 2 windows and running docker in windows. | by Praveen David Mathew | Medium</a></p>
+<h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3><p>Xshell 连接阿里云。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 查看内核</span>
+<span class="token function">uname</span> -r
+
+<span class="token comment"># 查看系统版本</span>
+<span class="token function">cat</span> /etc/os-release<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><a target="_blank" rel="noopener" href="https://docs.docker.com/desktop/install/linux-install/">Install Docker Desktop on Linux | Docker Documentation</a></p>
+<p><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/install/ubuntu/">Install Docker Engine on Ubuntu | Docker Documentation</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/b1134977524/article/details/120442417">Ubuntu下安装docker(阿里云镜像)_b1134977524的博客-CSDN博客_ubuntu 阿里云docker</a></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> update
+<span class="token comment">#安装必要工具</span>
+<span class="token function">sudo</span> <span class="token function">apt-get</span> -y <span class="token function">install</span> apt-transport-https ca-certificates <span class="token function">curl</span> software-properties-common
+<span class="token comment">#安装GPG证书</span>
+<span class="token function">curl</span> -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg <span class="token operator">|</span> <span class="token function">sudo</span> apt-key <span class="token function">add</span> -
+
+<span class="token function">sudo</span> add-apt-repository <span class="token string">"deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu <span class="token variable"><span class="token variable">$(</span>lsb_release -cs<span class="token variable">)</span></span> stable"</span>
+
+<span class="token function">sudo</span> <span class="token function">apt-get</span> update
+<span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> docker-ce docker-ce-cli containerd.io
+
+<span class="token comment"># 版本信息</span>
+docker version
+
+docker run hello-world<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="Docker-使用"><a href="#Docker-使用" class="headerlink" title="Docker  使用"></a>Docker  使用</h2><p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111014521.png" alt="vGuay"></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 查看镜像 </span>
+docker images
+
+<span class="token comment"># 运行镜像</span>
+docker run <span class="token punctuation">[</span>my-image<span class="token punctuation">]</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>运行镜像先在本地查找，如果没有会去网络仓库下载。    </p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 帮助命令</span>
+docker version
+docker info
+docker <span class="token punctuation">[</span>command<span class="token punctuation">]</span> --help<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/run/">Docker run reference | Docker Documentation</a></p>
+<h3 id="镜像命令"><a href="#镜像命令" class="headerlink" title="镜像命令"></a>镜像命令</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 列出镜像</span>
+docker images -aq
+
+-a <span class="token comment"># 列出所有镜像</span>
+-q <span class="token comment"># 只显示镜像ID</span>
+
+<span class="token comment"># 搜索镜像</span>
+docker search -f <span class="token assign-left variable">stars</span><span class="token operator">=</span><span class="token number">500</span> mysql
+docker search --filter is-official<span class="token operator">=</span>true --filter <span class="token assign-left variable">stars</span><span class="token operator">=</span><span class="token number">3</span> busybox
+
+-f, --filter <span class="token comment"># 过滤选项</span>
+
+<span class="token comment"># 下载镜像</span>
+docker pull <span class="token punctuation">[</span>my-image<span class="token punctuation">]</span> <span class="token punctuation">[</span>:tag<span class="token punctuation">]</span>
+docker pull mysql
+docker pull docker.io/library/mysql:latest
+
+<span class="token comment"># 不写tag默认latest 可以指定版本</span>
+<span class="token comment"># 分层下载 已有的库直接跳过</span>
+
+<span class="token comment"># 删除镜像</span>
+docker rmi -f <span class="token punctuation">[</span>id<span class="token punctuation">]</span> <span class="token punctuation">[</span>id<span class="token punctuation">]</span> <span class="token punctuation">[</span>id<span class="token punctuation">]</span>
+docker rmi -f <span class="token variable"><span class="token variable">$(</span>docker images -aq<span class="token variable">)</span></span> <span class="token comment"># 删除全部</span>
+
+-f <span class="token comment"># 强制删除</span>
+
+<span class="token comment"># 查看镜像信息</span>
+docker image inspect <span class="token punctuation">[</span>my-image<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>🟠对容器追加启动选项可以先提交成镜像再重新启动</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker <span class="token function">ps</span> -a
+<span class="token comment"># 提交镜像</span>
+docker commit <span class="token punctuation">[</span>id<span class="token punctuation">]</span> <span class="token punctuation">[</span>new-image-name<span class="token punctuation">]</span>
+
+<span class="token comment"># 重新启动</span>
+docker run -it -v<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+
+<h3 id="容器命令"><a href="#容器命令" class="headerlink" title="容器命令"></a>容器命令</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker pull ubuntu
+
+<span class="token comment"># 启动容器</span>
+docker run <span class="token punctuation">[</span>options<span class="token punctuation">]</span> <span class="token punctuation">[</span>my-image<span class="token punctuation">]</span>
+
+--name<span class="token operator">=</span><span class="token string">"Name"</span> <span class="token comment"># 容器名字</span>
+-d <span class="token comment"># 后台运行方式</span>
+-it <span class="token comment"># 交互方式运行 产生一个终端 [cmd]有的镜像有默认值 ubuntu->/bin/bash python->python</span>
+-p <span class="token comment"># 指定容器端口 </span>
+<span class="token comment"># -p 主机端口：容器端口</span>
+-P <span class="token comment"># 随机指定端口</span>
+
+<span class="token comment"># 进入容器</span>
+docker run -it ubuntu /bin/bash
+
+<span class="token comment"># 从容器中退出</span>
+<span class="token builtin class-name">exit</span>
+Ctrl + P + Q <span class="token comment"># 容器不停止</span>
+
+<span class="token comment"># 重新启动并进入容器</span>
+docker start -ai <span class="token punctuation">[</span>ubuntu01<span class="token punctuation">]</span>
+
+<span class="token comment"># 查看运行中的容器</span>
+docker <span class="token function">ps</span>
+
+-a <span class="token comment"># 包括运行过的容器</span>
+-n<span class="token operator">=</span>? <span class="token comment"># 最近创建的几个容器</span>
+-q <span class="token comment"># 只显示编号</span>
+
+<span class="token comment"># 删除容器</span>
+docker <span class="token function">rm</span> <span class="token punctuation">[</span>id<span class="token punctuation">]</span>
+docker <span class="token function">rm</span> -f <span class="token variable"><span class="token variable">$(</span>docker <span class="token function">ps</span> -aq<span class="token variable">)</span></span>
+docker <span class="token function">ps</span> -aq <span class="token operator">|</span> <span class="token function">xargs</span> docker <span class="token function">rm</span>
+
+-f <span class="token comment"># 强制删除</span>
+
+<span class="token comment"># 启动和停止</span>
+docker start <span class="token punctuation">[</span>id<span class="token punctuation">]</span>
+docker restart <span class="token punctuation">[</span>id<span class="token punctuation">]</span>
+docker stop <span class="token punctuation">[</span>id<span class="token punctuation">]</span>
+docker <span class="token function">kill</span> <span class="token punctuation">[</span>id<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker run -d <span class="token punctuation">[</span>my-image<span class="token punctuation">]</span>
+docker <span class="token function">ps</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>🟠如果在后台启动的容器没有为前台进程提供响应的服务，容器会自动停止。</p>
+<p><strong>查看日志</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker run -d ubuntu /bin/sh -c <span class="token string">"while true;do echo hello;sleep 1;done"</span>
+
+docker <span class="token function">ps</span>
+
+docker logs -tf --tail <span class="token punctuation">[</span>n<span class="token punctuation">]</span> <span class="token punctuation">[</span>container<span class="token punctuation">]</span>
+
+-t <span class="token comment"># 显示时间戳</span>
+-f <span class="token comment"># 显示后续日志</span>
+--tail <span class="token comment"># 查看末尾几条</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 查看镜像的构建过程 dockerfile </span>
+docker <span class="token function">history</span> <span class="token punctuation">[</span>id<span class="token punctuation">]</span>
+
+<span class="token comment"># 查看容器中进程信息</span>
+docker <span class="token function">top</span> <span class="token punctuation">[</span>id<span class="token punctuation">]</span>
+
+<span class="token comment"># 查看容器元信息</span>
+docker inspect <span class="token punctuation">[</span>id<span class="token punctuation">]</span>
+
+<span class="token comment"># 查看cpu状态</span>
+docker stats
+
+--no-stream <span class="token comment"># 只显示一次</span>
+
+<span class="token comment"># 进入正在运行的容器</span>
+docker <span class="token builtin class-name">exec</span> -it <span class="token punctuation">[</span>id<span class="token punctuation">]</span> /bin/bash <span class="token comment"># 开启新的终端（常用）</span>
+docker attach <span class="token punctuation">[</span>id<span class="token punctuation">]</span> <span class="token comment"># 进入正在执行的终端</span>
+
+<span class="token comment"># 从容器中复制文件到主机</span>
+docker <span class="token function">cp</span> <span class="token punctuation">[</span>id<span class="token punctuation">]</span>:<span class="token punctuation">[</span>file_path<span class="token punctuation">]</span> <span class="token punctuation">[</span>host_path<span class="token punctuation">]</span>
+
+docker run -it ubuntu /bin/bash
+<span class="token comment"># container</span>
+<span class="token builtin class-name">cd</span> /home
+<span class="token function">ls</span>
+<span class="token function">touch</span> hello.txt
+<span class="token builtin class-name">exit</span>
+<span class="token comment"># container</span>
+docker <span class="token function">ps</span> -a <span class="token comment"># 容器停止运行但保存了数据</span>
+docker <span class="token function">cp</span> <span class="token punctuation">[</span>id<span class="token punctuation">]</span>:/home/hello.txt /home
+<span class="token function">ls</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>==TODO: 使用 Docker 数据卷挂载目录和文件==</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111014041.png" alt="dockercommand"></p>
+<h3 id="部署-nginx"><a href="#部署-nginx" class="headerlink" title="部署 nginx"></a>部署 nginx</h3><p>==TODO：通过 -v 数据卷提供外部映射路径，修改配置文件。==</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 环境准备</span>
+docker <span class="token function">ps</span> -aq
+docker <span class="token function">rm</span> <span class="token variable"><span class="token variable">$(</span>docker <span class="token function">ps</span> -aq<span class="token variable">)</span></span>
+
+<span class="token comment"># 搜索下载</span>
+docker search nginx
+docker pull nginx
+docker images
+
+<span class="token comment"># 后台运行服务</span>
+docker run --name<span class="token operator">=</span><span class="token string">"nginx01"</span> -d  -p <span class="token number">3344</span>:80 nginx
+<span class="token function">curl</span> localhost:3344
+docker <span class="token function">ps</span>
+docker stop nginx01
+<span class="token function">curl</span> localhost:3344 <span class="token comment"># 无响应</span>
+docker start nginx01
+<span class="token function">curl</span> localhost:3344 <span class="token comment"># 重新启动了</span>
+
+<span class="token comment"># 进入容器</span>
+docker <span class="token builtin class-name">exec</span> -it nginx01 /bin/bash
+<span class="token function">whereis</span> nginx
+<span class="token builtin class-name">cd</span> /etc/nginx
+<span class="token function">ls</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="部署-tomcat"><a href="#部署-tomcat" class="headerlink" title="部署 tomcat"></a>部署 tomcat</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 自动下载并启动容器</span>
+docker run -it --rm tomcat
+
+--rm <span class="token comment"># 结束运行后删除容器</span>
+
+docker <span class="token function">ps</span> -a <span class="token comment"># 没有结果</span>
+docker images
+
+<span class="token comment"># 运行容器</span>
+docker run -d --name<span class="token operator">=</span>tomcat01  -p <span class="token number">3355</span>:8080 tomcat
+<span class="token function">curl</span> localhost:3355 <span class="token comment"># 404</span>
+
+<span class="token comment"># 进入容器</span>
+docker <span class="token builtin class-name">exec</span> -it tomcat01 /bin/bash
+<span class="token comment"># tomcat </span>
+<span class="token function">cp</span> -r webapps.dist/* webapps
+<span class="token builtin class-name">exit</span>
+<span class="token comment"># tomcat</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>访问 <a target="_blank" rel="noopener" href="http://localhost:3355/">http://localhost:3355</a></p>
+<p>==TODO: 在容器外提供映射路径 webapps，自动同步项目。==</p>
+<h3 id="elasticsearch"><a href="#elasticsearch" class="headerlink" title="elasticsearch"></a>elasticsearch</h3><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111016355.png" alt="image-20220804204104104" style="zoom: 67%;" />
+
+<p><a target="_blank" rel="noopener" href="https://hub.docker.com/_/elasticsearch">Elasticsearch - Official Image | Docker Hub</a></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 增加内存限制</span>
+docker run -d --name elasticsearch <span class="token punctuation">[</span>--net somenetwork<span class="token punctuation">]</span> -p <span class="token number">9200</span>:9200 -p <span class="token number">9300</span>:9300 -e <span class="token string">"discovery.type=single-node"</span> -e <span class="token assign-left variable">ES_JAVA_OPTS</span><span class="token operator">=</span><span class="token string">"-Xms64m -Xmx512m"</span> elasticsearch:tag
+
+<span class="token function">curl</span> localhost:9200<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>==TODO: 使用Kibana 连接 ES 需要通过 Linux 内网转发==</p>
+<h2 id="可视化"><a href="#可视化" class="headerlink" title="可视化"></a>可视化</h2><ul>
+<li>Rancher 持续集成、持续部署 CI/CD</li>
+<li>portainer 图形化界面管理</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://www.portainer.io/">Container Management | Kubernetes GUI | Docker Swarm GUI | Portainer</a></p>
+<p><a target="_blank" rel="noopener" href="https://docs.portainer.io/start/install/server/docker/linux">Install Portainer with Docker on Linux - Portainer Documentation</a></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker run -d -p <span class="token number">8000</span>:8000 -p <span class="token number">9443</span>:9443  -p <span class="token number">9000</span>:9000 --name portainer --restart<span class="token operator">=</span>always <span class="token punctuation">\</span>
+-v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data <span class="token punctuation">\</span>
+portainer/portainer-ce:latest
+
+<span class="token comment"># 需要映射http端口9000</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>🟠powershell 中的 line continuation character（换行符）是   <code>`</code> </p>
+<p><a target="_blank" rel="noopener" href="http://localhost:9000/">http://localhost:9000</a></p>
+<h2 id="Dokcer-镜像"><a href="#Dokcer-镜像" class="headerlink" title="Dokcer 镜像"></a>Dokcer 镜像</h2><h3 id="镜像加载原理"><a href="#镜像加载原理" class="headerlink" title="镜像加载原理"></a>镜像加载原理</h3><p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111015123.png" alt="image-20220804214538428"></p>
+<p>下载不同镜像都会有一些共同的文件，例如 Linux内核。</p>
+<p><strong>Docker 的镜像是由一层一层的文件系统组成。</strong></p>
+<p> <img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111015023.png" alt="image-20220804215349485"></p>
+<p>Docker 直接使用底层的 bootfs 来加载内核，只需要自带精简的 rootfs，只包含最基本的命令、工具和程序库。</p>
+<p>启动虚拟机需要从底层加载 bootfs，速度是分钟级别，docker 是秒级。</p>
+<h3 id="分层理解"><a href="#分层理解" class="headerlink" title="分层理解"></a>分层理解</h3><p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111015136.png" alt="image-20220804215043667"></p>
+<p>通过文件分层来资源共享，每个 layer 都是一个步骤。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 查看 layer</span>
+docker image inspect redis:latest<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111015121.png" alt="image-20220804220729416"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111015727.png" alt="image-20220804220902839"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111015163.png" alt="image-20220804220900426"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111015491.png" alt="image-20220804220642894"></p>
+<p><strong>Docker 镜像都是只读的，当容器启动时，一个新的可写层被加载到镜像层顶部，叫做容器层。</strong></p>
+<h3 id="commit-镜像"><a href="#commit-镜像" class="headerlink" title="commit 镜像"></a>commit 镜像</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker commit -m <span class="token string">"message"</span> -a <span class="token string">"author"</span> <span class="token punctuation">[</span>id<span class="token punctuation">]</span> <span class="token punctuation">[</span>image-name<span class="token punctuation">]</span>:<span class="token punctuation">[</span>tag<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>通过 commit 将当前容器的状态保存为一个镜像。【快照】</p>
+<p><strong>练习：提交 Tomcat</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker run -d --name<span class="token operator">=</span>tomcat -p <span class="token number">8080</span>:8080 tomcat
+
+<span class="token comment"># 进入容器</span>
+docker <span class="token builtin class-name">exec</span> -it tomcat /bin/bash
+
+<span class="token comment"># tomcat</span>
+<span class="token function">ls</span>
+<span class="token comment"># 设置首页内容</span>
+<span class="token function">cp</span> -r webapps.dist/* webapps
+<span class="token builtin class-name">exit</span>
+<span class="token comment"># tomcat</span>
+
+docker <span class="token function">ps</span>
+
+<span class="token function">curl</span> localhost:8080
+
+<span class="token comment"># 提交容器成为镜像</span>
+docker commit -m <span class="token string">"add webapps"</span> -a <span class="token string">"ysama"</span> 8f my-tomcat:1.0
+docker images
+
+<span class="token comment"># 删除原容器</span>
+docker <span class="token function">rm</span> -f 8f
+
+<span class="token comment"># 启动新镜像</span>
+docker run -d -p <span class="token number">8080</span>:8080 --rm my-tomcat:1.0
+docker <span class="token function">ps</span>
+<span class="token function">curl</span> localhost:8080<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="容器数据卷"><a href="#容器数据卷" class="headerlink" title="容器数据卷"></a>容器数据卷</h2><h3 id="使用数据卷"><a href="#使用数据卷" class="headerlink" title="使用数据卷"></a>使用数据卷</h3><p>删除容器，容器中的数据就会丢失。</p>
+<p>需要将 docker 容器中产生的数据同步到本地，<strong>数据共享</strong>。</p>
+<p><strong>将容器内的目录挂载到主机上</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 启动容器 挂载目录</span>
+docker run -it -v /home/test:/home ubuntu /bin/bash
+
+-v <span class="token comment"># 主机目录:容器目录</span>
+
+<span class="token comment"># 查看容器mount信息</span>
+docker inspect <span class="token punctuation">[</span>id<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p><strong>只要容器存在，目录就会自动同步。</strong></p>
+<ul>
+<li>停止容器</li>
+<li>主机上修改文件</li>
+<li>启动容器</li>
+<li>容器内的数据依旧是同步的</li>
+</ul>
+<p>删除容器后，挂载到本地的数据还会存在。【容器数据持久化】</p>
+<p>🟠挂载镜像内已经有的目录，该目录会清空。</p>
+<h3 id="同步-MySQL"><a href="#同步-MySQL" class="headerlink" title="同步  MySQL"></a>同步  MySQL</h3><p><a target="_blank" rel="noopener" href="https://hub.docker.com/_/mysql">Mysql - Official Image | Docker Hub</a></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 获取镜像</span>
+docker pull mysql:5.7
+
+<span class="token comment"># docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql:tag</span>
+docker run -d -p <span class="token number">3310</span>:3306 -v /home/mysql/conf:/etc/mysql/conf.d -v /home/mysql/data:/var/lib/mysql <span class="token punctuation">\</span>
+-e <span class="token assign-left variable">MYSQL_ROOT_PASSWORD</span><span class="token operator">=</span><span class="token number">123456</span> --name mysql01 mysql:5.7
+
+-d <span class="token comment"># 后台运行</span>
+-p <span class="token comment"># 端口映射</span>
+-v <span class="token comment"># 卷挂载</span>
+-e <span class="token comment"># 环境配置</span>
+
+<span class="token function">whereis</span> mysql<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>使用 SQLyog 连接 localhost:3310</p>
+<p>root</p>
+<p>123456</p>
+</blockquote>
+<h3 id="具名挂载-amp-匿名挂载"><a href="#具名挂载-amp-匿名挂载" class="headerlink" title="具名挂载&amp;匿名挂载"></a>具名挂载&amp;匿名挂载</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 匿名挂载</span>
+docker run -d -P --name nginx01 -v /etc/nginx nginx
+
+<span class="token comment"># 查看端口</span>
+docker inspect <span class="token punctuation">[</span>id<span class="token punctuation">]</span>
+
+-P <span class="token comment"># 随机端口</span>
+-v <span class="token comment"># 只写了容器内路径</span>
+
+<span class="token comment"># 查看所有volume（数据卷）情况</span>
+docker volume <span class="token function">ls</span>
+
+<span class="token comment"># 具名挂载</span>
+docker  run -d -P --name nginx02 -v my-nginx:/etc/nginx nginx
+
+-v <span class="token comment"># 卷名:容器内路径</span>
+
+docker volume <span class="token function">ls</span>
+docker volume inspect my-nginx<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111015914.png" alt="image-20220805124743566"></p>
+<p>没有指定挂载目录的容器，默认挂载到 <code>/var/lib/docker/volumes/xxx/_data</code></p>
+<p>在 windows 上这个位置在 Linux 中的 <code>\\wsl.localhost\docker-desktop-data\data\docker\volumes</code></p>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/43181654/locating-data-volumes-in-docker-desktop-windows">Locating data volumes in Docker Desktop (Windows) - Stack Overflow</a></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">-v 容器内路径 <span class="token comment"># 匿名挂载</span>
+-v 卷名:容器内路径 <span class="token comment"># 具名挂载</span>
+-v /主机路径:容器路径 <span class="token comment"># 指定路径挂载</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>大多情况使用<strong>具名挂载</strong>，可以根据名称找到数据卷。</p>
+<p><strong>设置容器对挂载路径的权限</strong></p>
+<ul>
+<li>ro (readonly) 容器只读，只能通过主机操作</li>
+<li>rw (readwrite) 容器可读可写</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 设置权限</span>
+docker run -d -P --name nginx -v my-nginx:/etc/nginx:ro nginx
+docker run -d -P --name nginx -v my-nginx:/etc/nginx:rw nginx<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="使用-dockerfile-自动挂载"><a href="#使用-dockerfile-自动挂载" class="headerlink" title="使用 dockerfile 自动挂载"></a>使用 dockerfile 自动挂载</h3><p>Dockerfile 就是用来构建 docker 镜像的命令脚本。</p>
+<p>脚本的每个命令对应着镜像的每一层。</p>
+<pre class="line-numbers language-dockerfile" data-language="dockerfile"><code class="language-dockerfile">FROM ubuntu
+
+# 匿名挂载
+VOLUME [&quot;volume01&quot;,&quot;volume02&quot;]
+
+CMD echo &quot;----end----&quot;
+
+CMD &#x2F;bin&#x2F;bash<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在主机目录创建 dockerfile 并构建镜像：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> /home
+<span class="token function">mkdir</span> docker-test-volume
+
+<span class="token function">vim</span> Dockerfile
+<span class="token comment"># 上面的dockerfile内容</span>
+<span class="token function">cat</span> Dockerfile
+
+docker build -f /home/docker-test-volume/Dockerfile -t my-ubuntu:1.0 <span class="token builtin class-name">.</span>
+
+docker images<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>运行生成的镜像会发现自动挂载了目录</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker run -it <span class="token punctuation">[</span>id<span class="token punctuation">]</span> /bin/bash
+<span class="token function">ls</span> -l
+
+<span class="token comment"># volume01</span>
+<span class="token comment"># volume02</span>
+
+<span class="token builtin class-name">cd</span> volume01
+<span class="token function">touch</span> hello.txt
+
+<span class="token comment"># 查看Mounts信息 找到主机上的目录 /var/lib/docker/volumes/[id]/_data</span>
+docker inspect <span class="token punctuation">[</span>id<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="容器数据同步"><a href="#容器数据同步" class="headerlink" title="容器数据同步"></a>容器数据同步</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43274097/article/details/104500521">数据卷容器 : –volumes-from_听雨　的博客-CSDN博客</a></p>
+<p>命名的容器挂载数据卷，其它容器通过挂载这个(父容器)实现数据共享，挂载数据卷的容器，称之为<strong>数据卷容器</strong>。</p>
+<ul>
+<li>数据卷容器可以自动挂载也可以手动挂载。</li>
+<li>停止或删除数据卷容器，子容器和主机之间的挂载仍旧存在。</li>
+<li>删除所有容器并重新开始，新的容器中会有在主机目录保存的数据。</li>
+</ul>
+<p><strong>注意：exit 退出 Ubuntu，容器会停止运行，需要 Ctrl + P + Q 退出不停止容器。</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker run -it --name<span class="token operator">=</span>ubuntu01 -v /home/ysama/volume01:/home/volume01 ubuntu /bin/bash
+docker run -it --name<span class="token operator">=</span>ubuntu02 --volumes-from ubuntu01 ubuntu /bin/bash<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111015944.png" alt="image-20220805185535659"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111015754.png" alt="image-20220805185946104"></p>
+<p>🟠 多个 mysql 实现数据共享</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 在wsl2环境中</span>
+
+<span class="token comment"># 数据卷容器</span>
+docker run -d -p <span class="token number">3310</span>:3306 -v /etc/mysql/conf.d -v /var/lib/mysql <span class="token punctuation">\</span>
+-e <span class="token assign-left variable">MYSQL_ROOT_PASSWORD</span><span class="token operator">=</span><span class="token number">123456</span> --name<span class="token operator">=</span>mysql01 mysql:5.7
+
+<span class="token comment"># 子容器</span>
+docker run -d -p <span class="token number">3310</span>:3306 -e <span class="token assign-left variable">MYSQL_ROOT_PASSWORD</span><span class="token operator">=</span><span class="token number">123456</span> --name<span class="token operator">=</span>mysql02 mysql:5.7
+
+mysql -h <span class="token number">127.0</span>.0.1 -uroot -P3310 -p<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/11657829/error-2002-hy000-cant-connect-to-local-mysql-server-through-socket-var-run">lamp - ERROR 2002 (HY000): Can’t connect to local MySQL server through socket ‘/var/run/mysqld/mysqld.sock’ (2) - Stack Overflow</a></p>
+<h2 id="DockerFile"><a href="#DockerFile" class="headerlink" title="DockerFile"></a>DockerFile</h2><h3 id="dockerfile-命令"><a href="#dockerfile-命令" class="headerlink" title="dockerfile 命令"></a>dockerfile 命令</h3><ol>
+<li>编写 Dockerfile</li>
+<li>docker build 构建成为镜像</li>
+<li>docker run 运行镜像</li>
+<li>docker push 发布镜像</li>
+</ol>
+<p>每一个 Dockerfile 指令都会创建一个新的镜像层并提交。</p>
+<pre class="line-numbers language-dockerfile" data-language="dockerfile"><code class="language-dockerfile">FROM        # 基础镜像
+MAINTAINER  # 维护者信息
+RUN         # 构建镜像时运行的命令
+ADD         # 添加内容
+WORKDIR     # 进入容器的默认路径
+VOLUME      # 挂载目录
+EXPOSE      # 指定对外端口
+CMD         # 容器启动后运行的命令 会被外部选项覆盖
+ENTRYPOINT  # 容器启动后运行的命令 可以追加命令
+ONBUILD
+COPY
+ENV         # 设置环境<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 查看镜像的构建过程 dockerfile </span>
+docker <span class="token function">history</span> <span class="token punctuation">[</span>id<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h3 id="构建镜像-ubuntu"><a href="#构建镜像-ubuntu" class="headerlink" title="构建镜像 ubuntu"></a>构建镜像 ubuntu</h3><p>🟠需要更换阿里云的源</p>
+<pre class="line-numbers language-dockerfile" data-language="dockerfile"><code class="language-dockerfile">FROM ubuntu
+MAINTAINER ysama&lt;1234@example.com&gt;
+
+ENV MYPATH &#x2F;usr&#x2F;local
+ENV SOURCES &#x2F;etc&#x2F;apt&#x2F;sources.list
+WORKDIR $MYPATH
+
+RUN mv $SOURCES $SOURCES.bak
+
+RUN echo &quot;deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; focal main multiverse restricted universe&quot;&gt;&gt;$SOURCES
+
+RUN echo &quot;deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; focal-backports main multiverse restricted universe&quot;&gt;&gt;$SOURCES
+
+RUN echo &quot;deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; focal-proposed main multiverse restricted universe&quot;&gt;&gt;$SOURCES
+
+RUN echo &quot;deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; focal-security main multiverse restricted universe&quot;&gt;&gt;$SOURCES
+
+RUN echo &quot;deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; focal-updates main multiverse restricted universe&quot;&gt;&gt;$SOURCES
+
+RUN echo &quot;deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; focal main multiverse restricted universe&quot;&gt;&gt;$SOURCES
+
+RUN echo &quot;deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; focal-backports main multiverse restricted universe&quot;&gt;&gt;$SOURCES
+
+RUN echo &quot;deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; focal-proposed main multiverse restricted universe&quot;&gt;&gt;$SOURCES
+
+RUN echo &quot;deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; focal-security main multiverse restricted universe&quot;&gt;&gt;$SOURCES
+
+RUN echo &quot;deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; focal-updates main multiverse restricted universe&quot;&gt;&gt;$SOURCES
+
+RUN apt-get update
+RUN apt-get -y install vim
+RUN apt-get -y install net-tools
+
+EXPOSE 80
+
+CMD echo $MYPATH
+CMD echo &quot;----end----&quot;
+CMD &#x2F;bin&#x2F;bash<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><a target="_blank" rel="noopener" href="https://dev.to/greenteabiscuit/installing-vim-in-a-docker-container-15i6">Installing Vim in a Docker Container - DEV Community</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/a_small_cherry/article/details/123037157">Ubuntu 快速更换阿里源_a_small_cherry的博客-CSDN博客_ubuntu更换阿里云源</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_37475168/article/details/105029052">解决Docker下没有vim时，更新apt-get源_coder_szc的博客-CSDN博客</a></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 构建镜像</span>
+docker build -f /home/docker-test-volume/Dockerfile -t my-ubuntu:1.1 <span class="token builtin class-name">.</span>
+<span class="token comment"># 默认名字是Dockerfile 不用加上-f选项</span>
+
+<span class="token comment"># 查看镜像</span>
+docker images
+
+<span class="token comment"># 测试运行</span>
+docker run -it my-ubuntu:1.1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="容器启动时执行命令"><a href="#容器启动时执行命令" class="headerlink" title="容器启动时执行命令"></a>容器启动时执行命令</h3><p>编写测试用 Dockerfile</p>
+<pre class="line-numbers language-dockerfile" data-language="dockerfile"><code class="language-dockerfile">FROM ubuntu
+
+# ENTRYPOINT [&quot;ls&quot;, &quot;-a&quot;]
+CMD [&quot;ls&quot;, &quot;-a&quot;]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> Dockerfile
+
+<span class="token comment"># 构建镜像</span>
+docker build -f Dockerfile -t cmdtest <span class="token builtin class-name">.</span>
+
+<span class="token comment"># 测试运行</span>
+docker run cmdtest
+<span class="token comment"># ls -a 自动运行</span>
+
+<span class="token comment"># 如果追加为 ls -al</span>
+docker run cmdtest -l
+<span class="token comment"># 会覆盖 ls -a 命令 导致错误</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>后续的命令选项会覆盖Dockerfile中的 CMD 命令</strong></p>
+<p><strong>使用 ENTRYPOINT 会追加后续命令选项</strong></p>
+<h3 id="构建-Tomcat-镜像"><a href="#构建-Tomcat-镜像" class="headerlink" title="构建 Tomcat 镜像"></a>构建 Tomcat 镜像</h3><p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111016787.png" alt="image-20220806173212186"></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 构建镜像</span>
+docker build -t diytomcat <span class="token builtin class-name">.</span>
+
+<span class="token comment"># 测试运行 挂载文件</span>
+docker run -d -p <span class="token number">8080</span>:8080 --name my-tomcat -v /home/ysama/build/tomcat/test:/url/local/apache-tomcat-9.0.22/webapps/test -v /home/ysama/build/tomcat/tomcatlogs:/url/local/apache-tomcat-9.0.22/logs diytomcat
+
+docker <span class="token builtin class-name">exec</span> -it my-tomcat /bin/bash<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>在主机的 webapps 目录发布网页。</strong></p>
+<h2 id="推送镜像"><a href="#推送镜像" class="headerlink" title="推送镜像"></a>推送镜像</h2><p><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/push/">docker push | Docker Documentation</a></p>
+<p>也可以使用别的仓库。</p>
+<p>🟠使用的是 Docker Desktop，所以需要在 powershell 中操作。</p>
+<p>首先在 Docker Desktop 中登录。</p>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">docker login
+
+<span class="token comment"># tag就是用户名</span>
+docker tag <span class="token namespace">[image]</span> ysama2021<span class="token operator">/</span>my<span class="token operator">-</span>tomcat:1<span class="token punctuation">.</span>1
+
+docker push ysama2021<span class="token operator">/</span>my<span class="token operator">-</span>tomcat:1<span class="token punctuation">.</span>1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>The CLI “docker login” will not work in this configuration.</p>
+<p>在 wsl2 中无法登录。</p>
+<p>denied: requested access to the resource is denied</p>
+<p>tag要和用户名一致，类似 GitHub</p>
+</blockquote>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell"><span class="token comment"># 清理容器和镜像</span>
+docker <span class="token function">rm</span> $<span class="token punctuation">(</span>docker <span class="token function">ps</span> <span class="token operator">-</span>aq<span class="token punctuation">)</span>
+docker rmi ysama2021<span class="token operator">/</span>my<span class="token operator">-</span>tomcat:1<span class="token punctuation">.</span>1
+<span class="token comment"># 下载测试</span>
+docker pull ysama2021<span class="token operator">/</span>my<span class="token operator">-</span>tomcat:1<span class="token punctuation">.</span>1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="Docker-网络"><a href="#Docker-网络" class="headerlink" title="Docker 网络"></a>Docker 网络</h2><h3 id="概念-1"><a href="#概念-1" class="headerlink" title="概念"></a>概念</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker images
+docker run -d -p <span class="token number">8080</span>:8080 my-tomcat:1.0
+docker <span class="token function">ps</span>
+docker <span class="token builtin class-name">exec</span> -it <span class="token punctuation">[</span>id<span class="token punctuation">]</span> /bin/bash<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><a target="_blank" rel="noopener" href="https://vuepress.mirror.docker-practice.com/network/">Docker 中的网络功能介绍 | Docker 从入门到实践 (docker-practice.com)</a></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111015367.png" alt="image-20220806180341502"></p>
+<p>启动 tomcat 服务后，在 wsl 和 powershell 中都能访问到 8080 端口。</p>
+<ul>
+<li>wsl 访问 docker 网卡</li>
+<li>powershell 先访问 wsl 网卡</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 删除所有镜像</span>
+docker rmi <span class="token variable"><span class="token variable">$(</span>docker images -aq<span class="token variable">)</span></span>
+
+<span class="token comment"># 启动tomcat</span>
+docker run -d --name my-tomcat -p <span class="token number">8080</span>:8080 tomcat 
+
+<span class="token comment"># 查看网络信息</span>
+docker inspect my-tomcat
+
+<span class="token comment"># 或者进入容器查看网络信息</span>
+<span class="token comment"># docker exec -it [id] ip addr</span>
+docker <span class="token builtin class-name">exec</span> -it my-tomcat /bin/bash
+
+<span class="token comment"># tomcat</span>
+<span class="token function">apt-get</span> update
+
+<span class="token function">apt-get</span> <span class="token function">install</span> -y net-tools
+
+<span class="token function">ifconfig</span>
+<span class="token comment"># tomcat</span>
+
+<span class="token comment"># 退出容器</span>
+Ctrl + P + Q<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>容器内的网络地址</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111015051.png" alt="image-20220806181821815"></p>
+<p><strong>容器之间是可以 ping 通的</strong></p>
+<p><strong>主机无法 ping 通容器（无法访问容器内部端口），只能访问 docker 网卡的外部端口，相当于 localhost</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111015907.png" alt="Docker 网络"></p>
+<h3 id="–link"><a href="#–link" class="headerlink" title="–link"></a>–link</h3><p>使容器之间的连接不受 ip 地址变化的影响。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker run -d -P --name tomcat03 --link tomcat02 tomcat
+
+<span class="token comment"># 3可以ping通2</span>
+docker <span class="token builtin class-name">exec</span> -it tomcat03 <span class="token function">ping</span> tomcat02
+
+<span class="token comment"># 原理是配置了hosts</span>
+docker <span class="token builtin class-name">exec</span> -it tomcat03 <span class="token function">ping</span> <span class="token function">cat</span> /etc/hosts
+
+<span class="token comment"># 2不能ping通3</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>不推荐使用 –link</strong></p>
+<h3 id="自定义网络"><a href="#自定义网络" class="headerlink" title="自定义网络"></a>自定义网络</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 查看docker网络</span>
+docker network <span class="token function">ls</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>网络模式：</p>
+<ul>
+<li>bridge 桥接 docker</li>
+<li>none</li>
+<li>host 和主机向网络</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 创建网络</span>
+docker network create --driver bridge --subnet <span class="token number">192.168</span>.0.0/16 --gateway <span class="token number">192.168</span>.0.1 mynet
+
+docker network inspect mynet
+
+<span class="token comment"># 使用自定义网络</span>
+docker run -d -P --name tomcat-net-01 --net mynet tomcat
+docker run -d -P --name tomcat-net-02 --net mynet tomcat
+
+<span class="token comment"># 在自定义网络中的容器可以互相ping通</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="网络连通"><a href="#网络连通" class="headerlink" title="网络连通"></a>网络连通</h3><p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111016981.png" alt="image-20220806201304791"></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker network connect mynet tomcat01
+
+<span class="token comment"># 将tomcat01放入mynet中 一个容器两个ip</span>
+docker network inspect mynet
+
+<span class="token comment"># tomcat-01可以ping通tomcat-net-01 在同一个网络中</span>
+<span class="token comment"># tomcat-02未连通</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="Redis-集群"><a href="#Redis-集群" class="headerlink" title="Redis 集群"></a>Redis 集群</h2><p>[<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000022808576">Redis] 你了解 Redis 的三种集群模式吗？ - SegmentFault 思否</a></p>
+<p>创建集群之后当某个主节点下线时会启用从节点。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111016517.png" alt="image-20220806202314189"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/202208111016518.png" alt="image-20220806202432580"></p>
+<h2 id="SpringBoot-微服务打包"><a href="#SpringBoot-微服务打包" class="headerlink" title="SpringBoot 微服务打包"></a>SpringBoot 微服务打包</h2><ul>
+<li>在项目根目录编写 Dockerfile 并打包 app。</li>
+</ul>
+<blockquote>
+<p>安装 IDEA 的 Dokcer integration 插件用来高亮 Dockerfile。</p>
+<p>也可以用来连接远程仓库。</p>
+</blockquote>
+<pre class="line-numbers language-dockerfile" data-language="dockerfile"><code class="language-dockerfile">FROM java:8
+
+COPY *.jar &#x2F;app.jar
+
+CMD [&quot;--server.port&#x3D;8080&quot;]
+
+EXPOSE 8080
+
+ENTRYPOINT [&quot;java&quot;,&quot;-jar&quot;,&quot;&#x2F;app.jar&quot;]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>将项目生成的 jar 包和 Dockerfile 上传到服务器。</li>
+<li>构建 docker 镜像</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker build -t Dockerfile -t myapp <span class="token builtin class-name">.</span>
+
+<span class="token comment"># 运行测试</span>
+docker run -d -P --name springboot-web myapp
+
+<span class="token comment"># 查看端口</span>
+docker <span class="token function">ps</span>
+
+<span class="token function">curl</span> localhost:<span class="token punctuation">[</span>port<span class="token punctuation">]</span>
+
+<span class="token comment"># 上传到仓库</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/server/" rel="tag"><i class="fa fa-tag"></i> server</a>
+              <a href="/tags/docker/" rel="tag"><i class="fa fa-tag"></i> docker</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/08/10/%E5%B0%8F%E5%AD%A6%E6%9C%9F%E6%B0%B4%E8%AF%BE%E7%AC%94%E8%AE%B0/" rel="prev" title="小学期水课笔记">
+                  <i class="fa fa-chevron-left"></i> 小学期水课笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/08/11/nginx-note/" rel="next" title="Nginx 学习笔记">
+                  Nginx 学习笔记 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nova-mist</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+    <div class="pjax">
+
+
+    </div>
+</body>
+</html>

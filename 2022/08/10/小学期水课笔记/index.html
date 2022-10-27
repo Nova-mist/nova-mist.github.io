@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"nova-mist.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+<meta name="description" content="小学期水课笔记基于云平台的计算机视觉实践、百度飞桨 鸢尾花SVM分类数据处理使用 np.loadtext() 加载数据，并用 np.split() 分割数据。 data &#x3D; np.loadtxt(&#39;iris.data&#39;,                 dtype &#x3D; float, # 数据类型                 delimiter &#x3D; &#39;,&#39;, # 数据分割符">
+<meta property="og:type" content="article">
+<meta property="og:title" content="小学期水课笔记">
+<meta property="og:url" content="https://nova-mist.github.io/2022/08/10/%E5%B0%8F%E5%AD%A6%E6%9C%9F%E6%B0%B4%E8%AF%BE%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="novamist blog">
+<meta property="og:description" content="小学期水课笔记基于云平台的计算机视觉实践、百度飞桨 鸢尾花SVM分类数据处理使用 np.loadtext() 加载数据，并用 np.split() 分割数据。 data &#x3D; np.loadtxt(&#39;iris.data&#39;,                 dtype &#x3D; float, # 数据类型                 delimiter &#x3D; &#39;,&#39;, # 数据分割符">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-08-10T11:38:56.000Z">
+<meta property="article:modified_time" content="2022-08-10T11:45:54.816Z">
+<meta property="article:author" content="Nova-mist">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="数媒技">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://nova-mist.github.io/2022/08/10/%E5%B0%8F%E5%AD%A6%E6%9C%9F%E6%B0%B4%E8%AF%BE%E7%AC%94%E8%AE%B0/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>小学期水课笔记 | novamist blog</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">novamist blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">74</span></a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">31</span></a></li>
+        <li class="menu-item menu-item-stars"><a href="/stars/" rel="section"><i class="fa fa-heart fa-fw"></i>收集</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%8F%E5%AD%A6%E6%9C%9F%E6%B0%B4%E8%AF%BE%E7%AC%94%E8%AE%B0"><span class="nav-number">1.</span> <span class="nav-text">小学期水课笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%B8%A2%E5%B0%BE%E8%8A%B1SVM%E5%88%86%E7%B1%BB"><span class="nav-number">1.1.</span> <span class="nav-text">鸢尾花SVM分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86"><span class="nav-number">1.1.1.</span> <span class="nav-text">数据处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.1.2.</span> <span class="nav-text">定义模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.1.3.</span> <span class="nav-text">训练模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E9%AA%8C%E8%AF%81"><span class="nav-number">1.1.4.</span> <span class="nav-text">模型验证</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%B8%A2%E5%B0%BE%E8%8A%B1K-means%E8%81%9A%E7%B1%BB"><span class="nav-number">1.2.</span> <span class="nav-text">鸢尾花K-means聚类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%9A%84%E5%B1%95%E7%A4%BA%E6%96%B9%E6%B3%95"><span class="nav-number">1.2.1.</span> <span class="nav-text">数据的展示方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#K-means%E8%AE%AD%E7%BB%83"><span class="nav-number">1.2.2.</span> <span class="nav-text">K-means训练</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#K-means%E7%BB%93%E6%9E%9C%E5%B1%95%E7%A4%BA"><span class="nav-number">1.2.3.</span> <span class="nav-text">K-means结果展示</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89"><span class="nav-number">1.3.</span> <span class="nav-text">计算机视觉</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#plt%E6%98%BE%E7%A4%BA%E5%9B%BE%E7%89%87"><span class="nav-number">1.3.1.</span> <span class="nav-text">plt显示图片</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nova-mist"
+      src="/uploads/avatar.png">
+  <p class="site-author-name" itemprop="name">Nova-mist</p>
+  <div class="site-description" itemprop="description">My blog about daily life and learning. :b</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">74</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Nova-mist" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Nova-mist" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fas fa-cat fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.bilibili.com/" title="https:&#x2F;&#x2F;www.bilibili.com&#x2F;" rel="noopener" target="_blank">Bilibili</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2022/08/10/%E5%B0%8F%E5%AD%A6%E6%9C%9F%E6%B0%B4%E8%AF%BE%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="Nova-mist">
+      <meta itemprop="description" content="My blog about daily life and learning. :b">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="novamist blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          小学期水课笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-08-10 19:38:56 / 修改时间：19:45:54" itemprop="dateCreated datePublished" datetime="2022-08-10T19:38:56+08:00">2022-08-10</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="小学期水课笔记"><a href="#小学期水课笔记" class="headerlink" title="小学期水课笔记"></a>小学期水课笔记</h1><p>基于云平台的计算机视觉实践、百度飞桨</p>
+<h2 id="鸢尾花SVM分类"><a href="#鸢尾花SVM分类" class="headerlink" title="鸢尾花SVM分类"></a>鸢尾花SVM分类</h2><h3 id="数据处理"><a href="#数据处理" class="headerlink" title="数据处理"></a>数据处理</h3><p>使用 <code>np.loadtext()</code> 加载数据，并用 <code>np.split()</code> 分割数据。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">data <span class="token operator">=</span> np<span class="token punctuation">.</span>loadtxt<span class="token punctuation">(</span><span class="token string">'iris.data'</span><span class="token punctuation">,</span>
+                dtype <span class="token operator">=</span> <span class="token builtin">float</span><span class="token punctuation">,</span> <span class="token comment"># 数据类型</span>
+                delimiter <span class="token operator">=</span> <span class="token string">','</span><span class="token punctuation">,</span> <span class="token comment"># 数据分割符</span>
+                converters <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token number">4</span> <span class="token punctuation">:</span> iris_type<span class="token punctuation">&#125;</span><span class="token punctuation">)</span> <span class="token comment"># 第五列使用函数iris_type进行转换</span>
+
+x<span class="token punctuation">,</span> y <span class="token operator">=</span> np<span class="token punctuation">.</span>split<span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token punctuation">)</span><span class="token punctuation">,</span> axis <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token comment"># 数据分组 第五列开始往后为y 纵向按列分割</span>
+<span class="token comment"># indices_or_sections 如果整数则平均切分，如果是数组则是沿轴切分的位置</span>
+x <span class="token operator">=</span> x<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token number">2</span><span class="token punctuation">]</span>
+x_train<span class="token punctuation">,</span> x_test<span class="token punctuation">,</span> y_train<span class="token punctuation">,</span> y_test <span class="token operator">=</span> model_selection<span class="token punctuation">.</span>train_test_split<span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> random_state <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> test_size <span class="token operator">=</span> <span class="token number">0.2</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="定义模型"><a href="#定义模型" class="headerlink" title="定义模型"></a>定义模型</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">classifier</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    clf <span class="token operator">=</span> svm<span class="token punctuation">.</span>SVC<span class="token punctuation">(</span>c <span class="token operator">=</span> <span class="token number">0.8</span><span class="token punctuation">,</span> <span class="token comment"># 误差项惩罚系数</span>
+                kernel <span class="token operator">=</span> <span class="token string">'linear'</span><span class="token punctuation">,</span> <span class="token comment"># 线性核 高斯核 rbf</span>
+                decision_function_shape <span class="token operator">=</span> <span class="token string">'over'</span> <span class="token comment"># 决策函数)</span>
+    <span class="token keyword">return</span> clf
+clf <span class="token operator">=</span> classifier<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="训练模型"><a href="#训练模型" class="headerlink" title="训练模型"></a>训练模型</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">train</span><span class="token punctuation">(</span>clf<span class="token punctuation">,</span> x_train<span class="token punctuation">,</span> y_train<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    clf<span class="token punctuation">.</span>fit<span class="token punctuation">(</span>x_train<span class="token punctuation">,</span> y_train<span class="token punctuation">.</span>ravel<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment"># 训练集特征向量和训练集目标值</span>
+train<span class="token punctuation">(</span>clf<span class="token punctuation">,</span> x_train<span class="token punctuation">,</span> y_train<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="模型验证"><a href="#模型验证" class="headerlink" title="模型验证"></a>模型验证</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">print_accuracy</span><span class="token punctuation">(</span>clf<span class="token punctuation">,</span> x_train<span class="token punctuation">,</span> y_train<span class="token punctuation">,</span> x_test<span class="token punctuation">,</span> y_test<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># 输出在模型上的准确率</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'training prediction:%.3f'</span> <span class="token operator">%</span> <span class="token punctuation">(</span>clf<span class="token punctuation">.</span>score<span class="token punctuation">(</span>x_train<span class="token punctuation">,</span> y_train<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'test data prediction:%.3f'</span> <span class="token operator">%</span> <span class="token punctuation">(</span>clf<span class="token punctuation">.</span>score<span class="token punctuation">(</span>x_test<span class="token punctuation">,</span> y_test<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token comment"># 原始结果与预测结果进行对比</span>
+    show_accuracy<span class="token punctuation">(</span>clf<span class="token punctuation">.</span>predict<span class="token punctuation">(</span>x_train<span class="token punctuation">)</span><span class="token punctuation">,</span> y_train<span class="token punctuation">,</span> <span class="token string">'traing data'</span><span class="token punctuation">)</span>
+    show_accuracy<span class="token punctuation">(</span>clf<span class="token punctuation">.</span>predict<span class="token punctuation">(</span>x_test<span class="token punctuation">)</span><span class="token punctuation">,</span> y_test<span class="token punctuation">,</span> <span class="token string">'testing data'</span><span class="token punctuation">)</span>
+print_accuracy<span class="token punctuation">(</span>clf<span class="token punctuation">,</span> x_train<span class="token punctuation">,</span> y_train<span class="token punctuation">,</span> x_test<span class="token punctuation">,</span> y_test<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<span id="more"></span>
+
+
+
+<h2 id="鸢尾花K-means聚类"><a href="#鸢尾花K-means聚类" class="headerlink" title="鸢尾花K-means聚类"></a>鸢尾花K-means聚类</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> matplotlib<span class="token punctuation">.</span>pyplot <span class="token keyword">as</span> plt
+<span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
+<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>cluster <span class="token keyword">import</span> KMeans
+<span class="token keyword">from</span> sklearn <span class="token keyword">import</span> datasets<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>聚类属于无监督算法，不需要专门切分训练集和测试集。</strong></p>
+<h3 id="数据的展示方法"><a href="#数据的展示方法" class="headerlink" title="数据的展示方法"></a>数据的展示方法</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">iris <span class="token operator">=</span> datasets<span class="token punctuation">.</span>load_iris<span class="token punctuation">(</span><span class="token punctuation">)</span>
+X <span class="token operator">=</span> iris<span class="token punctuation">.</span>data<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token number">4</span><span class="token punctuation">]</span> <span class="token comment"># 取特征空间中的4个维度</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>X<span class="token punctuation">.</span>shape<span class="token punctuation">)</span>
+
+<span class="token comment"># 取前两个维度 绘制数据分布图</span>
+plt<span class="token punctuation">.</span>scatter<span class="token punctuation">(</span>X<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> X<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> c <span class="token operator">=</span> <span class="token string">'red'</span><span class="token punctuation">,</span> marker <span class="token operator">=</span> <span class="token string">'o'</span><span class="token punctuation">,</span> label <span class="token operator">=</span> <span class="token string">'see'</span><span class="token punctuation">)</span>
+plt<span class="token punctuation">.</span>xlabel<span class="token punctuation">(</span><span class="token string">'sepal length'</span><span class="token punctuation">)</span>
+plt<span class="token punctuation">.</span>ylabel<span class="token punctuation">(</span><span class="token string">'speal width'</span><span class="token punctuation">)</span>
+plt<span class="token punctuation">.</span>legend<span class="token punctuation">(</span>loc <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token comment"># 图例 loc代表位置代码</span>
+plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="K-means训练"><a href="#K-means训练" class="headerlink" title="K-means训练"></a>K-means训练</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">estimator <span class="token operator">=</span>KMeans<span class="token punctuation">(</span>n_clusters <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">)</span>
+estimator<span class="token punctuation">.</span>fit<span class="token punctuation">(</span>X<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h3 id="K-means结果展示"><a href="#K-means结果展示" class="headerlink" title="K-means结果展示"></a>K-means结果展示</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">label_pred <span class="token operator">=</span> estimator<span class="token punctuation">.</span>labels_ <span class="token comment"># 获取聚类标签</span>
+<span class="token comment"># 绘制结果</span>
+x0 <span class="token operator">=</span> X<span class="token punctuation">[</span>label_pred <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">]</span>
+x1 <span class="token operator">=</span> X<span class="token punctuation">[</span>label_pred <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">]</span>
+x2 <span class="token operator">=</span> X<span class="token punctuation">[</span>label_pred <span class="token operator">==</span> <span class="token number">2</span><span class="token punctuation">]</span>
+plt<span class="token punctuation">.</span>scatter<span class="token punctuation">(</span>x0<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> x0<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> c <span class="token operator">=</span> <span class="token string">'red'</span><span class="token punctuation">,</span> marker <span class="token operator">=</span> <span class="token string">'o'</span><span class="token punctuation">,</span> label <span class="token operator">=</span> <span class="token string">'label0'</span><span class="token punctuation">)</span>
+plt<span class="token punctuation">.</span>scatter<span class="token punctuation">(</span>x1<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> x1<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> c <span class="token operator">=</span> <span class="token string">'green'</span><span class="token punctuation">,</span> marker <span class="token operator">=</span> <span class="token string">'*'</span><span class="token punctuation">,</span> label <span class="token operator">=</span> <span class="token string">'label1'</span><span class="token punctuation">)</span>
+plt<span class="token punctuation">.</span>scatter<span class="token punctuation">(</span>x2<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> x2<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> c <span class="token operator">=</span> <span class="token string">'blue'</span><span class="token punctuation">,</span> marker <span class="token operator">=</span> <span class="token string">'+'</span><span class="token punctuation">,</span> label <span class="token operator">=</span> <span class="token string">'label2'</span><span class="token punctuation">)</span>
+plt<span class="token punctuation">.</span>xlabel<span class="token punctuation">(</span><span class="token string">'sepal length'</span><span class="token punctuation">)</span>
+plt<span class="token punctuation">.</span>ylabel<span class="token punctuation">(</span><span class="token string">'sepal width'</span><span class="token punctuation">)</span>
+plt<span class="token punctuation">.</span>legend<span class="token punctuation">(</span>loc <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">)</span>
+plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<h2 id="计算机视觉"><a href="#计算机视觉" class="headerlink" title="计算机视觉"></a>计算机视觉</h2><p>应用：</p>
+<ol>
+<li>图像分类</li>
+<li>图像检测</li>
+<li>图像分割</li>
+</ol>
+<h3 id="plt显示图片"><a href="#plt显示图片" class="headerlink" title="plt显示图片"></a>plt显示图片</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> matplotlib<span class="token punctuation">.</span>pyplot <span class="token keyword">as</span> plt
+<span class="token keyword">import</span> matplotlib<span class="token punctuation">.</span>image <span class="token keyword">as</span> mpimg
+
+img <span class="token operator">=</span> mpimg<span class="token punctuation">.</span>imread<span class="token punctuation">(</span>test_img_path<span class="token punctuation">)</span>
+plt<span class="token punctuation">.</span>figure<span class="token punctuation">(</span>figsize<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+plt<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span>img<span class="token punctuation">)</span>
+plt<span class="token punctuation">.</span>axis<span class="token punctuation">(</span><span class="token string">'off'</span><span class="token punctuation">)</span>
+plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment"># 显示结果</span>
+res <span class="token operator">=</span> os<span class="token punctuation">.</span>listdir<span class="token punctuation">(</span><span class="token string">'output'</span><span class="token punctuation">)</span>
+img1 <span class="token operator">=</span> mpimg<span class="token punctuation">.</span>imread<span class="token punctuation">(</span><span class="token string">'output/'</span> <span class="token operator">+</span> res<span class="token punctuation">[</span><span class="token builtin">len</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+plt<span class="token punctuation">.</span>figure<span class="token punctuation">(</span>figsize<span class="token operator">=</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+plt<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span>img1<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"><i class="fa fa-tag"></i> python</a>
+              <a href="/tags/%E6%95%B0%E5%AA%92%E6%8A%80/" rel="tag"><i class="fa fa-tag"></i> 数媒技</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/07/13/convert-line-stickers-to-wechat/" rel="prev" title="把Line表情转换成微信表情">
+                  <i class="fa fa-chevron-left"></i> 把Line表情转换成微信表情
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/08/11/docker-note-2022/" rel="next" title="Docker 学习笔记">
+                  Docker 学习笔记 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nova-mist</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+    <div class="pjax">
+
+
+    </div>
+</body>
+</html>

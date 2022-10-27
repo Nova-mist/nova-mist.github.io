@@ -123,8 +123,8 @@
 <nav class="site-nav">
   <ul class="main-menu menu">
         <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
-        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">75</span></a></li>
-        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">28</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">74</span></a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">31</span></a></li>
         <li class="menu-item menu-item-stars"><a href="/stars/" rel="section"><i class="fa fa-heart fa-fw"></i>收集</a></li>
   </ul>
 </nav>
@@ -171,14 +171,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-count">74</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-count">31</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -222,6 +222,352 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2022/07/11/use-powershell/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="Nova-mist">
+      <meta itemprop="description" content="My blog about daily life and learning. :b">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="novamist blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/07/11/use-powershell/" class="post-title-link" itemprop="url">试试PowerShell</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-07-11 09:22:34" itemprop="dateCreated datePublished" datetime="2022-07-11T09:22:34+08:00">2022-07-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-08-04 21:17:20" itemprop="dateModified" datetime="2022-08-04T21:17:20+08:00">2022-08-04</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="试试PowerShell"><a href="#试试PowerShell" class="headerlink" title="试试PowerShell"></a>试试PowerShell</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/PowerShell/PowerShell">PowerShell/PowerShell: PowerShell for every system! (github.com)</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/powershell/scripting/overview?view=powershell-7.2">What is PowerShell? - PowerShell | Microsoft Docs</a></li>
+</ul>
+<ol>
+<li>PowerShell是支持全平台使用的。</li>
+<li>Windows上内置的是v5.1版本，最新的v7版本需要自行安装。</li>
+</ol>
+<h2 id="配置环境"><a href="#配置环境" class="headerlink" title="配置环境"></a>配置环境</h2><ul>
+<li>修改Windows Terminal配置，排列、主题。</li>
+<li>配置 oh-my-posh —— <strong>提示符个性化工具</strong>。</li>
+</ul>
+<h3 id="oh-my-posh"><a href="#oh-my-posh" class="headerlink" title="oh-my-posh"></a>oh-my-posh</h3><p>参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://sspai.com/post/69911">Oh My Posh：全平台终端提示符个性化工具 - 少数派 (sspai.com)</a></li>
+<li><a target="_blank" rel="noopener" href="https://ohmyposh.dev/docs/">Introduction | Oh My Posh</a></li>
+</ul>
+<p>使用搭配：Windows Terminal + oh-my-posh + PowerShell Core<br>💥【终端】+【个性化配置工具】+【shell】</p>
+<p><strong>安装</strong></p>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">winget install oh<span class="token operator">-</span>my<span class="token operator">-</span>posh
+winget upgrade oh<span class="token operator">-</span>my<span class="token operator">-</span>posh<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><strong>配置主题</strong></p>
+<p>在 <a target="_blank" rel="noopener" href="https://ohmyposh.dev/docs/themes">主题页面</a> 查看内置的主题样式，对应的配置文件的路径为 <code>~\AppData\Local\Programs\oh-my-posh\themes\xxx.omp.json</code></p>
+<p>使用PowerShell查看配置文件的路径 <code>$Profile</code> ，<strong>创建并编辑</strong>该 <code>.ps1</code> 文件：</p>
+<pre class="line-numbers language-none"><code class="language-none">oh-my-posh init pwsh --config ~&#x2F;AppData&#x2F;Local&#x2F;Programs&#x2F;oh-my-posh&#x2F;themes&#x2F;cloud-native-azure.omp.json | Invoke-ExpressionR<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong>修改字体</strong></p>
+<p>下载 <a target="_blank" rel="noopener" href="https://www.nerdfonts.com/">Nerd Fonts系列字体</a> 并安装，在Windows Terminal中选择。🟠（<strong>全选-右键-为所有用户安装</strong>）</p>
+<p><strong>重启Windows Terminal查看配置完成的效果。</strong></p>
+<p>💥<strong>修改vscode中的终端字体</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources@main/images/2022/image-20220515194945445.png" alt="image-20220515194945445"></p>
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell"><span class="token variable">$PSversionTable</span> <span class="token comment"># 查看版本</span>
+<span class="token variable">$Profile</span> <span class="token comment"># 配置文件的路径</span>
+<span class="token comment"># 重命名</span>
+<span class="token function">Rename-Item</span> <span class="token operator">-</span>Path <span class="token string">'.\测不准的阿波连同学`[P7`]7 这是艺术了吧？.mp4'</span> <span class="token string">'p7_audio.mp4'</span>
+<span class="token comment"># 删除目录下的特定文件 正则表达式 Get-ChildItem选项 -Recurse 获取子目录</span>
+<span class="token function">Get-ChildItem</span> <span class="token variable">$Path</span> <span class="token punctuation">|</span> Where<span class="token punctuation">&#123;</span><span class="token variable">$_</span><span class="token punctuation">.</span>Name <span class="token operator">-Match</span> <span class="token string">"&lt;RegEx Pattern>"</span><span class="token punctuation">&#125;</span> <span class="token punctuation">|</span> <span class="token function">Remove-Item</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<blockquote>
+<p><strong>更新 2022/07/26</strong></p>
+</blockquote>
+<p>换行符 line continuation character 是 <code>`</code></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/23767489/how-can-one-delete-files-in-a-folder-matching-a-regular-expression-using-powersh">regex - How can one delete files in a folder matching a regular expression using PowerShell? - Stack Overflow</a></li>
+<li><a target="_blank" rel="noopener" href="https://devblogs.microsoft.com/scripting/powertip-line-continuation-in-powershell/">PowerTip: Line Continuation in PowerShell - Scripting Blog (microsoft.com)</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2022/07/11/mklink-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="Nova-mist">
+      <meta itemprop="description" content="My blog about daily life and learning. :b">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="novamist blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/07/11/mklink-2/" class="post-title-link" itemprop="url">再谈mklink</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-07-11 09:21:09 / 修改时间：09:22:48" itemprop="dateCreated datePublished" datetime="2022-07-11T09:21:09+08:00">2022-07-11</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="再谈mklink"><a href="#再谈mklink" class="headerlink" title="再谈mklink"></a>再谈mklink</h1><blockquote>
+<p>在一台 Windows 电脑中，硬盘被分割为卷用以保存数据，在每一个卷上，数据对象被 NTFS 文件系统赋予了独一无二的<strong>文件 ID</strong> 以及<strong>与之对应的文件路径</strong>，文件路径和文件 ID 对应，文件 ID 和数据对象绑定，最终才呈现为可供用户打开、编辑的文件。</p>
+</blockquote>
+<p>一些供下次研究的笔记。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/07/11/mklink-2/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2022/07/11/redis-learn/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="Nova-mist">
+      <meta itemprop="description" content="My blog about daily life and learning. :b">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="novamist blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/07/11/redis-learn/" class="post-title-link" itemprop="url">redis-learn</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-07-11 09:11:33" itemprop="dateCreated datePublished" datetime="2022-07-11T09:11:33+08:00">2022-07-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-07-26 20:07:10" itemprop="dateModified" datetime="2022-07-26T20:07:10+08:00">2022-07-26</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Redis-基础"><a href="#Redis-基础" class="headerlink" title="Redis 基础"></a>Redis 基础</h1><p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources/images/2022/blog-image-20220711-1657502318.gif" alt="blog-image-20220711-1657502318"></p>
+<p>学习 <a target="_blank" rel="noopener" href="https://www.ydlclass.com/doc21xnv/frame/redis/">文档</a> 的笔记。</p>
+<p>[toc]</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/07/11/redis-learn/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2022/07/11/digital-watermark-note/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="Nova-mist">
+      <meta itemprop="description" content="My blog about daily life and learning. :b">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="novamist blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/07/11/digital-watermark-note/" class="post-title-link" itemprop="url">数字水印耳濡目染</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-07-11 09:08:39 / 修改时间：09:11:08" itemprop="dateCreated datePublished" datetime="2022-07-11T09:08:39+08:00">2022-07-11</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="数字水印耳濡目染"><a href="#数字水印耳濡目染" class="headerlink" title="数字水印耳濡目染"></a>数字水印耳濡目染</h1><p>[toc]</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/07/11/digital-watermark-note/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -375,82 +721,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2022/05/24/before-leetcode-java/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="Nova-mist">
-      <meta itemprop="description" content="My blog about daily life and learning. :b">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="novamist blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/05/24/before-leetcode-java/" class="post-title-link" itemprop="url">算法前概</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-05-24 15:56:54 / 修改时间：15:57:59" itemprop="dateCreated datePublished" datetime="2022-05-24T15:56:54+08:00">2022-05-24</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>顺序存储：存储空间连续，遍历容易，修改复杂。</p>
-<p>链式存储：存储空间不连续，遍历复杂，修改容易。</p>
-<blockquote>
-<p>  Redis 提供列表、字符串、集合等等几种常用数据结构，但是对于每种数据结构，底层的存储方式都至少有两种，以便于根据存储数据的实际情况使用合适的存储方式。</p>
-</blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/05/24/before-leetcode-java/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2022/05/24/vita-Cryptography-Course/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -494,221 +764,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/05/24/vita-Cryptography-Course/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2022/05/24/binary-tree-java/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="Nova-mist">
-      <meta itemprop="description" content="My blog about daily life and learning. :b">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="novamist blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/05/24/binary-tree-java/" class="post-title-link" itemprop="url">binary-tree-java</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-05-24 15:44:40 / 修改时间：15:47:23" itemprop="dateCreated datePublished" datetime="2022-05-24T15:44:40+08:00">2022-05-24</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources@main/images/2022/GIF%202022-5-14%2022-06-30.gif" alt="GIF 2022-5-14 22-06-30"></p>
-<h1 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h1><h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><p>满二叉树：深度为k，有2^k-1个节点的二叉树。</p>
-<p>完全二叉树：除最底层外，其余每层节点数都达到最大值，并且底层节点都集中在最左边的若干位置。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources@main/images/2022/image-20220401183725675.png" alt="image-20220401183725675"></p>
-<p>二叉搜索树：从首节点开始看，</p>
-<ul>
-<li>  若左子树不为空，则左子树上所有节点的值均小于它的根结点的值</li>
-<li>  若右子树不为空，则右子树上所有结点的值均大于它的根结点的值</li>
-<li>  其左、右子树也分别为二叉排序树</li>
-</ul>
-<p><strong>二叉搜索树是一个有序树</strong></p>
-<p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources@main/images/2022/20200806190304693.png" alt="img"></p>
-<p>平衡二叉搜索树：是一颗空树，或者左右两个子树的高度差的绝对值不超过1，并且左右两个子树都是一颗平衡二叉树。</p>
-<hr>
-<h3 id="存储方式"><a href="#存储方式" class="headerlink" title="存储方式"></a>存储方式</h3><ul>
-<li>  链式存储，使用指针，链接各个地址的节点。</li>
-<li>  顺序存储，使用数组，内存连续分布。</li>
-</ul>
-<p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources@main/images/2022/image-20220401184828788.png" alt="image-20220401184828788"></p>
-<p>⭐用数组存储的二叉树的遍历规律：<strong>如果父节点的数组下标是 i，那么它的左孩子就是 i * 2 + 1，右孩子就是 i * 2 + 2。</strong></p>
-<hr>
-<h3 id="遍历方式"><a href="#遍历方式" class="headerlink" title="遍历方式"></a>遍历方式</h3><ul>
-<li>深度优先遍历：先往深走，遇到叶子节点再往回走。<ul>
-<li>  前序遍历（递归法，迭代法）中左右</li>
-<li>  中序遍历（递归法，迭代法）左中右</li>
-<li>  后序遍历（递归法，迭代法）左右中</li>
-</ul>
-</li>
-<li>广度优先遍历：一层一层的去遍历。<ul>
-<li>  层次遍历（迭代法）</li>
-</ul>
-</li>
-</ul>
-<p><strong>前中后序的名称，区分的就是中间节点在遍历顺序中的位置。</strong></p>
-<p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources@main/images/2022/20200806191109896.png" alt="img"></p>
-<p>深度遍历可以借助栈来实现（栈也是一种递归结构），广度遍历一般使用队列来实现（先进后出的结构一层一层的遍历）。</p>
-<p>🟠<strong>二叉树中递归的概念很重要</strong></p>
-<hr>
-<h3 id="代码定义"><a href="#代码定义" class="headerlink" title="代码定义"></a>代码定义</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TreeNode</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">int</span> val<span class="token punctuation">;</span>
-    <span class="token class-name">TreeNode</span> left<span class="token punctuation">;</span>
-    <span class="token class-name">TreeNode</span> right<span class="token punctuation">;</span>
-
-    <span class="token class-name">TreeNode</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-    <span class="token class-name">TreeNode</span><span class="token punctuation">(</span><span class="token keyword">int</span> val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>val <span class="token operator">=</span> val<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token class-name">TreeNode</span><span class="token punctuation">(</span><span class="token keyword">int</span> val<span class="token punctuation">,</span> <span class="token class-name">TreeNode</span> left<span class="token punctuation">,</span> <span class="token class-name">TreeNode</span> right<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>val <span class="token operator">=</span> val<span class="token punctuation">;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>left <span class="token operator">=</span> left<span class="token punctuation">;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>right <span class="token operator">=</span> right<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/05/24/binary-tree-java/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2022/05/24/hash-table-java/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="Nova-mist">
-      <meta itemprop="description" content="My blog about daily life and learning. :b">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="novamist blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/05/24/hash-table-java/" class="post-title-link" itemprop="url">hash-table-java</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-05-24 15:42:29 / 修改时间：15:43:28" itemprop="dateCreated datePublished" datetime="2022-05-24T15:42:29+08:00">2022-05-24</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Hash-Table"><a href="#Hash-Table" class="headerlink" title="Hash Table"></a>Hash Table</h1><h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><p>哈希表、散列表。</p>
-<p><strong>一般哈希表都是用来快速判断一个元素是否出现集合里。</strong> <em>O(1)</em></p>
-<blockquote>
-<p>hashFunction = hashCode(name) % tableSize 取模保证映射出来的索引数值都落在哈希表上</p>
-</blockquote>
-<p>解决哈希碰撞的方法：</p>
-<ol>
-<li>拉链法：将发生冲突的元素都存储在链表中</li>
-<li>线性探测法：冲突时寻找下一个空位，tableSize要大于dataSize</li>
-</ol>
-<p><strong>常见的哈希结构</strong>：</p>
-<ul>
-<li>数组</li>
-<li>set 集合</li>
-<li>map 映射</li>
-</ul>
-<p>==TODO：容器的底层实现==</p>
-<blockquote>
-<p>红黑树是一种平衡二叉搜索树，key值有序但不可以修改，只能删除和增加。</p>
-</blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/05/24/hash-table-java/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1128,84 +1183,6 @@ go build <span class="token punctuation">[</span>name<span class="token punctuat
             </div>
           <!--/noindex-->
         
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://nova-mist.github.io/2022/04/01/git-config-lf-crlf/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="Nova-mist">
-      <meta itemprop="description" content="My blog about daily life and learning. :b">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="novamist blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/04/01/git-config-lf-crlf/" class="post-title-link" itemprop="url">解决报错LF will be replaced by CRLF</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-04-01 10:14:45 / 修改时间：14:35:50" itemprop="dateCreated datePublished" datetime="2022-04-01T10:14:45+08:00">2022-04-01</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p><strong>每次 hexo deploy 发布博客的时候就会出现</strong>：</p>
-<blockquote>
-<p>  warning: LF will be replaced by CRLF</p>
-</blockquote>
-<h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><p>在 <code>.git</code> 目录下的 <code>config</code> 文件中设置：</p>
-<pre class="line-numbers language-none"><code class="language-none">core.autocrlf &#x3D; false<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p><img src="https://cdn.jsdelivr.net/gh/Nova-mist/HexoBlogResources@main/images/2022/image-20220401142806178.png" alt="image-20220401142806178"></p>
-<p>会关闭 git 默认的<strong>换行(LF)转换成回车和换行(CRLF)</strong></p>
-<p>🟠这种设置只适合纯 Windows 系统下的项目，由于只想应用于 hexo 博客，所以只修改了单个项目的配置。不建议使用全局配置 <code>git config --global core.autocrlf false</code> 。</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
-<li>  <a target="_blank" rel="noopener" href="https://www.zhihu.com/question/50862500">git如何避免”warning: LF will be replaced by CRLF“提示？ - 知乎</a></li>
-<li>  <a target="_blank" rel="noopener" href="https://xiaozhuanlan.com/topic/4053786912">通过阅读 git-config 文档理解 Git 如何使用autocrlf、safecrlf、eol和.gitattributes处理line-ending</a></li>
-</ul>
-
       
     </div>
 
